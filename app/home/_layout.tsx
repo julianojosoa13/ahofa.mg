@@ -41,7 +41,6 @@ const HomeLayout = () => {
           return (
             <TouchableOpacity onPress={() => setVisible(true)}>
               <Animated.Image
-                entering={FadeInUp.delay(150).duration(300)}
                 source={require("@/assets/images/brand/trans_bg.png")}
                 style={{
                   width: wp(15.5),
@@ -59,7 +58,6 @@ const HomeLayout = () => {
         headerRight: () => {
           return (
             <Animated.View
-              entering={FadeInDown.delay(175).duration(300)}
               style={{
                 flexDirection: "row",
                 gap: wp(2),
