@@ -8,8 +8,16 @@ import {
 } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import IconContainer from "../../components/IconContainer";
-import { Image, Pressable, Text, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Pressable,
+  Text,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import SideDrawer from "@/components/modals/SideDrawer";
+import { useState } from "react";
 
 const marginBottom = hp(0.25);
 
@@ -29,18 +37,25 @@ const HomeLayout = () => {
         tabBarActiveTintColor: COLORS.mainColor,
         tabBarInactiveTintColor: COLORS.secondaryColor,
         headerLeft: () => {
+          const [visible, setVisible] = useState(false);
           return (
-            <Animated.Image
-              entering={FadeInUp.delay(0).duration(300)}
-              source={require("@/assets/images/brand/trans_bg.png")}
-              style={{ width: wp(20), height: wp(20) }}
-            />
+            <TouchableOpacity onPress={() => setVisible(true)}>
+              <Animated.Image
+                entering={FadeInUp.delay(150).duration(300)}
+                source={require("@/assets/images/brand/trans_bg.png")}
+                style={{ width: wp(20), height: wp(20), marginLeft: wp(2.5) }}
+              />
+              <SideDrawer
+                visible={visible}
+                onRequestClose={() => setVisible(false)}
+              />
+            </TouchableOpacity>
           );
         },
         headerRight: () => {
           return (
             <Animated.View
-              entering={FadeInDown.delay(75).duration(300)}
+              entering={FadeInDown.delay(175).duration(300)}
               style={{
                 flexDirection: "row",
                 gap: wp(2),
@@ -132,7 +147,7 @@ const HomeLayout = () => {
       <Tabs.Screen
         name="Music"
         options={{
-          title: "Instruments de Musique",
+          title: "Sonorisation",
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={450} focused={focused}>
