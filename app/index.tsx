@@ -9,6 +9,7 @@ import Animated, {
 import COLORS from "@/utils/colors";
 import Button from "@/components/ui/Button";
 import LanguagesButton from "@/components/LanguagesButton";
+import { router } from "expo-router";
 
 export default function Index() {
   return (
@@ -48,7 +49,7 @@ export default function Index() {
         </Animated.Text>
         <Animated.View entering={FadeInDown.delay(900).duration(300)}>
           <Button
-            action={() => console.log("continue...")}
+            action={() => router.navigate("/home")}
             title="Continuer"
             style={{ width: wp(70) }}
           ></Button>
