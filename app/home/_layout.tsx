@@ -43,7 +43,11 @@ const HomeLayout = () => {
               <Animated.Image
                 entering={FadeInUp.delay(150).duration(300)}
                 source={require("@/assets/images/brand/trans_bg.png")}
-                style={{ width: wp(20), height: wp(20), marginLeft: wp(2.5) }}
+                style={{
+                  width: wp(15.5),
+                  height: wp(15.5),
+                  marginLeft: wp(2.5),
+                }}
               />
               <SideDrawer
                 visible={visible}

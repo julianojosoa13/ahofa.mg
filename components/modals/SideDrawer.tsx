@@ -51,9 +51,13 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           entering={SlideInLeft.duration(300)}
           exiting={SlideOutLeft.duration(300)}
         >
-          <Pressable style={styles.closeButton} onPress={onRequestClose}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={onRequestClose}
+            hitSlop={8}
+          >
             <FontAwesome6 name="x" size={25} />
-          </Pressable>
+          </TouchableOpacity>
 
           <View style={styles.header}>
             <TouchableOpacity style={styles.userAvatar}>
