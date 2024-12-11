@@ -61,7 +61,7 @@ const HomeLayout = () => {
                 <Text
                   style={{ color: COLORS.secondaryColor, fontWeight: "300" }}
                 >
-                  À Quoi pensez-vous?
+                  À Quoi Pensez-Vous?
                 </Text>
               </Pressable>
               <TouchableOpacity
