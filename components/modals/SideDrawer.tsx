@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     width: wp(80),
     height: hp(100),
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255,255,255,0.75)",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -188,6 +188,8 @@ const styles = StyleSheet.create({
   },
   menuLabel: {
     fontSize: hp(2),
+    color: COLORS.secondaryColor,
+    fontWeight: "300",
   },
   toolTip: {
     width: wp(7.5),
