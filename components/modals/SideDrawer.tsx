@@ -2,9 +2,11 @@ import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import {
   AntDesign,
+  Feather,
   FontAwesome6,
   Fontisto,
   Ionicons,
+  MaterialIcons,
 } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import {
@@ -17,6 +19,10 @@ import {
   View,
 } from "react-native";
 import Animated, { SlideInLeft, SlideOutLeft } from "react-native-reanimated";
+
+import Entypo from "@expo/vector-icons/Entypo";
+
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 interface Props {
   visible?: boolean;
@@ -69,6 +75,53 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
               <Text style={styles.loginButtton}>Se Connecter</Text>
             </Pressable>
           </View>
+
+          {/* Mon Profile */}
+          <View style={styles.line} />
+          <TouchableOpacity style={styles.menuItem}>
+            <FontAwesome name="user-o" size={24} color="black" />
+            <Text style={styles.menuLabel}>Mon Profile</Text>
+          </TouchableOpacity>
+
+          {/* Parametres */}
+          <TouchableOpacity style={styles.menuItem}>
+            <Entypo name="tools" size={24} color="black" />
+            <Text style={styles.menuLabel}>Paramètres</Text>
+          </TouchableOpacity>
+
+          {/* Mes Locations */}
+          <TouchableOpacity style={styles.menuItem}>
+            <Ionicons name="bag-handle-outline" size={24} color="black" />
+            <Text style={styles.menuLabel}>Mes Locations</Text>
+          </TouchableOpacity>
+
+          {/* Mes Achats */}
+          <TouchableOpacity style={styles.menuItem}>
+            <FontAwesome name="credit-card" size={24} color="black" />
+            <Text style={styles.menuLabel}>Mes Achats</Text>
+          </TouchableOpacity>
+
+          {/* Mes messages */}
+          <TouchableOpacity style={styles.menuItem}>
+            <Ionicons name="chatbubble-outline" size={24} color="black" />
+            <Text style={styles.menuLabel}>Messages</Text>
+
+            {/* ToolTip */}
+            <View style={styles.toolTip}>
+              <Text style={styles.toolTipText}>2</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Mes notifications */}
+          <TouchableOpacity style={styles.menuItem}>
+            <AntDesign name="bells" size={24} color="black" />
+            <Text style={styles.menuLabel}>Notifications</Text>
+
+            {/* ToolTip */}
+            <View style={styles.toolTip}>
+              <Text style={styles.toolTipText}>5</Text>
+            </View>
+          </TouchableOpacity>
         </Animated.View>
       )}
       <Pressable style={styles.overlay} onPress={onRequestClose} />
@@ -111,6 +164,47 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: COLORS.secondaryColor,
     fontSize: hp(2),
+  },
+  line: {
+    borderBottomWidth: 0.2,
+    borderBottomColor: "rgba(0,0,0,0.25)",
+    marginHorizontal: wp(15),
+    marginTop: hp(1.5),
+    marginBottom: hp(1.5),
+  },
+  menuItem: {
+    flexDirection: "row",
+    width: wp(70),
+    marginHorizontal: hp(2),
+    marginVertical: hp(1.25),
+    gap: hp(1.5),
+    paddingLeft: wp(5),
+    paddingVertical: hp(0.75),
+    justifyContent: "flex-start",
+    alignItems: "center",
+    elevation: 1,
+    backgroundColor: COLORS.bgColor,
+    borderRadius: 8,
+  },
+  menuLabel: {
+    fontSize: hp(2),
+  },
+  toolTip: {
+    width: wp(7.5),
+    height: wp(7.5),
+    borderRadius: hp(3.75),
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 10,
+    top: -10,
+  },
+  toolTipText: {
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 12,
   },
 });
 

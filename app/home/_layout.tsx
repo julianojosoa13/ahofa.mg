@@ -2,6 +2,7 @@ import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import {
   AntDesign,
+  Entypo,
   FontAwesome6,
   MaterialIcons,
   SimpleLineIcons,
@@ -14,6 +15,7 @@ import {
   Text,
   Touchable,
   TouchableOpacity,
+  View,
 } from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import SideDrawer from "@/components/modals/SideDrawer";
@@ -39,20 +41,29 @@ const HomeLayout = () => {
         headerLeft: () => {
           const [visible, setVisible] = useState(false);
           return (
-            <TouchableOpacity onPress={() => setVisible(true)}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingLeft: wp(1),
+              }}
+            >
+              <TouchableOpacity onPress={() => setVisible(true)}>
+                <Entypo name="menu" size={34} color={COLORS.thirdColor} />
+              </TouchableOpacity>
               <Animated.Image
                 source={require("@/assets/images/brand/trans_bg.png")}
                 style={{
                   width: wp(15.5),
                   height: wp(15.5),
-                  marginLeft: wp(2.5),
+                  marginLeft: wp(0.5),
                 }}
               />
               <SideDrawer
                 visible={visible}
                 onRequestClose={() => setVisible(false)}
               />
-            </TouchableOpacity>
+            </View>
           );
         },
         headerRight: () => {
