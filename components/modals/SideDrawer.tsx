@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     width: wp(80),
     height: hp(100),
-    backgroundColor: "rgba(255,255,255,0.75)",
+    backgroundColor: "rgba(255,255,255,0.95)",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
