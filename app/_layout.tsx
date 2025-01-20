@@ -29,7 +29,7 @@ const SyncLanguageWithI18n = () => {
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor} key={"persistedState"}>
+      <PersistGate loading={null} persistor={persistor} key={"root"}>
         <SyncLanguageWithI18n />
         <I18nextProvider i18n={i18n}>
           <Stack screenOptions={{ headerShown: false }} />

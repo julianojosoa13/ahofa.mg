@@ -24,8 +24,9 @@ import logger from "redux-logger";
 
 // Persist config
 const persistConfig = {
-  key: "persistedState",
+  key: "root",
   storage,
+  version: 1,
   whitelist: ["translations"], // Persist only translations state
 };
 

@@ -25,4 +25,5 @@ export const {
   incrementInterstitialAd,
   incrementRewardedAd,
 } = adsSlice.actions;
+
 export default adsSlice.reducer;

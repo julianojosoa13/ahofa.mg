@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const checkPersistedLanguage = async () => {
   try {
-    const persistedState = await AsyncStorage.getItem("persistedState");
+    const persistedState = await AsyncStorage.getItem("root");
     if (persistedState !== null) {
       const state = JSON.parse(persistedState);
       console.log("Persisted State:", state); // Check the persisted state
