@@ -8,9 +8,21 @@ import Button from "@/components/ui/Button";
 import LanguagesButton from "@/components/LanguagesButton";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useSelector } from "react-redux";
+import { useEffect, useLayoutEffect } from "react";
+import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
+
+import i18n from "@/lib/i18n";
 
 export default function Index() {
   const { t } = useTranslation();
+
+  const language = useSelector(selectTranslationsLanguage);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
+
   return (
     <View
       style={{

@@ -31,7 +31,6 @@ const LanguagesButton: FC<Props> = (props) => {
   const { t } = useTranslation();
   const currentLanguage = useSelector(selectTranslationsLanguage);
 
-  console.log("Current Language >>> ", currentLanguage);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
@@ -42,11 +41,10 @@ const LanguagesButton: FC<Props> = (props) => {
   const switchLanguage = (code: string) => {
     setCurrentLanguage(code);
     setShowModal(false);
-    i18n.changeLanguage(code);
   };
 
   useEffect(() => {
-    checkPersistedLanguage();
+    i18n.changeLanguage(currentLanguage);
   }, [currentLanguage]);
 
   return (

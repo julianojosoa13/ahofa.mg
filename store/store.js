@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -27,22 +27,21 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["translations"], // Persist only translations state
+  whitelist: ["translations"],
 };
 
-const persistedTranslationsReducer = persistReducer(
-  persistConfig,
-  translationsReducer
-);
+const rootReducer = combineReducers({
+  ads: adsReducer,
+  posts: postsReducer,
+  subscriptions: subscriptionsReducer,
+  payments: paymentsReducer,
+  translations: translationsReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    ads: adsReducer,
-    posts: postsReducer,
-    subscriptions: subscriptionsReducer,
-    payments: paymentsReducer,
-    translations: persistedTranslationsReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: true, // Include thunk middleware (enabled by default)
