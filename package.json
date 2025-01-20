@@ -23,8 +23,8 @@
     "@react-navigation/native": "^7.0.0",
     "@reduxjs/toolkit": "^2.5.0",
     "expo": "~52.0.26",
-    "expo-blur": "~14.0.2",
     "expo-constants": "~17.0.3",
+    "expo-dev-client": "~5.0.9",
     "expo-font": "~13.0.1",
     "expo-haptics": "~14.0.1",
     "expo-linking": "~7.0.4",
@@ -49,8 +49,7 @@
     "react-native-webview": "13.12.5",
     "react-redux": "^9.2.0",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0",
-    "expo-dev-client": "~5.0.9"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
