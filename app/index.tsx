@@ -1,17 +1,16 @@
 import { hp, wp } from "@/utils/screensize";
-import { Alert, Image, Text, View } from "react-native";
-import Animated, {
-  FadeInDown,
-  SlideInDown,
-  SlideInUp,
-} from "react-native-reanimated";
+import { Text, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
+import { useTranslation } from "react-i18next";
 import COLORS from "@/utils/colors";
 import Button from "@/components/ui/Button";
 import LanguagesButton from "@/components/LanguagesButton";
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 export default function Index() {
+  const { t } = useTranslation();
   return (
     <View
       style={{
@@ -20,7 +19,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <View style={{ position: "absolute", top: hp(2.5), right: wp(5) }}>
+      <StatusBar style="dark" />
+      <View style={{ position: "absolute", top: hp(4.5), right: wp(5) }}>
         <LanguagesButton />
       </View>
 
@@ -36,7 +36,7 @@ export default function Index() {
           entering={FadeInDown.delay(600).duration(300)}
           style={{ fontSize: hp(1.8), fontWeight: "300", textAlign: "center" }}
         >
-          Bienvenue sur{" "}
+          {t("welcome_to")}
           <Text
             style={{
               fontWeight: "bold",
@@ -50,7 +50,7 @@ export default function Index() {
         <Animated.View entering={FadeInDown.delay(900).duration(300)}>
           <Button
             action={() => router.navigate("/home")}
-            title="Continuer"
+            title={t("continue")}
             style={{ width: wp(70) }}
           ></Button>
         </Animated.View>

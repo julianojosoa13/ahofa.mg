@@ -20,10 +20,13 @@ import {
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import SideDrawer from "@/components/modals/SideDrawer";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const marginBottom = hp(0.25);
 
 const HomeLayout = () => {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -87,9 +90,13 @@ const HomeLayout = () => {
                 }}
               >
                 <Text
-                  style={{ color: COLORS.secondaryColor, fontWeight: "300" }}
+                  style={{
+                    color: COLORS.secondaryColor,
+                    fontWeight: "300",
+                    fontSize: hp(1.9),
+                  }}
                 >
-                  À Quoi Pensez-Vous?
+                  {t("what are you thinking")}
                 </Text>
               </Pressable>
               <TouchableOpacity
@@ -109,7 +116,7 @@ const HomeLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Maisons",
+          title: t("houses"),
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={0} focused={focused}>
@@ -126,7 +133,7 @@ const HomeLayout = () => {
       <Tabs.Screen
         name="Cars"
         options={{
-          title: "Véhicules",
+          title: t("vehicles"),
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={150} focused={focused}>
@@ -143,7 +150,7 @@ const HomeLayout = () => {
       <Tabs.Screen
         name="Lands"
         options={{
-          title: "Terrain",
+          title: t("terrains"),
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={300} focused={focused}>
@@ -160,7 +167,7 @@ const HomeLayout = () => {
       <Tabs.Screen
         name="Music"
         options={{
-          title: "Sonorisation",
+          title: t("sound"),
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={450} focused={focused}>
@@ -177,7 +184,7 @@ const HomeLayout = () => {
       <Tabs.Screen
         name="Computers"
         options={{
-          title: "Electronique",
+          title: t("electronic"),
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={600} focused={focused}>

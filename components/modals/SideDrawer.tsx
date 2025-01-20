@@ -23,6 +23,7 @@ import Animated, { SlideInLeft, SlideOutLeft } from "react-native-reanimated";
 import Entypo from "@expo/vector-icons/Entypo";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import LanguagesButton from "../LanguagesButton";
 
 interface Props {
   visible?: boolean;
