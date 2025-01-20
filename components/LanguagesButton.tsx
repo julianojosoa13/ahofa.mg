@@ -1,5 +1,5 @@
 import { hp, wp } from "@/utils/screensize";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -17,19 +17,37 @@ import { AntDesign } from "@expo/vector-icons";
 import i18n from "@/lib/i18n";
 import { useTranslation } from "react-i18next";
 import FlagImage from "./FlagImage";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setLanguage,
+  selectTranslationsLanguage,
+} from "@/store/slices/translationsSlice";
+
+import { checkPersistedLanguage } from "@/utils/helpers";
 
 interface Props {}
 
 const LanguagesButton: FC<Props> = (props) => {
   const { t } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState("fr");
+  const currentLanguage = useSelector(selectTranslationsLanguage);
+
+  console.log("Current Language >>> ", currentLanguage);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+
+  const setCurrentLanguage = (code: string) => {
+    dispatch(setLanguage(code));
+  };
 
   const switchLanguage = (code: string) => {
     setCurrentLanguage(code);
     setShowModal(false);
     i18n.changeLanguage(code);
   };
+
+  useEffect(() => {
+    checkPersistedLanguage();
+  }, [currentLanguage]);
 
   return (
     <SafeAreaView style={styles.container}>

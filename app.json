@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.julianojosoa13.ahofa-app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/brand/original.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.julianojosoa13.ahofa_app"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "69af86b2-666c-44bc-809a-452e304075f9"
+      }
+    },
+    "owner": "julianojosoa13"
   }
 }

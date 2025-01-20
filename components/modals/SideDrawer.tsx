@@ -104,31 +104,31 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
             <View style={styles.line} />
             <TouchableOpacity style={styles.menuItem}>
               <FontAwesome name="user-o" size={24} color="black" />
-              <Text style={styles.menuLabel}>Mon Profile</Text>
+              <Text style={styles.menuLabel}>{t("my profile")}</Text>
             </TouchableOpacity>
 
             {/* Parametres */}
             <TouchableOpacity style={styles.menuItem}>
               <Entypo name="tools" size={24} color="black" />
-              <Text style={styles.menuLabel}>Paramètres</Text>
+              <Text style={styles.menuLabel}>{t("settings")}</Text>
             </TouchableOpacity>
 
             {/* Mes Locations */}
             <TouchableOpacity style={styles.menuItem}>
               <Ionicons name="bag-handle-outline" size={24} color="black" />
-              <Text style={styles.menuLabel}>Mes Locations</Text>
+              <Text style={styles.menuLabel}>{t("my rentals")}</Text>
             </TouchableOpacity>
 
             {/* Mes Achats */}
             <TouchableOpacity style={styles.menuItem}>
               <FontAwesome name="credit-card" size={24} color="black" />
-              <Text style={styles.menuLabel}>Mes Achats</Text>
+              <Text style={styles.menuLabel}>{t("my purchases")}</Text>
             </TouchableOpacity>
 
             {/* Mes messages */}
             <TouchableOpacity style={styles.menuItem}>
               <Ionicons name="chatbubble-outline" size={24} color="black" />
-              <Text style={styles.menuLabel}>Messages</Text>
+              <Text style={styles.menuLabel}>{t("messages")}</Text>
 
               {/* ToolTip */}
               <View style={styles.toolTip}>
@@ -139,7 +139,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
             {/* Mes notifications */}
             <TouchableOpacity style={styles.menuItem}>
               <AntDesign name="bells" size={24} color="black" />
-              <Text style={styles.menuLabel}>Notifications</Text>
+              <Text style={styles.menuLabel}>{t("notifications")}</Text>
 
               {/* ToolTip */}
               <View style={styles.toolTip}>
