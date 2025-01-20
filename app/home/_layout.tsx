@@ -54,14 +54,7 @@ const HomeLayout = () => {
               <TouchableOpacity onPress={() => setVisible(true)}>
                 <Entypo name="menu" size={34} color={COLORS.thirdColor} />
               </TouchableOpacity>
-              <Animated.Image
-                source={require("@/assets/images/brand/trans_bg.png")}
-                style={{
-                  width: wp(15.5),
-                  height: wp(15.5),
-                  marginLeft: wp(0.5),
-                }}
-              />
+
               <SideDrawer
                 visible={visible}
                 onRequestClose={() => setVisible(false)}
@@ -75,12 +68,12 @@ const HomeLayout = () => {
               style={{
                 flexDirection: "row",
                 gap: wp(2),
-                justifyContent: "space-around",
+                justifyContent: "space-between",
               }}
             >
               <Pressable
                 style={{
-                  width: wp(60),
+                  width: wp(77),
                   height: hp(5),
                   borderRadius: 8,
                   justifyContent: "center",

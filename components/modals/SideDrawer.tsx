@@ -13,6 +13,7 @@ import {
   Modal,
   Pressable,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -24,6 +25,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import LanguagesButton from "../LanguagesButton";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   visible?: boolean;
@@ -32,6 +34,7 @@ interface Props {
 
 const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
   const [showModal, setShowModal] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let modalTimeout: NodeJS.Timeout;
@@ -65,64 +68,85 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           >
             <FontAwesome6 name="x" size={25} />
           </TouchableOpacity>
-
+          <Animated.Image
+            source={require("@/assets/images/brand/trans_bg.png")}
+            style={{
+              width: wp(25),
+              height: wp(25),
+              marginLeft: wp(27.5),
+              marginTop: hp(2.5),
+            }}
+          />
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: "500",
+              fontSize: hp(2.25),
+              color: COLORS.mainColor,
+            }}
+          >
+            {t("account management").toUpperCase()}
+          </Text>
+          <View style={styles.line} />
           <View style={styles.header}>
             <TouchableOpacity style={styles.userAvatar}>
               <AntDesign name="user" size={50} color={"#fff"} />
             </TouchableOpacity>
 
             <Pressable>
-              <Text style={{ fontWeight: "200" }}>Non connecté</Text>
-              <Text style={styles.loginButtton}>Se Connecter</Text>
+              <Text style={{ fontWeight: "200" }}>{t("not connected")}</Text>
+              <Text style={styles.loginButtton}>{t("sign in")}</Text>
             </Pressable>
           </View>
 
-          {/* Mon Profile */}
-          <View style={styles.line} />
-          <TouchableOpacity style={styles.menuItem}>
-            <FontAwesome name="user-o" size={24} color="black" />
-            <Text style={styles.menuLabel}>Mon Profile</Text>
-          </TouchableOpacity>
+          <ScrollView>
+            {/* Mon Profile */}
+            <View style={styles.line} />
+            <TouchableOpacity style={styles.menuItem}>
+              <FontAwesome name="user-o" size={24} color="black" />
+              <Text style={styles.menuLabel}>Mon Profile</Text>
+            </TouchableOpacity>
 
-          {/* Parametres */}
-          <TouchableOpacity style={styles.menuItem}>
-            <Entypo name="tools" size={24} color="black" />
-            <Text style={styles.menuLabel}>Paramètres</Text>
-          </TouchableOpacity>
+            {/* Parametres */}
+            <TouchableOpacity style={styles.menuItem}>
+              <Entypo name="tools" size={24} color="black" />
+              <Text style={styles.menuLabel}>Paramètres</Text>
+            </TouchableOpacity>
 
-          {/* Mes Locations */}
-          <TouchableOpacity style={styles.menuItem}>
-            <Ionicons name="bag-handle-outline" size={24} color="black" />
-            <Text style={styles.menuLabel}>Mes Locations</Text>
-          </TouchableOpacity>
+            {/* Mes Locations */}
+            <TouchableOpacity style={styles.menuItem}>
+              <Ionicons name="bag-handle-outline" size={24} color="black" />
+              <Text style={styles.menuLabel}>Mes Locations</Text>
+            </TouchableOpacity>
 
-          {/* Mes Achats */}
-          <TouchableOpacity style={styles.menuItem}>
-            <FontAwesome name="credit-card" size={24} color="black" />
-            <Text style={styles.menuLabel}>Mes Achats</Text>
-          </TouchableOpacity>
+            {/* Mes Achats */}
+            <TouchableOpacity style={styles.menuItem}>
+              <FontAwesome name="credit-card" size={24} color="black" />
+              <Text style={styles.menuLabel}>Mes Achats</Text>
+            </TouchableOpacity>
 
-          {/* Mes messages */}
-          <TouchableOpacity style={styles.menuItem}>
-            <Ionicons name="chatbubble-outline" size={24} color="black" />
-            <Text style={styles.menuLabel}>Messages</Text>
+            {/* Mes messages */}
+            <TouchableOpacity style={styles.menuItem}>
+              <Ionicons name="chatbubble-outline" size={24} color="black" />
+              <Text style={styles.menuLabel}>Messages</Text>
 
-            {/* ToolTip */}
-            <View style={styles.toolTip}>
-              <Text style={styles.toolTipText}>2</Text>
-            </View>
-          </TouchableOpacity>
+              {/* ToolTip */}
+              <View style={styles.toolTip}>
+                <Text style={styles.toolTipText}>2</Text>
+              </View>
+            </TouchableOpacity>
 
-          {/* Mes notifications */}
-          <TouchableOpacity style={styles.menuItem}>
-            <AntDesign name="bells" size={24} color="black" />
-            <Text style={styles.menuLabel}>Notifications</Text>
+            {/* Mes notifications */}
+            <TouchableOpacity style={styles.menuItem}>
+              <AntDesign name="bells" size={24} color="black" />
+              <Text style={styles.menuLabel}>Notifications</Text>
 
-            {/* ToolTip */}
-            <View style={styles.toolTip}>
-              <Text style={styles.toolTipText}>5</Text>
-            </View>
-          </TouchableOpacity>
+              {/* ToolTip */}
+              <View style={styles.toolTip}>
+                <Text style={styles.toolTipText}>5</Text>
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
         </Animated.View>
       )}
       <Pressable style={styles.overlay} onPress={onRequestClose} />
@@ -150,7 +174,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: wp(2),
     alignItems: "center",
-    marginTop: hp(2.5),
+    // marginTop: hp(2.5),
   },
   userAvatar: {
     margin: wp(2.5),
@@ -167,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: hp(2),
   },
   line: {
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.5,
     borderBottomColor: "rgba(0,0,0,0.25)",
     marginHorizontal: wp(15),
     marginTop: hp(1.5),
