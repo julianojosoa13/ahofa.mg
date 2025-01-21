@@ -10,14 +10,15 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.julianojosoa13.ahofa-app"
+      "bundleIdentifier": "com.julianojosoa13.ahofa_app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/brand/original.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.julianojosoa13.ahofa_app"
+      "package": "com.julianojosoa13.ahofa_app",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -34,7 +35,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      ["@react-native-google-signin/google-signin"]
     ],
     "experiments": {
       "typedRoutes": true
