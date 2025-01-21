@@ -8,11 +8,12 @@ import Button from "@/components/ui/Button";
 import LanguagesButton from "@/components/LanguagesButton";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useSelector } from "react-redux";
-import { useEffect, useLayoutEffect } from "react";
-import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
 
+import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import i18n from "@/lib/i18n";
+import LottieView from "lottie-react-native";
 
 export default function Index() {
   const { t } = useTranslation();
@@ -42,7 +43,12 @@ export default function Index() {
         style={{ width: wp(50), height: hp(25) }}
         resizeMode={"contain"}
       />
-
+      <LottieView
+        source={require("@/assets/animations/shop.json")}
+        autoPlay
+        loop
+        style={{ width: wp(20), height: wp(20) }}
+      />
       <View>
         <Animated.Text
           entering={FadeInDown.delay(600).duration(300)}
