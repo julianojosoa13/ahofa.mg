@@ -40,15 +40,28 @@ export default function Index() {
       <Animated.Image
         entering={FadeInDown.delay(1200).duration(300)}
         source={require("@/assets/images/brand/trans_bg.png")}
-        style={{ width: wp(50), height: hp(25) }}
+        style={{
+          width: wp(50),
+          height: hp(25),
+          marginTop: hp(10),
+          marginBottom: -hp(10),
+        }}
         resizeMode={"contain"}
       />
-      <LottieView
-        source={require("@/assets/animations/shop.json")}
-        autoPlay
-        loop
-        style={{ width: wp(20), height: wp(20) }}
-      />
+      <View
+        style={{
+          borderRadius: "50%",
+          backgroundColor: "rgba(255,255,255,0.55)",
+        }}
+      >
+        <LottieView
+          source={require("@/assets/animations/shop.json")}
+          autoPlay
+          loop
+          speed={0.75}
+          style={{ width: wp(55), height: wp(55) }}
+        />
+      </View>
       <View>
         <Animated.Text
           entering={FadeInDown.delay(600).duration(300)}
