@@ -10,13 +10,22 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import i18n from "@/lib/i18n";
 import LottieView from "lottie-react-native";
+import LoginModal from "@/components/bottomsheets/LoginModal";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 export default function Index() {
   const { t } = useTranslation();
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    console.log("ModalRef >> ", bottomSheetModalRef.current);
+    bottomSheetModalRef.current?.present();
+  }, []);
 
   const language = useSelector(selectTranslationsLanguage);
 
@@ -80,12 +89,14 @@ export default function Index() {
         </Animated.Text>
         <Animated.View entering={FadeInDown.delay(900).duration(300)}>
           <Button
-            action={() => router.navigate("/home")}
+            action={handlePresentModalPress}
             title={t("continue")}
             style={{ width: wp(70) }}
           ></Button>
         </Animated.View>
       </View>
+
+      <LoginModal ref={bottomSheetModalRef} />
       <Text
         style={{
           textAlign: "center",

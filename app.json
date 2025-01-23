@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.julianojosoa13.ahofa_app"
+      "bundleIdentifier": "com.julianojosoa13.ahofa-app"
     },
     "android": {
       "adaptiveIcon": {
