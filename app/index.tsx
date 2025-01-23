@@ -14,7 +14,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import i18n from "@/lib/i18n";
 import LottieView from "lottie-react-native";
-import LoginModal from "@/components/bottomsheets/LoginModal";
+import ToSModal from "@/components/bottomsheets/ToSModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 export default function Index() {
@@ -96,7 +96,10 @@ export default function Index() {
         </Animated.View>
       </View>
 
-      <LoginModal ref={bottomSheetModalRef} />
+      <ToSModal
+        ref={bottomSheetModalRef}
+        onClose={() => bottomSheetModalRef.current?.close()}
+      />
       <Text
         style={{
           textAlign: "center",

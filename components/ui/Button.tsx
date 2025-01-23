@@ -7,6 +7,7 @@ interface Props {
   textStyle?: any;
   title: string;
   action?: () => void;
+  disabled?: boolean;
 }
 
 const defaultStyle = {
@@ -16,17 +17,32 @@ const defaultStyle = {
   borderRadius: 8,
   justifyContent: "center",
   alignItems: "center",
+  elevation: 5,
 };
 
 const defaultTextStyle = {
   color: "#fff",
   fontSize: hp(2),
+  fontWeight: "300",
 };
 
 const Button = (props: Props) => {
-  const { title, action, style, textStyle } = props;
+  const { title, action, style, textStyle, disabled } = props;
+
+  const launchAction = () => {
+    if (!disabled && action) action();
+  };
+
   return (
-    <TouchableOpacity onPress={action} style={[defaultStyle, style]}>
+    <TouchableOpacity
+      onPress={launchAction}
+      style={[
+        defaultStyle,
+        style,
+        disabled && { backgroundColor: "lightgrey" },
+      ]}
+      activeOpacity={disabled ? 1 : 0.5}
+    >
       <Text style={[defaultTextStyle, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
