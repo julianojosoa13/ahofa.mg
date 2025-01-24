@@ -24,6 +24,7 @@ import {
   setAppUser,
 } from "@/store/slices/appSlice";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import LoginModal from "@/components/modals/LoginModal";
 
 export default function Index() {
   const { t } = useTranslation();
@@ -124,6 +125,7 @@ export default function Index() {
         onClose={() => bottomSheetModalRef.current?.close()}
       />
 
+      <LoginModal />
       <BusyModal />
       <Text
         style={{
