@@ -48,7 +48,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
         <BlurView
           style={[style, styles.backdrop]}
           blurType="light"
-          blurAmount={7}
+          blurAmount={10}
           reducedTransparencyFallbackColor="white"
         />
       )}
