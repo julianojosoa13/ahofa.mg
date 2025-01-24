@@ -43,12 +43,12 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
     <BottomSheetModal
       ref={ref}
       onChange={handleSheetChanges}
-      snapPoints={["70%"]}
+      snapPoints={["72.5%"]}
       backdropComponent={({ style }) => (
         <BlurView
           style={[style, styles.backdrop]}
           blurType="light"
-          blurAmount={10}
+          blurAmount={7}
           reducedTransparencyFallbackColor="white"
         />
       )}
