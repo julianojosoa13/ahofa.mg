@@ -7,6 +7,8 @@ import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import LottieView from "lottie-react-native";
 
+import { signIn } from "@/lib/firebase/googleSignIn";
+
 import * as Linking from "expo-linking";
 import Button from "../ui/Button";
 
@@ -23,16 +25,22 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
     console.log("handleSheetChanges", index);
   }, []);
 
+  const signInUser = async () => {
+    await signIn();
+  };
+
   const handleLinkPress = () => {
     Linking.openURL("https://ahofamg.web.app/tos");
-    setButtonDisabled(false);
+    setTimeout(() => {
+      setButtonDisabled(false);
+    }, 3000);
   };
 
   return (
     <BottomSheetModal
       ref={ref}
       onChange={handleSheetChanges}
-      snapPoints={["40%", "47.5%"]}
+      snapPoints={["32.5%", "37.5%"]}
       backdropComponent={({ style }) => (
         <View style={[style, styles.backdrop]} />
       )}
@@ -44,7 +52,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
         <View style={styles.header}>
           <TouchableOpacity
             hitSlop={8}
-            style={{ position: "absolute", top: hp(2), left: wp(4) }}
+            style={{ position: "absolute", top: hp(2), right: wp(4) }}
             onPress={onClose}
           >
             <AntDesign name="close" size={25} />
@@ -61,7 +69,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               marginVertical: 10,
             }}
           ></View>
-          <View style={{ marginTop: hp(2) }}>
+          <View style={{ marginTop: hp(1) }}>
             <View
               style={{
                 alignSelf: "center",
@@ -78,7 +86,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
             </View>
             <Text
               style={{
-                color: COLORS.mainColor,
+                color: COLORS.secondaryColor,
                 textTransform: "uppercase",
                 fontSize: hp(2),
                 textAlign: "center",
@@ -93,7 +101,6 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
             <TouchableOpacity
               style={{
                 alignSelf: "center",
-                marginVertical: hp(3.5),
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 4,
@@ -120,9 +127,8 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
           </View>
           <Button
             title={t("accept all")}
-            action={() => console.log("ok")}
+            action={signInUser}
             disabled={buttonDisabled}
-            style={{ backgroundColor: "teal" }}
           ></Button>
         </View>
       </BottomSheetView>
@@ -133,13 +139,13 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
 const styles = StyleSheet.create({
   contentContainer: {
     width: wp(95),
-    height: hp(45),
+    height: hp(33),
     marginLeft: wp(2.5),
     backgroundColor: "rgba(255,255,255,1)",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 35,
   },
   title: { color: COLORS.secondaryColor },
   backdrop: {

@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.julianojosoa13.ahofa-app"
+      "bundleIdentifier": "com.julianojosoa13.ahofa-app",
+      "googleServicesFile": "./GoogleService-info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -36,7 +37,18 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      ["@react-native-google-signin/google-signin"]
+      ["@react-native-google-signin/google-signin"],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/crashlytics",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
