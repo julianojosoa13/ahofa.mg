@@ -1,5 +1,6 @@
 import { selectAppBusy } from "@/store/slices/appSlice";
 import { hp, wp } from "@/utils/screensize";
+import { BlurView } from "@react-native-community/blur";
 import { StatusBar } from "expo-status-bar";
 import LottieView from "lottie-react-native";
 import React, { FC } from "react";
@@ -14,18 +15,31 @@ const BusyModal: FC<Props> = (props) => {
   console.log("busy >> ", busy);
   return (
     <Modal style={styles.container} transparent visible={busy}>
-      <StatusBar backgroundColor="rgba(0,0,0,0.75)" />
-      <View style={styles.contentContainer}>
-        <View style={{ alignSelf: "center" }}>
+      <StatusBar backgroundColor="rgba(255,255,255,0.75)" />
+      <BlurView
+        blurType="light"
+        blurAmount={10}
+        reducedTransparencyFallbackColor="white"
+        style={styles.contentContainer}
+      >
+        <View
+          style={{
+            alignSelf: "center",
+            backgroundColor: "rgba(255,255,255,0.67)",
+            borderRadius: wp(5),
+            // borderWidth: 1,
+            borderColor: "white",
+          }}
+        >
           <LottieView
             source={require("@/assets/animations/activityIndicator.json")}
             autoPlay
             loop
             speed={1.25}
-            style={{ width: wp(25), height: wp(25) }}
+            style={{ width: wp(27.5), height: wp(27.5) }}
           />
         </View>
-      </View>
+      </BlurView>
     </Modal>
   );
 };
@@ -38,7 +52,6 @@ const styles = StyleSheet.create({
     height: hp(100),
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.75)",
   },
 });
 
