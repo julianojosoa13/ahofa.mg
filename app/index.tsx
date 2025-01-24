@@ -88,7 +88,7 @@ export default function Index() {
       <View
         style={{
           borderRadius: "50%",
-          backgroundColor: "rgba(255,255,255,0.55)",
+          backgroundColor: "rgba(255,255,255,0.95)",
         }}
       >
         <LottieView
@@ -115,11 +115,13 @@ export default function Index() {
             AHOFA.MG!
           </Text>
         </Animated.Text>
-        <Animated.View entering={FadeInDown.delay(900).duration(300)}>
+        <Animated.View
+          entering={FadeInDown.delay(900).duration(300)}
+          style={{ width: wp(80) }}
+        >
           <Button
             action={handlePresentModalPress}
             title={t("continue")}
-            style={{ width: wp(70) }}
           ></Button>
         </Animated.View>
       </View>

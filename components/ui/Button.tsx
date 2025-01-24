@@ -12,7 +12,7 @@ interface Props {
 
 const defaultStyle = {
   backgroundColor: COLORS.mainColor,
-  margin: hp(2.5),
+  marginVertical: hp(1.5),
   height: hp(6),
   borderRadius: 8,
   justifyContent: "center",

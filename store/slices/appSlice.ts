@@ -2,16 +2,26 @@ import { onGoogleButtonPress } from "@/lib/firebase/googleSignIn";
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+
+interface StateTypes {
+  user: FirebaseAuthTypes.UserCredential | null;
+  busy: boolean;
+  firstStep: boolean;
+  showLoginModal: boolean;
+  error: any;
+}
+const initialState: StateTypes = {
+  user: {} as FirebaseAuthTypes.UserCredential,
+  busy: false,
+  firstStep: false,
+  showLoginModal: false,
+  error: {},
+};
 
 const appSlice = createSlice({
   name: "app",
-  initialState: {
-    user: null,
-    busy: true,
-    firstStep: false,
-    showLoginModal: false,
-    error: null,
-  },
+  initialState,
   reducers: {
     setAppUser(state, action) {
       state.user = action.payload;
@@ -47,16 +57,15 @@ const appSlice = createSlice({
 });
 
 export const loginStart = createAsyncThunk(
-  "app/loginStart", // Action type prefix
-  async (thunkAPI) => {
+  "app/loginStart",
+  async (_, thunkAPI) => {
     try {
       const response = await onGoogleButtonPress();
       if (!response) {
         throw new Error("Error signing User");
       }
-
       return response; // Fulfilled action payload
-    } catch (error) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message); // Rejected action payload
     }
   }

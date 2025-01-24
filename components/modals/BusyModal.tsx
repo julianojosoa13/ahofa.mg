@@ -25,7 +25,7 @@ const BusyModal: FC<Props> = (props) => {
         <View
           style={{
             alignSelf: "center",
-            backgroundColor: "rgba(255,255,255,0.67)",
+            // backgroundColor: "rgba(255,255,255,0.67)",
             borderRadius: wp(5),
             // borderWidth: 1,
             borderColor: "white",
