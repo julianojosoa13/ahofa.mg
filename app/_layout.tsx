@@ -14,7 +14,33 @@ import "expo-dev-client";
 
 import i18n from "@/lib/i18n";
 
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+
+import { useEffect, useState } from "react";
+
+const FIREBASE_WEB_CLIENT_CLIENT_ID =
+  process.env.EXPO_PUBLIC_FIREBASE_WEB_CLIENT_CLIENT_ID;
+
+GoogleSignin.configure({
+  webClientId: FIREBASE_WEB_CLIENT_CLIENT_ID,
+});
+
 export default function RootLayout() {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>();
+
+  // Handle user state changes
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

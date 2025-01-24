@@ -18,6 +18,7 @@ import postsReducer from "@/store/slices/postsSlice";
 import subscriptionsReducer from "@/store/slices/subscriptionsSlice";
 import paymentsReducer from "@/store/slices/paymentsSlice";
 import translationsReducer from "@/store/slices/translationsSlice";
+import onboardingReducer from "@/store/slices/onboardingSlice";
 
 // Import redux-logger
 import logger from "redux-logger";
@@ -27,7 +28,7 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["translations"],
+  whitelist: ["translations", "onboarding"],
 };
 
 const rootReducer = combineReducers({
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   subscriptions: subscriptionsReducer,
   payments: paymentsReducer,
   translations: translationsReducer,
+  onboarding: onboardingReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

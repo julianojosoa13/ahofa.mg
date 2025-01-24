@@ -7,10 +7,12 @@ import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import LottieView from "lottie-react-native";
 
-import { signIn } from "@/lib/firebase/googleSignIn";
+import { onGoogleButtonPress } from "@/lib/firebase/googleSignIn";
 
 import * as Linking from "expo-linking";
 import Button from "../ui/Button";
+import { useDispatch } from "react-redux";
+import { setAcceptedToS } from "@/store/slices/onboardingSlice";
 
 interface Props {
   onClose?: () => void;
@@ -19,14 +21,16 @@ interface Props {
 const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   const { t } = useTranslation();
 
+  const dispatch = useDispatch();
+
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
 
-  const signInUser = async () => {
-    await signIn();
+  const accepteTos = () => {
+    dispatch(setAcceptedToS(true));
   };
 
   const handleLinkPress = () => {
@@ -127,7 +131,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
           </View>
           <Button
             title={t("accept all")}
-            action={signInUser}
+            action={accepteTos}
             disabled={buttonDisabled}
           ></Button>
         </View>
