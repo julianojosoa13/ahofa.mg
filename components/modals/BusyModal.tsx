@@ -36,7 +36,7 @@ const BusyModal: FC<Props> = (props) => {
             autoPlay
             loop
             speed={1.25}
-            style={{ width: wp(27.5), height: wp(27.5) }}
+            style={{ width: wp(20), height: wp(20) }}
           />
         </View>
       </BlurView>

@@ -22,20 +22,24 @@ import {
   selectAppUser,
   setAppBusy,
   setAppUser,
+  setShowLoginModal,
 } from "@/store/slices/appSlice";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import LoginModal from "@/components/modals/LoginModal";
+import { selectAcceptedToS } from "@/store/slices/onboardingSlice";
 
 export default function Index() {
   const { t } = useTranslation();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const dispatch = useDispatch();
   const [initializing, setInitializing] = useState(true);
+  const acceptedToS = useSelector(selectAcceptedToS);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     console.log("ModalRef >> ", bottomSheetModalRef.current);
-    bottomSheetModalRef.current?.present();
+    if (!acceptedToS) bottomSheetModalRef.current?.present();
+    else dispatch(setShowLoginModal(true));
   }, []);
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {

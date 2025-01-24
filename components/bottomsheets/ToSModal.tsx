@@ -59,14 +59,6 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
       <BottomSheetView style={styles.contentContainer}>
         <View style={styles.modalBox}>
           <View style={styles.header}>
-            <TouchableOpacity
-              hitSlop={8}
-              style={{ position: "absolute", top: hp(2), right: wp(4) }}
-              onPress={onClose}
-            >
-              <AntDesign name="close" size={25} />
-            </TouchableOpacity>
-
             {/* Handle`` */}
             <View
               style={{
