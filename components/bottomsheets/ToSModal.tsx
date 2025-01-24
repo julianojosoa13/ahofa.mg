@@ -6,8 +6,7 @@ import { hp, wp } from "@/utils/screensize";
 import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import LottieView from "lottie-react-native";
-
-import { onGoogleButtonPress } from "@/lib/firebase/googleSignIn";
+import { BlurView } from "@react-native-community/blur";
 
 import * as Linking from "expo-linking";
 import Button from "../ui/Button";
@@ -46,7 +45,12 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
       onChange={handleSheetChanges}
       snapPoints={["70%"]}
       backdropComponent={({ style }) => (
-        <View style={[style, styles.backdrop]} />
+        <BlurView
+          style={[style, styles.backdrop]}
+          blurType="light"
+          blurAmount={10}
+          reducedTransparencyFallbackColor="white"
+        />
       )}
       backgroundStyle={{ backgroundColor: "rgba(255,255,255,0)" }}
       handleComponent={null}
