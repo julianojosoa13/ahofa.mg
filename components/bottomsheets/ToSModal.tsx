@@ -44,7 +44,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
     <BottomSheetModal
       ref={ref}
       onChange={handleSheetChanges}
-      snapPoints={["32.5%", "37.5%"]}
+      snapPoints={["70%"]}
       backdropComponent={({ style }) => (
         <View style={[style, styles.backdrop]} />
       )}
@@ -53,87 +53,101 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
       enablePanDownToClose={false}
     >
       <BottomSheetView style={styles.contentContainer}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            hitSlop={8}
-            style={{ position: "absolute", top: hp(2), right: wp(4) }}
-            onPress={onClose}
-          >
-            <AntDesign name="close" size={25} />
-          </TouchableOpacity>
+        <View style={styles.modalBox}>
+          <View style={styles.header}>
+            <TouchableOpacity
+              hitSlop={8}
+              style={{ position: "absolute", top: hp(2), right: wp(4) }}
+              onPress={onClose}
+            >
+              <AntDesign name="close" size={25} />
+            </TouchableOpacity>
 
-          {/* Handle`` */}
-          <View
-            style={{
-              height: 4,
-              width: 30,
-              backgroundColor: "grey",
-              borderRadius: 2,
-              alignSelf: "center",
-              marginVertical: 10,
-            }}
-          ></View>
-          <View style={{ marginTop: hp(1) }}>
+            {/* Handle`` */}
             <View
               style={{
+                height: 4,
+                width: 30,
+                backgroundColor: "grey",
+                borderRadius: 2,
                 alignSelf: "center",
-                marginBottom: hp(1.5),
+                marginVertical: 10,
               }}
-            >
-              <LottieView
-                source={require("@/assets/animations/checkBox.json")}
-                autoPlay
-                loop
-                speed={0.75}
-                style={{ width: wp(12.5), height: wp(12.5) }}
-              />
-            </View>
-            <Text
-              style={{
-                color: COLORS.secondaryColor,
-                textTransform: "uppercase",
-                fontSize: hp(2),
-                textAlign: "center",
-                fontWeight: "200",
-                maxWidth: wp(75),
-                alignSelf: "center",
-              }}
-              numberOfLines={3}
-            >
-              {t("you must accept tos")}
-            </Text>
-            <TouchableOpacity
-              style={{
-                alignSelf: "center",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 4,
-              }}
-              hitSlop={8}
-              onPress={handleLinkPress}
-            >
+            ></View>
+            <View style={{ marginTop: hp(1) }}>
+              <View
+                style={{
+                  alignSelf: "center",
+                  marginBottom: hp(1.5),
+                }}
+              >
+                <LottieView
+                  source={require("@/assets/animations/checkBox.json")}
+                  autoPlay
+                  loop
+                  speed={0.75}
+                  style={{ width: wp(12.5), height: wp(12.5) }}
+                />
+              </View>
               <Text
                 style={{
                   color: COLORS.secondaryColor,
-                  textDecorationLine: "underline",
-                  fontWeight: "500",
-                  fontSize: hp(1.5),
+                  textTransform: "uppercase",
+                  fontSize: hp(2),
+                  textAlign: "center",
+                  fontWeight: "200",
+                  maxWidth: wp(75),
+                  alignSelf: "center",
                 }}
+                numberOfLines={3}
               >
-                {t("see tos")}
+                {t("you must accept tos")}
               </Text>
-              <MaterialCommunityIcons
-                name="arrow-top-right"
-                size={18}
-                color={COLORS.secondaryColor}
-              />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  alignSelf: "center",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+                hitSlop={8}
+                onPress={handleLinkPress}
+              >
+                <Text
+                  style={{
+                    color: COLORS.secondaryColor,
+                    textDecorationLine: "underline",
+                    fontWeight: "500",
+                    fontSize: hp(1.5),
+                  }}
+                >
+                  {t("see tos")}
+                </Text>
+                <MaterialCommunityIcons
+                  name="arrow-top-right"
+                  size={18}
+                  color={COLORS.secondaryColor}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                textAlign: "center",
+                marginTop: hp(2),
+                color: COLORS.mainColor,
+                fontWeight: "300",
+                height: hp(10),
+                verticalAlign: "middle",
+              }}
+            >
+              {t("for legal reasons")}
+            </Text>
+            <Button
+              title={t("accept all")}
+              action={accepteTos}
+              disabled={buttonDisabled}
+            ></Button>
           </View>
-          <Button
-            title={t("accept all")}
-            action={accepteTos}
-            disabled={buttonDisabled}
-          ></Button>
         </View>
       </BottomSheetView>
     </BottomSheetModal>
@@ -142,14 +156,21 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    width: wp(95),
-    height: hp(33),
-    marginLeft: wp(2.5),
+    width: wp(100),
+    height: hp(72.5),
+    backgroundColor: "transparent",
+  },
+  modalBox: {
+    width: wp(93),
+    height: hp(42.5),
+    marginLeft: wp(3.5),
+    marginRight: wp(3.5),
     backgroundColor: "rgba(255,255,255,1)",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 35,
+    marginBottom: hp(2),
   },
   title: { color: COLORS.secondaryColor },
   backdrop: {
