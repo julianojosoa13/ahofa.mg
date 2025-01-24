@@ -19,6 +19,7 @@ import subscriptionsReducer from "@/store/slices/subscriptionsSlice";
 import paymentsReducer from "@/store/slices/paymentsSlice";
 import translationsReducer from "@/store/slices/translationsSlice";
 import onboardingReducer from "@/store/slices/onboardingSlice";
+import appReducer from "@/store/slices/appSlice";
 
 // Import redux-logger
 import logger from "redux-logger";
@@ -32,6 +33,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  app: appReducer,
   ads: adsReducer,
   posts: postsReducer,
   subscriptions: subscriptionsReducer,

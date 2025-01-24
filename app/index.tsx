@@ -10,21 +10,44 @@ import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
-import { useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import i18n from "@/lib/i18n";
 import LottieView from "lottie-react-native";
 import ToSModal from "@/components/bottomsheets/ToSModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import BusyModal from "@/components/modals/BusyModal";
+import {
+  selectAppBusy,
+  selectAppUser,
+  setAppBusy,
+  setAppUser,
+} from "@/store/slices/appSlice";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 export default function Index() {
   const { t } = useTranslation();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const dispatch = useDispatch();
+  const [initializing, setInitializing] = useState(true);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     console.log("ModalRef >> ", bottomSheetModalRef.current);
     bottomSheetModalRef.current?.present();
+  }, []);
+
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    dispatch(setAppUser(user));
+    if (initializing) {
+      setInitializing(false);
+      dispatch(setAppBusy(false));
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
   }, []);
 
   const language = useSelector(selectTranslationsLanguage);
@@ -100,6 +123,8 @@ export default function Index() {
         ref={bottomSheetModalRef}
         onClose={() => bottomSheetModalRef.current?.close()}
       />
+
+      <BusyModal />
       <Text
         style={{
           textAlign: "center",
