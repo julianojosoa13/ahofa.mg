@@ -10,6 +10,7 @@ import {
 } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import {
+  Image,
   Modal,
   Pressable,
   SafeAreaView,
@@ -27,6 +28,12 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import LanguagesButton from "../LanguagesButton";
 import { useTranslation } from "react-i18next";
 
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { useAppDispatch } from "@/store/store";
+import { setAppBusy, setShowLoginModal } from "@/store/slices/appSlice";
+import { router } from "expo-router";
+
 interface Props {
   visible?: boolean;
   onRequestClose?: () => void;
@@ -35,6 +42,19 @@ interface Props {
 const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  console.log("t >> ", t);
+  const user = auth().currentUser;
+
+  const handleSignOut = async () => {
+    // dispatch(setAppBusy(true));
+    await GoogleSignin.signOut();
+    await auth().signOut();
+    // dispatch(setAppBusy(false));
+    dispatch(setShowLoginModal(true));
+    router.navigate("/Onboarding");
+  };
 
   useEffect(() => {
     let modalTimeout: NodeJS.Timeout;
@@ -90,12 +110,35 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           <View style={styles.line} />
           <View style={styles.header}>
             <TouchableOpacity style={styles.userAvatar}>
-              <AntDesign name="user" size={50} color={"#fff"} />
+              {user ? (
+                <Image
+                  source={{ uri: user?.photoURL! }}
+                  style={{
+                    width: 75,
+                    height: 75,
+                    borderRadius: 75 / 2,
+                  }}
+                />
+              ) : (
+                <AntDesign
+                  name="user"
+                  size={75}
+                  color={"#fff"}
+                  style={{
+                    backgroundColor: COLORS.mainColor,
+                    borderRadius: 75 / 2,
+                  }}
+                />
+              )}
             </TouchableOpacity>
 
-            <Pressable>
-              <Text style={{ fontWeight: "200" }}>{t("not connected")}</Text>
-              <Text style={styles.loginButtton}>{t("sign in")}</Text>
+            <Pressable onPress={handleSignOut}>
+              <Text style={{ fontWeight: "200" }}>
+                {user ? user.displayName : t("not connected")}
+              </Text>
+              <Text style={styles.loginButtton}>
+                {user ? t("sign out") : t("sign in")}
+              </Text>
             </Pressable>
           </View>
 
@@ -172,7 +215,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    gap: wp(2),
+    gap: wp(0.5),
     alignItems: "center",
     // marginTop: hp(2.5),
   },
@@ -181,7 +224,7 @@ const styles = StyleSheet.create({
     width: wp(20),
     height: wp(20),
     borderRadius: wp(10),
-    backgroundColor: COLORS.mainColor,
+
     justifyContent: "center",
     alignItems: "center",
   },
