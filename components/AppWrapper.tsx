@@ -4,6 +4,7 @@ import React, { FC, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 
 import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 interface Props {}
 
@@ -16,7 +17,7 @@ const AppWrapper: FC<Props> = (props) => {
 
   useEffect(() => {
     console.log("Current User >>> ", currentUser);
-    if (currentUser?.email) router.push("/Onboarding");
+    if (currentUser?.email) router.replace("/Onboarding");
   }, [currentUser]);
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
@@ -27,6 +28,9 @@ const AppWrapper: FC<Props> = (props) => {
   }
 
   useEffect(() => {
+    const user = auth().currentUser;
+    console.log("Current user >> ", user);
+
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);

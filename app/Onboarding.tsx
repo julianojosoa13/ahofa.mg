@@ -26,13 +26,17 @@ const Onboarding: FC<Props> = (props) => {
         title="Se Deconnecter"
         action={async () => {
           // dispatch(setAppBusy(true));
-          await GoogleSignin.signOut();
-          await auth().signOut();
-          router.dismissTo("/");
-          // dispatch(setAppBusy(false));
-          setTimeout(() => {
-            dispatch(setShowLoginModal(true));
-          }, 600);
+          try {
+            await GoogleSignin.signOut();
+            await auth().signOut();
+            router.dismissTo("/");
+            // dispatch(setAppBusy(false));
+            setTimeout(() => {
+              dispatch(setShowLoginModal(true));
+            }, 900);
+          } catch (error) {
+            console.error(error);
+          }
         }}
       />
       <BusyModal />
