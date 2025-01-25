@@ -1,51 +1,51 @@
 import Button from "@/components/ui/Button";
-import { wp } from "@/utils/screensize";
+import { hp, wp } from "@/utils/screensize";
 import React, { FC } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { Image, SafeAreaView, StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import auth from "@react-native-firebase/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useAppDispatch } from "@/store/store";
-import { setAppBusy, setShowLoginModal } from "@/store/slices/appSlice";
-import BusyModal from "@/components/modals/BusyModal";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
+import LottieView from "lottie-react-native";
+
+import { LinearGradient } from "expo-linear-gradient";
+import COLORS from "@/utils/colors";
 
 interface Props {}
 
 const Onboarding: FC<Props> = (props) => {
   const { top } = useSafeAreaInsets();
+
+  const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const user = auth().currentUser;
   return (
-    <SafeAreaView
+    <LinearGradient
+      colors={[COLORS.bgColor, COLORS.mainColor]}
       style={[styles.container, { marginTop: top, paddingHorizontal: wp(4) }]}
     >
-      <Text>onBoarding</Text>
-      <Button
-        style={{ backgroundColor: "red" }}
-        title="Se Deconnecter"
-        action={async () => {
-          // dispatch(setAppBusy(true));
-          try {
-            await GoogleSignin.signOut();
-            await auth().signOut();
-            router.dismissTo("/");
-            // dispatch(setAppBusy(false));
-            setTimeout(() => {
-              dispatch(setShowLoginModal(true));
-            }, 900);
-          } catch (error) {
-            console.error(error);
-          }
-        }}
+      <Image
+        source={{ uri: user?.photoURL! }}
+        style={{ width: wp(33), height: wp(33), borderRadius: wp(33 / 2) }}
       />
-      <BusyModal />
-    </SafeAreaView>
+      <LottieView
+        source={require("@/assets/animations/activityIndicator.json")}
+        loop
+        style={{ width: wp(25), height: wp(25) }}
+        autoPlay
+      />
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default Onboarding;
