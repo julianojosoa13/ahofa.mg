@@ -17,6 +17,7 @@ import i18n from "@/lib/i18n";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useEffect, useState } from "react";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import AppWrapper from "@/components/AppWrapper";
 
 const FIREBASE_WEB_CLIENT_CLIENT_ID =
   process.env.EXPO_PUBLIC_FIREBASE_WEB_CLIENT_CLIENT_ID;
@@ -26,42 +27,13 @@ GoogleSignin.configure({
 });
 
 export default function RootLayout() {
-  const [initializing, setInitializing] = useState(true);
-  const [currentUser, setCurrentUser] = useState(
-    {} as FirebaseAuthTypes.User | null
-  );
-
-  useEffect(() => {
-    console.log("Current User >>> ", currentUser);
-    if (currentUser?.email) router.replace("/Onboarding");
-  }, [currentUser]);
-
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setCurrentUser(user);
-    if (initializing) {
-      setInitializing(false);
-    }
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <I18nextProvider i18n={i18n}>
           <GestureHandlerRootView>
             <BottomSheetModalProvider>
-              {initializing ? (
-                <Slot />
-              ) : (
-                <Stack
-                  screenOptions={{ headerShown: false }}
-                  initialRouteName="index"
-                />
-              )}
+              <AppWrapper />
             </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </I18nextProvider>

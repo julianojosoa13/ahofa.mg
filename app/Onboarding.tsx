@@ -30,7 +30,9 @@ const Onboarding: FC<Props> = (props) => {
           await auth().signOut();
           router.dismissTo("/");
           // dispatch(setAppBusy(false));
-          dispatch(setShowLoginModal(true));
+          setTimeout(() => {
+            dispatch(setShowLoginModal(true));
+          }, 600);
         }}
       />
       <BusyModal />

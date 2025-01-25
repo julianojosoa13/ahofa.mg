@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     paddingLeft: wp(2),
     paddingRight: wp(2),
     marginVertical: hp(0.5),
-    borderWidth: 0.75,
+    borderWidth: 1,
     height: hp(5),
     borderRadius: wp(2),
     borderColor: "lightgrey",
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    borderLeftWidth: 1,
+    borderLeftWidth: 0.75,
     paddingLeft: wp(2),
   },
 });
