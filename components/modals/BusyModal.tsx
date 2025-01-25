@@ -45,7 +45,7 @@ const BusyModal: FC<Props> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { zIndex: 100 },
   contentContainer: {
     flex: 1,
     width: wp(100),

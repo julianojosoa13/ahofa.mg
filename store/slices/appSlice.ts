@@ -23,9 +23,6 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setAppUser(state, action) {
-      state.user = action.payload;
-    },
     setAppBusy(state, action) {
       state.busy = action.payload;
     },
@@ -72,18 +69,12 @@ export const loginStart = createAsyncThunk(
 );
 
 // Selectors
-export const selectAppUser = (state: RootState) => state.app.user;
 export const selectAppFirstStep = (state: RootState) => state.app.firstStep;
 export const selectAppBusy = (state: RootState) => state.app.busy;
 export const selectShowLoginModal = (state: RootState) =>
   state.app.showLoginModal;
 export const selectAppError = (state: RootState) => state.app.error;
 
-export const {
-  setAppUser,
-  setAppBusy,
-  setAppFirstStep,
-  setShowLoginModal,
-  setAppError,
-} = appSlice.actions;
+export const { setAppBusy, setAppFirstStep, setShowLoginModal, setAppError } =
+  appSlice.actions;
 export default appSlice.reducer;

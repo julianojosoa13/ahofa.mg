@@ -14,6 +14,7 @@ import FormInput from "../ui/FormInput";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Button from "../ui/Button";
+import COLORS from "@/utils/colors";
 
 interface Props {}
 
@@ -46,22 +47,22 @@ const LoginModal: FC<Props> = (props) => {
         style={styles.container}
       >
         <View style={styles.contentContainer}>
+          <TouchableOpacity
+            hitSlop={8}
+            style={{
+              position: "absolute",
+              top: hp(2),
+              right: wp(4),
+              zIndex: 10,
+            }}
+            onPress={closeModal}
+          >
+            <AntDesign name="close" size={25} />
+          </TouchableOpacity>
+          <Text style={styles.title}>
+            {t(notRegistered ? "create an account" : "sign in")}
+          </Text>
           <KeyboardAwareScrollView>
-            <TouchableOpacity
-              hitSlop={8}
-              style={{
-                position: "absolute",
-                top: hp(2),
-                right: wp(4),
-                zIndex: 10,
-              }}
-              onPress={closeModal}
-            >
-              <AntDesign name="close" size={25} />
-            </TouchableOpacity>
-            <Text style={styles.title}>
-              {t(notRegistered ? "create an account" : "sign in")}
-            </Text>
             <FormInput
               label={t("email address")}
               onChangeText={(text) => handleFormChange("email", text)}
@@ -85,27 +86,23 @@ const LoginModal: FC<Props> = (props) => {
                 icon={<AntDesign name="lock" size={25} color={"lightgrey"} />}
                 secret={true}
               />
-            ) : (
-              <View style={{ height: hp(7) }} />
-            )}
-            <Button
-              title={t(notRegistered ? "create an account" : "sign in")}
-            ></Button>
-            <View style={styles.alternativeContainer}>
-              <Text style={styles.alternativeLabel}>
-                {t(!notRegistered ? "no account?" : "have an account?")}
-              </Text>
-              <TouchableOpacity
-                onPress={() => setNotRegistered(!notRegistered)}
-              >
-                <Text style={styles.alternativeAction}>
-                  {t(!notRegistered ? "create an account" : "sign in")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.or}>{t("or")}</Text>
-            <GoogleSignInButton />
+            ) : null}
           </KeyboardAwareScrollView>
+          <Button
+            title={t(notRegistered ? "create an account" : "sign in")}
+          ></Button>
+          <View style={styles.alternativeContainer}>
+            <Text style={styles.alternativeLabel}>
+              {t(!notRegistered ? "no account?" : "have an account?")}
+            </Text>
+            <TouchableOpacity onPress={() => setNotRegistered(!notRegistered)}>
+              <Text style={styles.alternativeAction}>
+                {t(!notRegistered ? "create an account" : "sign in")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.or}>{t("or")}</Text>
+          <GoogleSignInButton />
         </View>
       </BlurView>
     </Modal>
@@ -113,20 +110,26 @@ const LoginModal: FC<Props> = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, width: wp(100), height: hp(100) },
+  container: {
+    flex: 1,
+    width: wp(100),
+    height: hp(100),
+    justifyContent: "center",
+    alignItems: "center",
+  },
   contentContainer: {
     padding: 10,
     borderRadius: wp(5),
     backgroundColor: "white",
-    flex: 1,
-    marginVertical: hp(15),
-    marginHorizontal: wp(7.5),
+    height: hp(70),
+    width: wp(85),
     elevation: 4,
   },
   title: {
     textAlign: "center",
     fontWeight: "bold",
     fontSize: hp(2.2),
+    color: COLORS.thirdColor,
   },
   or: {
     textAlign: "center",

@@ -1,10 +1,14 @@
 import React, { FC } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 
 interface Props {}
 
 const Onboarding: FC<Props> = (props) => {
-  return <SafeAreaView style={styles.container}></SafeAreaView>;
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text>onBoarding</Text>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({

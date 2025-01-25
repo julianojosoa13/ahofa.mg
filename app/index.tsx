@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import COLORS from "@/utils/colors";
 import Button from "@/components/ui/Button";
 import LanguagesButton from "@/components/LanguagesButton";
-import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
@@ -17,14 +16,7 @@ import LottieView from "lottie-react-native";
 import ToSModal from "@/components/bottomsheets/ToSModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import BusyModal from "@/components/modals/BusyModal";
-import {
-  selectAppBusy,
-  selectAppUser,
-  setAppBusy,
-  setAppUser,
-  setShowLoginModal,
-} from "@/store/slices/appSlice";
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { setShowLoginModal } from "@/store/slices/appSlice";
 import LoginModal from "@/components/modals/LoginModal";
 import { selectAcceptedToS } from "@/store/slices/onboardingSlice";
 
@@ -32,27 +24,14 @@ export default function Index() {
   const { t } = useTranslation();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const dispatch = useDispatch();
-  const [initializing, setInitializing] = useState(true);
+
   const acceptedToS = useSelector(selectAcceptedToS);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     console.log("ModalRef >> ", bottomSheetModalRef.current);
-    if (!acceptedToS) bottomSheetModalRef.current?.present();
+    if (acceptedToS == false) bottomSheetModalRef.current?.present();
     else dispatch(setShowLoginModal(true));
-  }, []);
-
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    dispatch(setAppUser(user));
-    if (initializing) {
-      setInitializing(false);
-      dispatch(setAppBusy(false));
-    }
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
   }, []);
 
   const language = useSelector(selectTranslationsLanguage);

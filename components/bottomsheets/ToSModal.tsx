@@ -12,6 +12,7 @@ import * as Linking from "expo-linking";
 import Button from "../ui/Button";
 import { useDispatch } from "react-redux";
 import { setAcceptedToS } from "@/store/slices/onboardingSlice";
+import { setShowLoginModal } from "@/store/slices/appSlice";
 
 interface Props {
   onClose?: () => void;
@@ -29,7 +30,9 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   }, []);
 
   const accepteTos = () => {
+    if (onClose) onClose();
     dispatch(setAcceptedToS(true));
+    dispatch(setShowLoginModal(true));
   };
 
   const handleLinkPress = () => {
@@ -150,8 +153,8 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                 onPress={accepteTos}
                 disabled={buttonDisabled}
                 style={{
-                  height: hp(4),
-                  backgroundColor: buttonDisabled ? "lightgreen" : "green",
+                  height: hp(6),
+                  backgroundColor: buttonDisabled ? "lightgrey" : "green",
                   justifyContent: "center",
                   alignItems: "center",
                   width: wp(35),
@@ -167,7 +170,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               <TouchableOpacity
                 onPress={onClose}
                 style={{
-                  height: hp(4),
+                  height: hp(6),
                   backgroundColor: "red",
                   justifyContent: "center",
                   alignItems: "center",
