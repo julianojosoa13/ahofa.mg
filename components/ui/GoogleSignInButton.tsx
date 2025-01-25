@@ -40,7 +40,7 @@ const GoogleSignInButton: FC<Props> = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    elevation: 1,
+    elevation: 3,
     borderRadius: 8,
     marginVertical: hp(2),
     height: hp(6.5),
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: wp(3),
     gap: wp(3),
-    borderWidth: 0.1,
+    // borderWidth: 0.1,
   },
   buttonLabel: {
     fontWeight: "600",

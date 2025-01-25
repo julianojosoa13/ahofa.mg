@@ -4,7 +4,7 @@ import {
 } from "@/store/slices/appSlice";
 import { hp, wp } from "@/utils/screensize";
 import { BlurView } from "@react-native-community/blur";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleSignInButton from "../ui/GoogleSignInButton";
@@ -25,6 +25,7 @@ interface Props {}
 
 const LoginModal: FC<Props> = (props) => {
   const showLoginModal = useSelector(selectShowLoginModal);
+  console.log("showLoginModal >> ", showLoginModal);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -43,6 +44,12 @@ const LoginModal: FC<Props> = (props) => {
   const handleFormChange = (name: string, text: string) => {
     setFormData({ ...formData, [name]: text });
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(setShowLoginModal(false));
+    };
+  }, []);
   return (
     <Modal transparent visible={showLoginModal} style={styles.container}>
       <BlurView
@@ -75,7 +82,7 @@ const LoginModal: FC<Props> = (props) => {
               borderBottomWidth: 1.5,
               alignSelf: "center",
               width: wp(25),
-              marginVertical: hp(1),
+              marginVertical: hp(2.5),
             }}
           />
           <Text style={styles.title}>

@@ -5,14 +5,12 @@ import { RootState } from "../store";
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 interface StateTypes {
-  user: FirebaseAuthTypes.UserCredential | null;
   busy: boolean;
   firstStep: boolean;
   showLoginModal: boolean;
   error: any;
 }
 const initialState: StateTypes = {
-  user: {} as FirebaseAuthTypes.UserCredential,
   busy: false,
   firstStep: false,
   showLoginModal: false,
@@ -44,7 +42,7 @@ const appSlice = createSlice({
       })
       .addCase(loginStart.fulfilled, (state, action) => {
         state.busy = false;
-        state.user = action.payload;
+        state.error = null;
       })
       .addCase(loginStart.rejected, (state, action) => {
         state.busy = false;
@@ -61,7 +59,7 @@ export const loginStart = createAsyncThunk(
       if (!response) {
         throw new Error("Error signing User");
       }
-      return response; // Fulfilled action payload
+      return true; // Fulfilled action payload
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message); // Rejected action payload
     }

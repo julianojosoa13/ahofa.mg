@@ -51,7 +51,15 @@ export const store = configureStore({
     getDefaultMiddleware({
       thunk: true, // Include thunk middleware (enabled by default)
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+          "app/loginStart",
+        ],
       },
     }).concat(logger), // Add redux-logger to middleware chain
 });
