@@ -34,7 +34,6 @@ export default function RootLayout() {
   useEffect(() => {
     console.log("Current User >>> ", currentUser);
     if (currentUser?.email) router.replace("/Onboarding");
-    else if (!initializing) router.navigate("/");
   }, [currentUser]);
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {

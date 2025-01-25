@@ -25,11 +25,11 @@ const Onboarding: FC<Props> = (props) => {
         style={{ backgroundColor: "red" }}
         title="Se Deconnecter"
         action={async () => {
-          dispatch(setAppBusy(true));
+          // dispatch(setAppBusy(true));
           await GoogleSignin.signOut();
           await auth().signOut();
           router.dismissTo("/");
-          dispatch(setAppBusy(false));
+          // dispatch(setAppBusy(false));
           dispatch(setShowLoginModal(true));
         }}
       />
