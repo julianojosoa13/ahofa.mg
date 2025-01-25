@@ -15,6 +15,11 @@ import FormInput from "../ui/FormInput";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Button from "../ui/Button";
 import COLORS from "@/utils/colors";
+import Animated, {
+  FadeInDown,
+  SlideInDown,
+  ZoomInDown,
+} from "react-native-reanimated";
 
 interface Props {}
 
@@ -46,7 +51,10 @@ const LoginModal: FC<Props> = (props) => {
         reducedTransparencyFallbackColor="white"
         style={styles.container}
       >
-        <View style={styles.contentContainer}>
+        <Animated.View
+          style={styles.contentContainer}
+          entering={ZoomInDown.duration(300).delay(50)}
+        >
           <TouchableOpacity
             hitSlop={8}
             style={{
@@ -59,21 +67,37 @@ const LoginModal: FC<Props> = (props) => {
           >
             <AntDesign name="close" size={25} />
           </TouchableOpacity>
+          <Text style={styles.title}>{t("sign in")}</Text>
+          <GoogleSignInButton />
+          <View
+            style={{
+              borderBottomColor: "lightgrey",
+              borderBottomWidth: 1.5,
+              alignSelf: "center",
+              width: wp(25),
+              marginVertical: hp(1),
+            }}
+          />
           <Text style={styles.title}>
-            {t(notRegistered ? "create an account" : "sign in")}
+            {t(notRegistered ? "create an account" : "sign in with email")}
           </Text>
           <KeyboardAwareScrollView>
             <FormInput
               label={t("email address")}
               onChangeText={(text) => handleFormChange("email", text)}
               value={formData.email}
-              icon={<AntDesign name="mail" size={25} color={"lightgrey"} />}
+              icon={
+                <AntDesign name="mail" size={25} color={COLORS.thirdColor} />
+              }
+              keyboardType="email-address"
             />
             <FormInput
               label={t("password")}
               onChangeText={(text) => handleFormChange("password", text)}
               value={formData.password}
-              icon={<AntDesign name="lock" size={25} color={"lightgrey"} />}
+              icon={
+                <AntDesign name="lock" size={25} color={COLORS.thirdColor} />
+              }
               secret={true}
             />
             {notRegistered ? (
@@ -83,7 +107,9 @@ const LoginModal: FC<Props> = (props) => {
                   handleFormChange("confirmPassword", text)
                 }
                 value={formData.confirmPassword}
-                icon={<AntDesign name="lock" size={25} color={"lightgrey"} />}
+                icon={
+                  <AntDesign name="lock" size={25} color={COLORS.thirdColor} />
+                }
                 secret={true}
               />
             ) : null}
@@ -101,9 +127,7 @@ const LoginModal: FC<Props> = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.or}>{t("or")}</Text>
-          <GoogleSignInButton />
-        </View>
+        </Animated.View>
       </BlurView>
     </Modal>
   );
@@ -124,6 +148,7 @@ const styles = StyleSheet.create({
     height: hp(70),
     width: wp(85),
     elevation: 4,
+    paddingBottom: 24,
   },
   title: {
     textAlign: "center",

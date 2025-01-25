@@ -2,7 +2,14 @@ import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import React, { FC, ReactNode, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  KeyboardTypeOptions,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 interface Props {
   label: string;
@@ -10,6 +17,8 @@ interface Props {
   secret?: boolean;
   onChangeText: (text: string) => void;
   value: string;
+  keyboardType?: KeyboardTypeOptions | undefined;
+  autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
 }
 
 const FormInput: FC<Props> = ({
@@ -18,6 +27,8 @@ const FormInput: FC<Props> = ({
   secret = false,
   onChangeText,
   value,
+  keyboardType = undefined,
+  autoCapitalize = undefined,
 }) => {
   const [focused, setFocused] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(secret);
@@ -49,13 +60,17 @@ const FormInput: FC<Props> = ({
       <View style={[styles.inputContainer, focused ? focusedStyle : null]}>
         {icon}
         <TextInput
-          style={[styles.input]}
+          style={[
+            styles.input,
+            focused && { borderLeftColor: COLORS.mainColor },
+          ]}
           onFocus={handleFocus}
           onBlur={handleBlur}
           value={value}
           onChangeText={(text) => onChangeText(text)}
           secureTextEntry={secureTextEntry}
-          autoCapitalize={secret ? "none" : "sentences"}
+          keyboardType={keyboardType}
+          autoCapitalize={secret ? "none" : autoCapitalize}
         />
         {secret && (
           <Entypo
@@ -92,6 +107,8 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    borderLeftWidth: 1,
+    paddingLeft: wp(2),
   },
 });
 
