@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { onGoogleButtonPress } from "@/lib/firebase/googleSignIn";
 import {
   Image,
+  Keyboard,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -22,6 +23,7 @@ const GoogleSignInButton: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleButtonPress = () => {
+    Keyboard.dismiss();
     dispatch(loginStart());
   };
   return (
