@@ -14,8 +14,8 @@
 		96905EF65AED1B983A6B3ABC /* libPods-AHOFAMG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-AHOFAMG.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		F1CD48C0E0A44A6EA4DA4D8A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77C6CBD5D4AC4D939EB0AB65 /* GoogleService-Info.plist */; };
-		5FD757DB338D4818991F4952 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2EEABECDEB4686900F7925 /* noop-file.swift */; };
+		F0D105FF90BB4B698B0C2C25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B510B107B6E24F63970A9FFD /* GoogleService-Info.plist */; };
+		8CDDAF42E2684317BC1A0A51 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8136E782A04745339BF78BAA /* noop-file.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +32,9 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-AHOFAMG/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		77C6CBD5D4AC4D939EB0AB65 /* GoogleService-Info.plist */ = {isa = PBXFileReference; name = "GoogleService-Info.plist"; path = "AHOFAMG/GoogleService-Info.plist"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.xml; explicitFileType = undefined; includeInIndex = 0; };
-		1E2EEABECDEB4686900F7925 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "AHOFAMG/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		92AF44F6F4FA48168C1235AC /* AHOFAMG-Bridging-Header.h */ = {isa = PBXFileReference; name = "AHOFAMG-Bridging-Header.h"; path = "AHOFAMG/AHOFAMG-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		B510B107B6E24F63970A9FFD /* GoogleService-Info.plist */ = {isa = PBXFileReference; name = "GoogleService-Info.plist"; path = "AHOFAMG/GoogleService-Info.plist"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.xml; explicitFileType = undefined; includeInIndex = 0; };
+		8136E782A04745339BF78BAA /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "AHOFAMG/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		794D196C623746DB886BB73A /* AHOFAMG-Bridging-Header.h */ = {isa = PBXFileReference; name = "AHOFAMG-Bridging-Header.h"; path = "AHOFAMG/AHOFAMG-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +59,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				77C6CBD5D4AC4D939EB0AB65 /* GoogleService-Info.plist */,
-				1E2EEABECDEB4686900F7925 /* noop-file.swift */,
-				92AF44F6F4FA48168C1235AC /* AHOFAMG-Bridging-Header.h */,
+				B510B107B6E24F63970A9FFD /* GoogleService-Info.plist */,
+				8136E782A04745339BF78BAA /* noop-file.swift */,
+				794D196C623746DB886BB73A /* AHOFAMG-Bridging-Header.h */,
 			);
 			name = AHOFAMG;
 			sourceTree = "<group>";
@@ -201,8 +201,8 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				F1CD48C0E0A44A6EA4DA4D8A /* GoogleService-Info.plist in Resources */,
-				FF3CAD5CBD314B1EAC1201B8 /* AHOFAMG-Bridging-Header.h in Resources */,
+				F0D105FF90BB4B698B0C2C25 /* GoogleService-Info.plist in Resources */,
+				F745B0F31FE74AE9BF2892D8 /* AHOFAMG-Bridging-Header.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +278,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				5FD757DB338D4818991F4952 /* noop-file.swift in Sources */,
+				8CDDAF42E2684317BC1A0A51 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
