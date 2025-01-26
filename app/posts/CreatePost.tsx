@@ -21,10 +21,21 @@ import Button from "@/components/ui/Button";
 import { useAppDispatch } from "@/store/store";
 import { setAppBusy } from "@/store/slices/appSlice";
 import BusyModal from "@/components/modals/BusyModal";
+import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
+import Announcement from "@/components/PostTypes/Announcement";
+import Offer from "@/components/PostTypes/Offer";
+import NoCategory from "@/components/Categories/NoCategory";
+import Vehicle from "@/components/Categories/Vehicle";
+import Terrain from "@/components/Categories/Terrrain";
+import Houses from "@/components/Categories/Houses";
+import Sound from "@/components/Categories/Sound";
+import Electronics from "@/components/Categories/Eletronics";
+import CategoryChanger from "@/components/Categories/CategoryChanger";
+import CategorySelectModal from "@/components/modals/CategorySelectModal";
 
 interface Props {}
 
-const CreatePosts: FC<Props> = (props) => {
+const CreatePost: FC<Props> = (props) => {
   const { top } = useSafeAreaInsets();
   const styles = createStyles(top);
   const router = useRouter();
@@ -52,7 +63,12 @@ const CreatePosts: FC<Props> = (props) => {
   };
 
   return (
-    <View style={[styles.container, { top }]}>
+    <Animated.View
+      style={[styles.container, { top }]}
+      entering={SlideInDown.duration(300)}
+      exiting={SlideOutDown}
+    >
+      <CategorySelectModal />
       <BusyModal />
       <View style={styles.headerContainer}>
         <BlurView
@@ -78,92 +94,73 @@ const CreatePosts: FC<Props> = (props) => {
           />
           <View>
             <Text style={styles.userName}>{user?.displayName}</Text>
-            <TouchableOpacity style={styles.selectPostTypeButton}>
-              <MaterialIcons name="arrow-drop-down" size={24} color="white" />
-              <Text style={styles.selectPostTypeButtonLabel}>
-                {t("announcement")}
-              </Text>
-              <Entypo name="megaphone" size={24} color="white" />
-            </TouchableOpacity>
+            <Announcement />
           </View>
         </View>
-
-        <Text
-          style={[
-            styles.title,
-            { fontSize: hp(1.8), marginVertical: hp(1), fontWeight: "500" },
-          ]}
-        >
-          {t("what are you thinking")}
-        </Text>
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 8,
-            marginBottom: hp(4),
-          }}
-        >
-          <Text style={{ fontWeight: "200" }}>{t("select a category")}</Text>
-          <TouchableOpacity style={styles.selectCategoryButton}>
-            <MaterialIcons name="public" size={20} color={"darkorange"} />
-            <Text style={styles.selectCategoryButtonLabel}>
-              {t("category")}
-            </Text>
-            <MaterialIcons
-              name="arrow-drop-down"
-              size={24}
-              color="darkorange"
-            />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            backgroundColor: "whitesmoke",
-            elevation: 2,
-            marginBottom: hp(4),
+            // backgroundColor: "rgba(255,250,245,1)",
+            // elevation: 2,
+            marginBottom: hp(2),
             borderRadius: 8,
-            paddingBottom: hp(2),
             paddingHorizontal: wp(2),
-            borderWidth: 0.5,
-            borderColor: "lightgrey",
           }}
         >
           <Text
             style={[
               styles.title,
-              { fontSize: hp(1.8), marginVertical: hp(1), fontWeight: "500" },
+              { fontSize: hp(1.8), marginVertical: hp(1), fontWeight: "900" },
             ]}
           >
-            {t("product details")}
+            {t("what are you thinking")}
           </Text>
-          <View style={{ paddingHorizontal: wp(4) }}>
-            <Text>{t("none")}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+              marginBottom: hp(4),
+            }}
+          >
+            <Text style={{ fontWeight: "200" }}>{t("select a category")}</Text>
+            <CategoryChanger />
           </View>
         </View>
-        <Text
-          style={[
-            styles.title,
-            { fontSize: hp(1.8), marginVertical: hp(1), fontWeight: "500" },
-            description.length > 150 && { color: "red" },
-          ]}
-          numberOfLines={2}
+
+        <View
+          style={{
+            // backgroundColor: ")rgba(255,250,245,1)",
+            // elevation: 2,
+            marginBottom: hp(2),
+            borderRadius: 8,
+            paddingBottom: hp(2),
+            paddingHorizontal: wp(2),
+          }}
         >
-          {`${t("describe what you are looking for")}  (${
-            description.length
-          } /  150)`}
-        </Text>
-        <TextInput
-          style={styles.descriptions}
-          multiline
-          placeholder={t("describe what you are looking for")}
-          value={description}
-          onChangeText={(text) => handleDescriptionChange(text)}
-          maxLength={150}
-        />
+          <Text
+            style={[
+              styles.title,
+              { fontSize: hp(1.6), marginVertical: hp(1), fontWeight: "900" },
+              description.length > 150 && { color: "red" },
+            ]}
+            numberOfLines={2}
+          >
+            {`${t("describe what you are looking for")}  (${
+              description.length
+            } /  150)`}
+          </Text>
+          <TextInput
+            style={styles.descriptions}
+            multiline
+            placeholder={t("describe what you are looking for")}
+            value={description}
+            onChangeText={(text) => handleDescriptionChange(text)}
+            maxLength={150}
+          />
+        </View>
         <Button title={t("publish")} action={handlePublish}></Button>
       </KeyboardAwareScrollView>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -199,14 +196,15 @@ const createStyles = (top: number) =>
       paddingTop: hp(8),
     },
     descriptions: {
-      borderWidth: 1,
+      // borderWidth: 1,
       borderColor: "lightgrey",
-      backgroundColor: "rgba(255,255,255,0.75)",
-      borderRadius: 8,
+      backgroundColor: "rgba(255,255,255,1)",
+      borderRadius: 12,
       verticalAlign: "top",
       padding: 10,
       height: hp(15),
       fontWeight: "300",
+      borderWidth: 0.5,
     },
     userDetailsContainer: {
       flexDirection: "row",
@@ -219,36 +217,6 @@ const createStyles = (top: number) =>
       fontWeight: "bold",
       color: COLORS.secondaryColor,
     },
-    selectCategoryButton: {
-      marginVertical: hp(0.5),
-      backgroundColor: "#E8D2CF",
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 4,
-      borderRadius: 10,
-      height: 30,
-      paddingHorizontal: wp(2),
-    },
-    selectPostTypeButton: {
-      marginVertical: hp(0.5),
-      backgroundColor: "lightgrey",
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 4,
-      borderRadius: 10,
-      height: 30,
-      paddingHorizontal: wp(2),
-    },
-    selectCategoryButtonLabel: {
-      fontWeight: "500",
-      color: COLORS.mainColor,
-    },
-    selectPostTypeButtonLabel: {
-      fontWeight: "400",
-      color: "white",
-      fontSize: hp(1.5),
-      textTransform: "capitalize",
-    },
   });
 
-export default CreatePosts;
+export default CreatePost;

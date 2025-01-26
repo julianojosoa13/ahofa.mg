@@ -72,7 +72,7 @@ const HomeLayout = () => {
           const handlePress = () => {
             animRef.current?.play();
             setTimeout(() => {
-              router.navigate("/posts/CreatePosts");
+              router.navigate("/posts/CreatePost");
             }, 600);
           };
           return (

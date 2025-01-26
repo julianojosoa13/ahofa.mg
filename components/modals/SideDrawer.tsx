@@ -64,7 +64,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
       }, 1200);
       setTimeout(() => {
         dispatch(setShowLoginModal(true));
-      }, 2000);
+      }, 3500);
     } catch (error) {
       console.error(error);
     }

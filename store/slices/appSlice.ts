@@ -9,12 +9,25 @@ interface StateTypes {
   firstStep: boolean;
   showLoginModal: boolean;
   error: any;
+  selectedCategory:
+    | "houses"
+    | "electronic"
+    | "sounds"
+    | "terrain"
+    | "vehicles"
+    | "none";
+
+  postType: "offer" | "annoucement";
+  showCategorySelectModal: boolean;
 }
 const initialState: StateTypes = {
   busy: false,
   firstStep: false,
   showLoginModal: false,
   error: {},
+  selectedCategory: "none",
+  postType: "annoucement",
+  showCategorySelectModal: false,
 };
 
 const appSlice = createSlice({
@@ -32,6 +45,15 @@ const appSlice = createSlice({
     },
     setAppError(state, action) {
       state.error = action.payload;
+    },
+    setAppPostType(state, action) {
+      state.postType = action.payload;
+    },
+    setAppSelectedCategory(state, action) {
+      state.selectedCategory = action.payload;
+    },
+    setShowCategorySelectModal(state, action) {
+      state.showCategorySelectModal = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -73,6 +95,21 @@ export const selectShowLoginModal = (state: RootState) =>
   state.app.showLoginModal;
 export const selectAppError = (state: RootState) => state.app.error;
 
-export const { setAppBusy, setAppFirstStep, setShowLoginModal, setAppError } =
-  appSlice.actions;
+export const selectAppPostType = (state: RootState) => state.app.postType;
+
+export const selectAppSelectedCategory = (state: RootState) =>
+  state.app.selectedCategory;
+
+export const selectAppShowCategorySelectModal = (state: RootState) =>
+  state.app.showCategorySelectModal;
+
+export const {
+  setAppBusy,
+  setAppFirstStep,
+  setShowLoginModal,
+  setAppError,
+  setAppPostType,
+  setAppSelectedCategory,
+  setShowCategorySelectModal,
+} = appSlice.actions;
 export default appSlice.reducer;
