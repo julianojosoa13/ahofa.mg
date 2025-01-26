@@ -37,6 +37,12 @@
           "backgroundColor": "#ffffff"
         }
       ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ],
       ["@react-native-google-signin/google-signin"],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",

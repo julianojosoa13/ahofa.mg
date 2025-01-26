@@ -1,7 +1,9 @@
 import Button from "@/components/ui/Button";
 import { hp, wp } from "@/utils/screensize";
 import React, { FC, useEffect } from "react";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+import { Image } from "expo-image";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import auth from "@react-native-firebase/auth";
