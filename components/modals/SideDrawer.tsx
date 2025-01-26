@@ -27,6 +27,15 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import LanguagesButton from "../LanguagesButton";
 import { useTranslation } from "react-i18next";
 
+import auth from "@react-native-firebase/auth";
+import { Image } from "expo-image";
+import { useAppDispatch } from "@/store/store";
+import { setAppBusy, setShowLoginModal } from "@/store/slices/appSlice";
+import { router, useRouter } from "expo-router";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import Button from "../ui/Button";
+import BusyModal from "./BusyModal";
+
 interface Props {
   visible?: boolean;
   onRequestClose?: () => void;
@@ -35,6 +44,29 @@ interface Props {
 const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
+
+  const user = auth().currentUser;
+  const dispatch = useAppDispatch();
+  // const router = useRouter();
+
+  const handleSignOut = async () => {
+    // dispatch(setAppBusy(true));
+    try {
+      await GoogleSignin.signOut();
+      if (user?.email) await auth().signOut();
+      console.log("Router >> ", router);
+      dispatch(setAppBusy(true));
+      setTimeout(() => {
+        dispatch(setAppBusy(false));
+        router.dismissTo("/");
+      }, 1200);
+      setTimeout(() => {
+        dispatch(setShowLoginModal(true));
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     let modalTimeout: NodeJS.Timeout;
@@ -55,6 +87,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
       visible={showModal}
       onRequestClose={onRequestClose}
     >
+      <BusyModal />
       {visible && (
         <Animated.View
           style={styles.container}
@@ -66,7 +99,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
             onPress={onRequestClose}
             hitSlop={8}
           >
-            <FontAwesome6 name="x" size={25} />
+            <AntDesign name="close" size={25} />
           </TouchableOpacity>
           <Animated.Image
             source={require("@/assets/images/brand/trans_bg.png")}
@@ -90,13 +123,36 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           <View style={styles.line} />
           <View style={styles.header}>
             <TouchableOpacity style={styles.userAvatar}>
-              <AntDesign name="user" size={50} color={"#fff"} />
+              {user ? (
+                <Image
+                  source={{ uri: user?.photoURL! }}
+                  style={{
+                    width: 75,
+                    height: 75,
+                    borderRadius: 75 / 2,
+                  }}
+                />
+              ) : (
+                <AntDesign
+                  name="user"
+                  size={75}
+                  color={"#fff"}
+                  style={{
+                    backgroundColor: COLORS.mainColor,
+                    borderRadius: 75 / 2,
+                  }}
+                />
+              )}
             </TouchableOpacity>
 
-            <Pressable>
-              <Text style={{ fontWeight: "200" }}>{t("not connected")}</Text>
-              <Text style={styles.loginButtton}>{t("sign in")}</Text>
-            </Pressable>
+            <View>
+              <Text style={{ fontWeight: "500" }}>
+                {user ? user.displayName : t("not connected")}
+              </Text>
+              <Text style={styles.email} numberOfLines={1}>
+                {user ? user?.email : t("sign in")}
+              </Text>
+            </View>
           </View>
 
           <ScrollView>
@@ -146,6 +202,21 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
                 <Text style={styles.toolTipText}>5</Text>
               </View>
             </TouchableOpacity>
+            <Button
+              title={t("sign out")}
+              action={handleSignOut}
+              style={{
+                backgroundColor: "rgba(255,0,0,0.2)",
+                marginHorizontal: wp(4),
+                height: hp(5),
+                elevation: 0,
+              }}
+              textStyle={{
+                color: "rgba(255,0,0,01)",
+                fontWeight: "600",
+                fontSize: hp(1.6),
+              }}
+            />
           </ScrollView>
         </Animated.View>
       )}
@@ -177,7 +248,7 @@ const styles = StyleSheet.create({
     // marginTop: hp(2.5),
   },
   userAvatar: {
-    margin: wp(2.5),
+    marginLeft: wp(2.5),
     width: wp(20),
     height: wp(20),
     borderRadius: wp(10),
@@ -185,10 +256,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  loginButtton: {
-    fontWeight: "600",
+  email: {
+    fontWeight: "300",
     color: COLORS.secondaryColor,
-    fontSize: hp(2),
+    fontSize: hp(1.2),
+    maxWidth: wp(50),
   },
   line: {
     borderBottomWidth: 0.5,

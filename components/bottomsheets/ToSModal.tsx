@@ -14,6 +14,8 @@ import { useDispatch } from "react-redux";
 import { setAcceptedToS } from "@/store/slices/onboardingSlice";
 import { setShowLoginModal } from "@/store/slices/appSlice";
 
+import { openBrowserAsync } from "expo-web-browser";
+
 interface Props {
   onClose?: () => void;
 }
@@ -36,7 +38,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   };
 
   const handleLinkPress = () => {
-    Linking.openURL("https://ahofamg.web.app/tos");
+    openBrowserAsync("https://ahofamg.web.app/tos");
     setTimeout(() => {
       setButtonDisabled(false);
     }, 3000);

@@ -7,7 +7,7 @@ import {
   MaterialIcons,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import IconContainer from "../../components/IconContainer";
 import {
   Image,
@@ -19,13 +19,17 @@ import {
 } from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import SideDrawer from "@/components/modals/SideDrawer";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import LottieView from "lottie-react-native";
+import { useAppDispatch } from "@/store/store";
 
 const marginBottom = hp(0.25);
 
 const HomeLayout = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -52,7 +56,7 @@ const HomeLayout = () => {
               }}
             >
               <TouchableOpacity onPress={() => setVisible(true)}>
-                <Entypo name="menu" size={34} color={COLORS.thirdColor} />
+                <Entypo name="menu" size={40} color={COLORS.thirdColor} />
               </TouchableOpacity>
 
               <SideDrawer
@@ -63,6 +67,14 @@ const HomeLayout = () => {
           );
         },
         headerRight: () => {
+          const animRef = useRef<LottieView | null>(null);
+
+          const handlePress = () => {
+            animRef.current?.play();
+            setTimeout(() => {
+              router.navigate("/posts/CreatePosts");
+            }, 600);
+          };
           return (
             <Animated.View
               style={{
@@ -71,35 +83,52 @@ const HomeLayout = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Pressable
+              <TouchableOpacity
+                activeOpacity={0.67}
                 style={{
-                  width: wp(77),
+                  width: wp(74),
                   height: hp(5),
-                  borderRadius: 8,
-                  justifyContent: "center",
+                  borderRadius: 40,
+                  flexDirection: "row",
+                  paddingHorizontal: wp(2),
+                  justifyContent: "space-between",
                   alignItems: "center",
                   paddingLeft: wp(2.5),
-                  backgroundColor: COLORS.bgColor,
+                  backgroundColor: "rgba(200,200,200,0.33)",
+                  borderColor: "lightgrey",
                 }}
               >
                 <Text
                   style={{
-                    color: COLORS.secondaryColor,
-                    fontWeight: "300",
+                    color: "black",
+                    fontWeight: "200",
                     fontSize: hp(1.9),
                   }}
                 >
                   {t("what are you thinking")}
                 </Text>
-              </Pressable>
+                <AntDesign name="search1" size={25} color={COLORS.thirdColor} />
+              </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  marginRight: wp(2),
+                  marginRight: wp(2.5),
                 }}
+                onPress={handlePress}
               >
-                <AntDesign name="search1" size={30} />
+                <LottieView
+                  source={require("@/assets/animations/plusAlt.json")}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    marginLeft: 0,
+                    backgroundColor: COLORS.mainColor,
+                  }}
+                  ref={animRef}
+                  speed={1.5}
+                  loop={false}
+                />
               </TouchableOpacity>
             </Animated.View>
           );

@@ -27,44 +27,44 @@ const Onboarding: FC<Props> = (props) => {
   useEffect(() => {
     setTimeout(() => {
       router.replace("/home");
-    }, 2000);
+    }, 750);
   }, []);
 
   const user = auth().currentUser;
   return (
-    <LinearGradient
-      colors={[COLORS.bgColor, COLORS.mainColor]}
+    <View
       style={[styles.container, { marginTop: top, paddingHorizontal: wp(4) }]}
     >
       <Image
         source={{ uri: user?.photoURL! }}
         style={{
-          width: wp(33),
-          height: wp(33),
-          borderRadius: wp(33 / 2),
-          borderWidth: 2.5,
-          borderColor: COLORS.thirdColor,
-          marginBottom: -hp(7),
+          width: wp(20),
+          height: wp(20),
+          borderRadius: wp(10),
+          borderWidth: 3.5,
+          borderColor: "white",
+          marginBottom: -hp(5),
           zIndex: 10,
         }}
       />
       <View
         style={{
           width: wp(45),
-          height: hp(15),
-          borderRadius: 16,
-          backgroundColor: "rgba(255,255,255,0.5)",
-          // elevation: 2,
+          height: hp(10),
+          borderRadius: 22,
+          backgroundColor: "rgba(255,255,255,0.95)",
+          elevation: 4,
+          zIndex: -1,
         }}
       />
 
       <LottieView
         source={require("@/assets/animations/activityIndicator.json")}
         loop
-        style={{ width: wp(25), height: wp(25), marginTop: -hp(10) }}
+        style={{ width: wp(20), height: wp(20), marginTop: -hp(7.25) }}
         autoPlay
       />
-    </LinearGradient>
+    </View>
   );
 };
 
