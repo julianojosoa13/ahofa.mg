@@ -6,6 +6,7 @@ import {
   FontAwesome6,
   Fontisto,
   Ionicons,
+  MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
@@ -35,6 +36,7 @@ import { router, useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import Button from "../ui/Button";
 import BusyModal from "./BusyModal";
+import { openBrowserAsync } from "expo-web-browser";
 
 interface Props {
   visible?: boolean;
@@ -66,6 +68,10 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleLinkPress = async () => {
+    await openBrowserAsync("https://ahofamg.web.app/tos");
   };
 
   useEffect(() => {
@@ -217,6 +223,32 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
                 fontSize: hp(1.6),
               }}
             />
+            <TouchableOpacity
+              style={{
+                alignSelf: "center",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 4,
+              }}
+              hitSlop={8}
+              onPress={handleLinkPress}
+            >
+              <Text
+                style={{
+                  color: COLORS.secondaryColor,
+                  textDecorationLine: "underline",
+                  fontWeight: "300",
+                  fontSize: hp(1.5),
+                }}
+              >
+                {t("see tos")}
+              </Text>
+              <MaterialCommunityIcons
+                name="arrow-top-right"
+                size={18}
+                color={COLORS.secondaryColor}
+              />
+            </TouchableOpacity>
           </ScrollView>
         </Animated.View>
       )}
