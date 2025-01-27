@@ -58,7 +58,7 @@ const CreatePost: FC<Props> = (props) => {
 
     setTimeout(() => {
       dispatch(setAppBusy(false));
-      router.dismiss();
+
       notify("warning", {
         params: {
           title: t("success"),
@@ -72,6 +72,10 @@ const CreatePost: FC<Props> = (props) => {
         },
       });
     }, 3000);
+
+    setTimeout(() => {
+      router.dismiss();
+    }, 3300);
   };
 
   const handleDescriptionChange = (text: string) => {

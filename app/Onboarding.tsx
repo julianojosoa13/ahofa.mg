@@ -7,16 +7,17 @@ import { Image } from "expo-image";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import auth from "@react-native-firebase/auth";
+
 import { useAppDispatch } from "@/store/store";
 import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "@/utils/colors";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import { BlurView } from "@react-native-community/blur";
 import { useSelector } from "react-redux";
 import { selectAppTheme } from "@/store/slices/appSlice";
+
+import { createOrUpdateUser } from "@/lib/firebase/actions";
 
 interface Props {}
 
@@ -28,13 +29,21 @@ const Onboarding: FC<Props> = (props) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    setTimeout(() => {
-      router.replace("/home");
-    }, 1200);
-  }, []);
-
   const user = auth().currentUser;
+
+  useEffect(() => {
+    (async () => {
+      if (user) {
+        try {
+          await createOrUpdateUser(user);
+          router.replace("/home");
+        } catch (erro) {
+          console.error(erro);
+        }
+      }
+    })();
+  }, [user]);
+
   return (
     <View
       style={[styles.container, { marginTop: top, paddingHorizontal: wp(4) }]}
