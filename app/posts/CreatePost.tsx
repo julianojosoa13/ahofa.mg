@@ -29,10 +29,13 @@ import CategoryChanger from "@/components/Categories/CategoryChanger";
 import CategorySelectModal from "@/components/modals/CategorySelectModal";
 import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
+import { useNotifications } from "react-native-notificated";
 
 interface Props {}
 
 const CreatePost: FC<Props> = (props) => {
+  const { notify } = useNotifications();
+
   const { top } = useSafeAreaInsets();
   const router = useRouter();
   const { t } = useTranslation();
@@ -52,8 +55,22 @@ const CreatePost: FC<Props> = (props) => {
 
   const handlePublish = () => {
     dispatch(setAppBusy(true));
+
     setTimeout(() => {
       dispatch(setAppBusy(false));
+      router.dismiss();
+      notify("warning", {
+        params: {
+          title: t("success"),
+          description: t("your announcement has been posted successfully"),
+          style: {
+            multiline: 3,
+            descriptionSize: 12,
+            titleSize: 14,
+            bgColor: "rgb(158, 219, 158)",
+          },
+        },
+      });
     }, 3000);
   };
 
@@ -206,17 +223,18 @@ const createStyles = (top: number, theme: "light" | "dark") =>
     headerContainer: {
       position: "absolute",
       left: 0,
-      top,
+      top: 0,
       zIndex: 200,
     },
     customHeader: {
-      height: hp(7.5),
+      height: hp(7.5) + top,
       width: wp(100),
       backgroundColor: COLORS[theme].bgColor,
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: wp(8),
       gap: wp(5),
+      paddingTop: top,
     },
     scrollView: {
       flex: 1,

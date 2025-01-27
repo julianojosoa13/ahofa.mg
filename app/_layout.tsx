@@ -10,6 +10,8 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import { persistor, store } from "@/store/store";
 
+import { createNotifications } from "react-native-notificated";
+
 import "expo-dev-client";
 
 import i18n from "@/lib/i18n";
@@ -27,14 +29,18 @@ GoogleSignin.configure({
 });
 
 export default function RootLayout() {
+  const { NotificationsProvider, useNotifications, ...events } =
+    createNotifications();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <I18nextProvider i18n={i18n}>
           <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-              <AppWrapper />
-            </BottomSheetModalProvider>
+            <NotificationsProvider>
+              <BottomSheetModalProvider>
+                <AppWrapper />
+              </BottomSheetModalProvider>
+            </NotificationsProvider>
           </GestureHandlerRootView>
         </I18nextProvider>
       </PersistGate>

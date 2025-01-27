@@ -31,7 +31,7 @@ const Onboarding: FC<Props> = (props) => {
   useEffect(() => {
     setTimeout(() => {
       router.replace("/home");
-    }, 750);
+    }, 1200);
   }, []);
 
   const user = auth().currentUser;
