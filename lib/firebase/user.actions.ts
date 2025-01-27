@@ -18,6 +18,7 @@ export const createOrUpdateUser = async (user: FirebaseAuthTypes.User) => {
       },
       savedPosts: [],
       createdPosts: [],
+      photoUrl: user.photoURL,
     };
 
     if (userDoc.exists) {
