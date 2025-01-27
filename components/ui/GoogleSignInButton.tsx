@@ -12,8 +12,12 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch } from "react-redux";
-import { loginStart, setAppBusy } from "@/store/slices/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  selectAppTheme,
+  setAppBusy,
+} from "@/store/slices/appSlice";
 import { useAppDispatch } from "@/store/store";
 
 interface Props {}
@@ -21,6 +25,9 @@ interface Props {}
 const GoogleSignInButton: FC<Props> = (props) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
 
   const handleButtonPress = () => {
     Keyboard.dismiss();
@@ -37,24 +44,25 @@ const GoogleSignInButton: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    elevation: 3,
-    borderRadius: 8,
-    marginVertical: hp(2),
-    height: hp(6.5),
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "row",
-    paddingLeft: wp(3),
-    gap: wp(3),
-    // borderWidth: 0.1,
-  },
-  buttonLabel: {
-    fontWeight: "600",
-    color: "grey",
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: COLORS[theme].softBgColor,
+      elevation: 3,
+      borderRadius: 8,
+      marginVertical: hp(2),
+      height: hp(6.5),
+      justifyContent: "flex-start",
+      alignItems: "center",
+      flexDirection: "row",
+      paddingLeft: wp(3),
+      gap: wp(3),
+      // borderWidth: 0.1,
+    },
+    buttonLabel: {
+      fontWeight: "600",
+      color: "grey",
+    },
+  });
 
 export default GoogleSignInButton;

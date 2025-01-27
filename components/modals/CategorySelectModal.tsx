@@ -1,5 +1,6 @@
 import {
   selectAppShowCategorySelectModal,
+  selectAppTheme,
   selectShowLoginModal,
   setShowCategorySelectModal,
   setShowLoginModal,
@@ -19,6 +20,7 @@ import Button from "../ui/Button";
 import COLORS from "@/utils/colors";
 import Animated, {
   FadeInDown,
+  FadeInUp,
   SlideInDown,
   ZoomInDown,
 } from "react-native-reanimated";
@@ -34,6 +36,10 @@ const CategorySelectModal: FC<Props> = (props) => {
   const showModal = useSelector(selectAppShowCategorySelectModal);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const theme = useSelector(selectAppTheme);
+
+  const styles = createStyles(theme);
 
   const closeModal = () => {
     dispatch(setShowCategorySelectModal(false));
@@ -60,7 +66,7 @@ const CategorySelectModal: FC<Props> = (props) => {
       >
         <Animated.View
           style={styles.contentContainer}
-          entering={ZoomInDown.duration(300).delay(50)}
+          entering={FadeInUp.duration(300).delay(50)}
         >
           <TouchableOpacity
             hitSlop={8}
@@ -96,30 +102,31 @@ const CategorySelectModal: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: wp(100),
-    height: hp(100),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  contentContainer: {
-    padding: 10,
-    paddingTop: hp(4.5),
-    borderRadius: wp(5),
-    backgroundColor: "white",
-    height: hp(40),
-    width: wp(85),
-    elevation: 4,
-    paddingBottom: 24,
-  },
-  title: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: hp(2.2),
-    color: COLORS.thirdColor,
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      width: wp(100),
+      height: hp(100),
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    contentContainer: {
+      padding: 10,
+      paddingTop: hp(4.5),
+      borderRadius: wp(5),
+      backgroundColor: "white",
+      height: hp(40),
+      width: wp(85),
+      elevation: 4,
+      paddingBottom: 24,
+    },
+    title: {
+      textAlign: "center",
+      fontWeight: "bold",
+      fontSize: hp(2.2),
+      color: COLORS[theme].thirdColor,
+    },
+  });
 
 export default CategorySelectModal;

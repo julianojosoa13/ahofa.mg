@@ -5,6 +5,9 @@ import { SafeAreaView, StyleSheet } from "react-native";
 
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { useSelector } from "react-redux";
+import { selectAppBusy, setAppBusy } from "@/store/slices/appSlice";
+import { useAppDispatch } from "@/store/store";
 
 interface Props {}
 
@@ -14,6 +17,8 @@ const AppWrapper: FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState(
     {} as FirebaseAuthTypes.User | null
   );
+  const busy = useSelector(selectAppBusy);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log("Current User >>> ", currentUser);
@@ -29,6 +34,8 @@ const AppWrapper: FC<Props> = (props) => {
 
   useEffect(() => {
     const user = auth().currentUser;
+    if (busy) dispatch(setAppBusy(false));
+
     console.log("Current user >> ", user);
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

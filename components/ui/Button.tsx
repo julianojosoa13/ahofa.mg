@@ -1,6 +1,8 @@
+import { selectAppTheme } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 
 interface Props {
   style?: any;
@@ -10,25 +12,25 @@ interface Props {
   disabled?: boolean;
 }
 
-const defaultStyle = {
-  backgroundColor: COLORS.mainColor,
-  marginVertical: hp(1.5),
-  height: hp(6),
-  borderRadius: 8,
-  justifyContent: "center",
-  alignItems: "center",
-  elevation: 5,
-};
-
-const defaultTextStyle = {
-  color: "#fff",
-  fontSize: hp(2),
-  fontWeight: "300",
-};
-
 const Button = (props: Props) => {
   const { title, action, style, textStyle, disabled } = props;
+  const theme = useSelector(selectAppTheme);
 
+  const defaultStyle = {
+    backgroundColor: COLORS[theme].mainColor,
+    marginVertical: hp(1.5),
+    height: hp(6),
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+  };
+
+  const defaultTextStyle = {
+    color: COLORS[theme].white,
+    fontSize: hp(2),
+    fontWeight: "300",
+  };
   const launchAction = () => {
     if (!disabled && action) action();
   };

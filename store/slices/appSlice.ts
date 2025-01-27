@@ -19,6 +19,7 @@ interface StateTypes {
 
   postType: "offer" | "annoucement";
   showCategorySelectModal: boolean;
+  theme: "light" | "dark";
 }
 const initialState: StateTypes = {
   busy: false,
@@ -28,6 +29,7 @@ const initialState: StateTypes = {
   selectedCategory: "none",
   postType: "annoucement",
   showCategorySelectModal: false,
+  theme: "dark",
 };
 
 const appSlice = createSlice({
@@ -54,6 +56,9 @@ const appSlice = createSlice({
     },
     setShowCategorySelectModal(state, action) {
       state.showCategorySelectModal = action.payload;
+    },
+    setAppTheme(state, aciton) {
+      state.theme = aciton.payload;
     },
   },
   extraReducers: (builder) => {
@@ -103,6 +108,8 @@ export const selectAppSelectedCategory = (state: RootState) =>
 export const selectAppShowCategorySelectModal = (state: RootState) =>
   state.app.showCategorySelectModal;
 
+export const selectAppTheme = (state: RootState) => state.app.theme;
+
 export const {
   setAppBusy,
   setAppFirstStep,
@@ -111,5 +118,6 @@ export const {
   setAppPostType,
   setAppSelectedCategory,
   setShowCategorySelectModal,
+  setAppTheme,
 } = appSlice.actions;
 export default appSlice.reducer;

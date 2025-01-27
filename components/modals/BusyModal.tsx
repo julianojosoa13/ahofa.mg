@@ -1,4 +1,5 @@
-import { selectAppBusy } from "@/store/slices/appSlice";
+import { selectAppBusy, selectAppTheme } from "@/store/slices/appSlice";
+import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { BlurView } from "@react-native-community/blur";
 import { StatusBar } from "expo-status-bar";
@@ -12,14 +13,18 @@ interface Props {}
 const BusyModal: FC<Props> = (props) => {
   const busy = useSelector(selectAppBusy);
 
+  const theme = useSelector(selectAppTheme);
+
+  const styles = createStyles(theme);
+
   console.log("busy >> ", busy);
   return (
     <Modal style={styles.container} transparent visible={busy}>
-      <StatusBar backgroundColor="rgba(255,255,255,0.75)" />
+      <StatusBar backgroundColor={COLORS[theme].bgColor} />
       <BlurView
-        blurType="light"
+        blurType={theme}
         blurAmount={10}
-        reducedTransparencyFallbackColor="white"
+        reducedTransparencyFallbackColor={theme === "light" ? "white" : "dark"}
         style={styles.contentContainer}
       >
         <View
@@ -44,15 +49,16 @@ const BusyModal: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { zIndex: 10 },
-  contentContainer: {
-    flex: 1,
-    width: wp(100),
-    height: hp(100),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: { zIndex: 10 },
+    contentContainer: {
+      flex: 1,
+      width: wp(100),
+      height: hp(100),
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  });
 
 export default BusyModal;

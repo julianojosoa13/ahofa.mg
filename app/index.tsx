@@ -16,15 +16,18 @@ import LottieView from "lottie-react-native";
 import ToSModal from "@/components/bottomsheets/ToSModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import BusyModal from "@/components/modals/BusyModal";
-import { setShowLoginModal } from "@/store/slices/appSlice";
+import { selectAppTheme, setShowLoginModal } from "@/store/slices/appSlice";
 import LoginModal from "@/components/modals/LoginModal";
 import { selectAcceptedToS } from "@/store/slices/onboardingSlice";
+import ThemedLogo from "@/components/ui/ThemedLogo";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function Index() {
   const { t } = useTranslation();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const dispatch = useDispatch();
 
+  const theme = useSelector(selectAppTheme);
   const acceptedToS = useSelector(selectAcceptedToS);
 
   // callbacks
@@ -46,28 +49,51 @@ export default function Index() {
         flex: 1,
         justifyContent: "space-around",
         alignItems: "center",
+        backgroundColor: COLORS[theme].softBgColor,
       }}
     >
-      <StatusBar style="dark" />
-      <View style={{ position: "absolute", top: hp(4.5), right: wp(5) }}>
+      <StatusBar style={theme === "light" ? "dark" : "light"} />
+      <View
+        style={{
+          position: "absolute",
+          top: hp(4.5),
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: wp(100),
+          paddingHorizontal: wp(5),
+        }}
+      >
+        <View
+          style={{ flexDirection: "row", alignItems: "center", gap: wp(1) }}
+        >
+          <Text
+            style={{
+              color: COLORS[theme].textColor,
+              fontWeight: "100",
+              textTransform: "capitalize",
+            }}
+          >
+            {theme}
+          </Text>
+          <ThemeSwitcher />
+        </View>
         <LanguagesButton />
       </View>
 
-      <Animated.Image
-        entering={FadeInDown.delay(1200).duration(300)}
-        source={require("@/assets/images/brand/trans_bg.png")}
+      <ThemedLogo
         style={{
           width: wp(50),
           height: hp(25),
           marginTop: hp(10),
           marginBottom: -hp(10),
         }}
-        resizeMode={"contain"}
+        entering={FadeInDown.delay(1200).duration(300)}
       />
       <View
         style={{
           borderRadius: "50%",
-          backgroundColor: "rgba(255,255,255,0.95)",
+          backgroundColor: COLORS[theme].bgColor,
         }}
       >
         <LottieView
@@ -81,13 +107,18 @@ export default function Index() {
       <View>
         <Animated.Text
           entering={FadeInDown.delay(600).duration(300)}
-          style={{ fontSize: hp(1.8), fontWeight: "300", textAlign: "center" }}
+          style={{
+            fontSize: hp(1.8),
+            fontWeight: "300",
+            textAlign: "center",
+            color: COLORS[theme].textColor,
+          }}
         >
           {t("welcome_to")}
           <Text
             style={{
               fontWeight: "bold",
-              color: COLORS.thirdColor,
+              color: COLORS[theme].thirdColor,
               fontSize: hp(2.3),
             }}
           >
@@ -119,6 +150,7 @@ export default function Index() {
           fontWeight: "200",
           position: "absolute",
           bottom: hp(2.5),
+          color: COLORS[theme].textColor,
         }}
       >
         Tous droits reservés, 2025 !

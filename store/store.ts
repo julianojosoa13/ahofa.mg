@@ -30,7 +30,7 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["translations", "onboarding"],
+  whitelist: ["translations", "onboarding", "app"],
 };
 
 const rootReducer = combineReducers({
