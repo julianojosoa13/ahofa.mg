@@ -17,11 +17,11 @@ import COLORS from "@/utils/colors";
 import { useSelector } from "react-redux";
 import { selectAppTheme } from "@/store/slices/appSlice";
 
-import { createOrUpdateUser } from "@/lib/firebase/actions";
+import { createOrUpdateUser } from "@/lib/firebase/user.actions";
 
 interface Props {}
 
-const Onboarding: FC<Props> = (props) => {
+const LoadingUser: FC<Props> = (props) => {
   const { top } = useSafeAreaInsets();
   const theme = useSelector(selectAppTheme);
   const styles = createStyles(theme);
@@ -91,4 +91,4 @@ const createStyles = (theme: "dark" | "light") =>
     },
   });
 
-export default Onboarding;
+export default LoadingUser;

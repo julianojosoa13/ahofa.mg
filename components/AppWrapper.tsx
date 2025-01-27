@@ -22,7 +22,7 @@ const AppWrapper: FC<Props> = (props) => {
 
   useEffect(() => {
     console.log("Current User >>> ", currentUser);
-    if (currentUser?.email) router.replace("/Onboarding");
+    if (currentUser?.email) router.replace("/LoadingUser");
   }, [currentUser]);
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
@@ -45,7 +45,7 @@ const AppWrapper: FC<Props> = (props) => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="Onboarding" />
+      <Stack.Screen name="LoadingUser" />
     </Stack>
   );
 };

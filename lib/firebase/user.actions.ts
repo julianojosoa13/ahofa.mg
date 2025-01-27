@@ -1,42 +1,45 @@
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 
+import * as _ from "lodash";
+
 export const createOrUpdateUser = async (user: FirebaseAuthTypes.User) => {
-  try {
-    const userRef = firestore().collection("users").doc(user.uid);
-    const userDoc = await userRef.get();
+  if (!user) return;
 
-    const userData = {
-      name: user.displayName || "Unknown User",
-      email: user.email || "",
-      phone: user.phoneNumber || "",
-      profileType: "normal", // Default to "normal" profile type
-      subscription: {
-        tier: "free", // Default subscription tier
-        startDate: firestore.FieldValue.serverTimestamp(),
-        endDate: null,
-      },
-      savedPosts: [],
-      createdPosts: [],
-      photoUrl: user.photoURL,
-    };
+  const userRef = firestore().collection("users").doc(user.uid);
+  const doc = await userRef.get();
 
-    if (userDoc.exists) {
-      // Update user data if it exists
-      await userRef.update({
-        ...userData,
-        subscription: {
-          ...userDoc.data()?.subscription,
-          ...userData.subscription, // Update only missing fields in subscription
-        },
-      });
-    } else {
-      // Create a new user document if it doesn't exist
-      await userRef.set(userData);
+  const newUserData = {
+    displayName: user.displayName,
+    email: user.email,
+    photoURL: user.photoURL,
+    phoneNumber: user.phoneNumber,
+    providerId: user.providerData[0]?.providerId,
+    lastSignInTime: user.metadata.lastSignInTime,
+  };
+
+  if (!doc.exists) {
+    // If the user doesn't exist, create the document
+    await userRef.set(newUserData, { merge: true });
+  } else {
+    const existingData = doc.data();
+
+    // Compare existing data with new data
+    if (!_.isEqual(existingData, newUserData)) {
+      // Only update if the data is different
+      await userRef.set(newUserData, { merge: true });
     }
+  }
+};
 
-    console.log("User data synchronized successfully!");
-  } catch (error) {
-    console.error("Error creating or updating user:", error);
+export const syncUserProfile = async () => {
+  const user = auth().currentUser;
+  if (user) {
+    try {
+      await createOrUpdateUser(user);
+      console.log("User profile synced successfully");
+    } catch (error) {
+      console.error("Error syncing user profile:", error);
+    }
   }
 };
