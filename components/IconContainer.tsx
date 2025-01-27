@@ -1,3 +1,4 @@
+import { selectAppTheme } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
 import { hp } from "@/utils/screensize";
 import React, { FC, ReactNode } from "react";
@@ -6,6 +7,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
+import { useSelector } from "react-redux";
 
 interface Props {
   focused: boolean;
@@ -14,6 +16,7 @@ interface Props {
 }
 const mbValue = hp(2.75);
 const IconContainer: FC<Props> = ({ focused, children, delay }) => {
+  const theme = useSelector(selectAppTheme);
   // Animated style for marginBottom
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -27,7 +30,7 @@ const IconContainer: FC<Props> = ({ focused, children, delay }) => {
       style={[
         animatedStyle,
         {
-          backgroundColor: focused ? COLORS.mainColor : "transparent",
+          backgroundColor: focused ? COLORS[theme].mainColor : "transparent",
           height: hp(6),
           width: hp(6),
           borderRadius: hp(3),
@@ -35,7 +38,7 @@ const IconContainer: FC<Props> = ({ focused, children, delay }) => {
           alignItems: "center",
           elevation: focused ? 5 : 0,
           borderWidth: focused ? 0.33 : 0,
-          borderColor: COLORS.mainColor,
+          borderColor: COLORS[theme].mainColor,
         },
       ]}
     >

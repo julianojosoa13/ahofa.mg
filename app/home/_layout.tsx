@@ -23,12 +23,17 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LottieView from "lottie-react-native";
 import { useAppDispatch } from "@/store/store";
+import { useSelector } from "react-redux";
+import { selectAppTheme } from "@/store/slices/appSlice";
+import { BlurView } from "@react-native-community/blur";
 
 const marginBottom = hp(0.25);
 
 const HomeLayout = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+
+  const theme = useSelector(selectAppTheme);
   const router = useRouter();
 
   return (
@@ -43,8 +48,8 @@ const HomeLayout = () => {
           position: "absolute",
           bottom: 0,
         },
-        tabBarActiveTintColor: COLORS.mainColor,
-        tabBarInactiveTintColor: COLORS.secondaryColor,
+        tabBarActiveTintColor: COLORS[theme].mainColor,
+        tabBarInactiveTintColor: COLORS[theme].secondaryColor,
         headerLeft: () => {
           const [visible, setVisible] = useState(false);
           return (
@@ -56,7 +61,11 @@ const HomeLayout = () => {
               }}
             >
               <TouchableOpacity onPress={() => setVisible(true)}>
-                <Entypo name="menu" size={40} color={COLORS.thirdColor} />
+                <Entypo
+                  name="menu"
+                  size={40}
+                  color={COLORS[theme].thirdColor}
+                />
               </TouchableOpacity>
 
               <SideDrawer
@@ -66,6 +75,7 @@ const HomeLayout = () => {
             </View>
           );
         },
+        headerStyle: { backgroundColor: COLORS[theme].bgColor },
         headerRight: () => {
           const animRef = useRef<LottieView | null>(null);
 
@@ -94,20 +104,24 @@ const HomeLayout = () => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   paddingLeft: wp(2.5),
-                  backgroundColor: "rgba(200,200,200,0.33)",
+                  backgroundColor: COLORS[theme].softBgColor,
                   borderColor: "lightgrey",
                 }}
               >
                 <Text
                   style={{
-                    color: "black",
                     fontWeight: "200",
                     fontSize: hp(1.9),
+                    color: COLORS[theme].textColor,
                   }}
                 >
                   {t("what are you thinking")}
                 </Text>
-                <AntDesign name="search1" size={25} color={COLORS.thirdColor} />
+                <AntDesign
+                  name="search1"
+                  size={25}
+                  color={COLORS[theme].textColor}
+                />
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -123,7 +137,7 @@ const HomeLayout = () => {
                     width: 40,
                     height: 40,
                     marginLeft: 0,
-                    backgroundColor: COLORS.mainColor,
+                    backgroundColor: COLORS[theme].mainColor,
                   }}
                   ref={animRef}
                   speed={1.5}
@@ -131,6 +145,19 @@ const HomeLayout = () => {
                 />
               </TouchableOpacity>
             </Animated.View>
+          );
+        },
+        tabBarBackground: () => {
+          return (
+            <View
+              style={{
+                backgroundColor: COLORS[theme].bgColor,
+                position: "absolute",
+                height: 60,
+                width: "100%",
+                bottom: 0,
+              }}
+            ></View>
           );
         },
       }}
@@ -144,7 +171,11 @@ const HomeLayout = () => {
               <IconContainer delay={0} focused={focused}>
                 <AntDesign
                   name="home"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -161,7 +192,11 @@ const HomeLayout = () => {
               <IconContainer delay={150} focused={focused}>
                 <AntDesign
                   name="car"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -178,7 +213,11 @@ const HomeLayout = () => {
               <IconContainer delay={300} focused={focused}>
                 <MaterialIcons
                   name="landscape"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -195,7 +234,11 @@ const HomeLayout = () => {
               <IconContainer delay={450} focused={focused}>
                 <SimpleLineIcons
                   name="music-tone-alt"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -212,7 +255,11 @@ const HomeLayout = () => {
               <IconContainer delay={600} focused={focused}>
                 <FontAwesome6
                   name="computer"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={22}
                 />
               </IconContainer>

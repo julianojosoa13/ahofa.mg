@@ -15,11 +15,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "@/utils/colors";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { BlurView } from "@react-native-community/blur";
+import { useSelector } from "react-redux";
+import { selectAppTheme } from "@/store/slices/appSlice";
 
 interface Props {}
 
 const Onboarding: FC<Props> = (props) => {
   const { top } = useSafeAreaInsets();
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -42,7 +46,7 @@ const Onboarding: FC<Props> = (props) => {
           height: wp(20),
           borderRadius: wp(10),
           borderWidth: 3.5,
-          borderColor: "white",
+          borderColor: COLORS[theme].softBgColor,
           marginBottom: -hp(5),
           zIndex: 10,
         }}
@@ -52,7 +56,7 @@ const Onboarding: FC<Props> = (props) => {
           width: wp(45),
           height: hp(10),
           borderRadius: 22,
-          backgroundColor: "rgba(255,255,255,0.95)",
+          backgroundColor: COLORS[theme].bgColor,
           elevation: 4,
           zIndex: -1,
         }}
@@ -68,12 +72,14 @@ const Onboarding: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const createStyles = (theme: "dark" | "light") =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: COLORS[theme].bgColor,
+    },
+  });
 
 export default Onboarding;

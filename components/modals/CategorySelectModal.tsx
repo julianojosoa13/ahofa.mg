@@ -60,8 +60,8 @@ const CategorySelectModal: FC<Props> = (props) => {
     >
       <BlurView
         blurAmount={10}
-        blurType="light"
-        reducedTransparencyFallbackColor="white"
+        blurType={theme}
+        reducedTransparencyFallbackColor={theme == "light" ? "white" : "dark"}
         style={styles.container}
       >
         <Animated.View
@@ -78,7 +78,7 @@ const CategorySelectModal: FC<Props> = (props) => {
             }}
             onPress={closeModal}
           >
-            <AntDesign name="close" size={25} />
+            <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
           </TouchableOpacity>
 
           <Text style={styles.title}>{t("select a category")}</Text>
@@ -115,7 +115,7 @@ const createStyles = (theme: "light" | "dark") =>
       padding: 10,
       paddingTop: hp(4.5),
       borderRadius: wp(5),
-      backgroundColor: "white",
+      backgroundColor: COLORS[theme].bgColor,
       height: hp(40),
       width: wp(85),
       elevation: 4,

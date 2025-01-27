@@ -67,6 +67,7 @@ export default function Index() {
         <View
           style={{ flexDirection: "row", alignItems: "center", gap: wp(1) }}
         >
+          <ThemeSwitcher />
           <Text
             style={{
               color: COLORS[theme].textColor,
@@ -74,9 +75,8 @@ export default function Index() {
               textTransform: "capitalize",
             }}
           >
-            {theme}
+            {t(theme)}
           </Text>
-          <ThemeSwitcher />
         </View>
         <LanguagesButton />
       </View>

@@ -20,7 +20,10 @@ const BusyModal: FC<Props> = (props) => {
   console.log("busy >> ", busy);
   return (
     <Modal style={styles.container} transparent visible={busy}>
-      <StatusBar backgroundColor={COLORS[theme].bgColor} />
+      <StatusBar
+        // backgroundColor={COLORS[theme].bgColor}
+        style={theme === "light" ? "dark" : "light"}
+      />
       <BlurView
         blurType={theme}
         blurAmount={10}

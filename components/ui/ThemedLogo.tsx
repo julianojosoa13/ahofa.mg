@@ -25,7 +25,10 @@ const ThemedLogo: FC<Props> = ({ style, entering }) => {
         <Animated.Image
           entering={entering}
           source={require("@/assets/images/brand/white_on_trans.png")}
-          style={style}
+          style={[
+            style,
+            theme == "dark" && { tintColor: "rgba(255,255,255,0.67)" },
+          ]}
           resizeMode={"contain"}
         />
       );
