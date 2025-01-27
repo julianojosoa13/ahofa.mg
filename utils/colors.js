@@ -7,6 +7,8 @@ const COLORS = {
     softBgColor: "rgb(248, 245, 245)", // Soft light background
     textColor: "rgba(34,38,64,1)", // Contrasting dark text
     white: "rgba(255,255,255,0.9)", // Slightly transparent white
+
+    imageTintColor: "rgba(59, 211, 238, 0.5)",
   },
   dark: {
     mainColor: "rgba(238,142,59,1)", // Vibrant accent color
@@ -16,6 +18,8 @@ const COLORS = {
     textColor: "rgba(240,240,240,1)", // Off-white for readability
     softBgColor: "rgb(44, 46, 60)", // Softer dark background for contrast
     white: "rgba(255,255,255,0.9)", // Slightly transparent white
+
+    imageTintColor: "rgba(59, 238, 214, 0.5)",
   },
 };
 

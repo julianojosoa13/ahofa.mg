@@ -30,6 +30,7 @@ import CategorySelectModal from "@/components/modals/CategorySelectModal";
 import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import { useNotifications } from "react-native-notificated";
+import RoundedButton from "@/components/ui/RoundedButton";
 
 interface Props {}
 
@@ -48,6 +49,7 @@ const CreatePost: FC<Props> = (props) => {
   const user = auth().currentUser;
 
   const [description, setDescription] = useState("");
+  const [showAddButton, setShowAddButton] = useState(true);
 
   const handleClose = () => {
     router.dismiss();
@@ -86,10 +88,14 @@ const CreatePost: FC<Props> = (props) => {
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setShowAddButton(false);
       setKeyboardVisible(true);
     });
     const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
       setKeyboardVisible(false);
+      setTimeout(() => {
+        setShowAddButton(true);
+      }, 10);
     });
 
     // Cleanup listeners on unmount
@@ -207,8 +213,36 @@ const CreatePost: FC<Props> = (props) => {
             />
           </View>
         </View>
+        {keyboardVisible && (
+          <View
+            style={{
+              width: wp(20),
+              height: wp(20),
+              position: "absolute",
+              bottom: hp(15),
+              right: wp(4),
+            }}
+          >
+            <RoundedButton />
+          </View>
+        )}
         <Button title={t("publish")} action={handlePublish}></Button>
       </KeyboardAwareScrollView>
+
+      {!keyboardVisible && showAddButton && (
+        <View
+          style={{
+            width: wp(20),
+            height: wp(20),
+            position: "absolute",
+            bottom: hp(15),
+            right: wp(4),
+          }}
+        >
+          <RoundedButton />
+        </View>
+      )}
+
       {keyboardVisible ? (
         <View style={styles.helperContainer}>
           <View />

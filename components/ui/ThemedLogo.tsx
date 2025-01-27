@@ -1,4 +1,5 @@
 import { selectAppTheme } from "@/store/slices/appSlice";
+import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { ImageStyle } from "expo-image";
 import React, { FC, Fragment } from "react";
@@ -24,10 +25,10 @@ const ThemedLogo: FC<Props> = ({ style, entering }) => {
       return (
         <Animated.Image
           entering={entering}
-          source={require("@/assets/images/brand/white_on_trans.png")}
+          source={require("@/assets/images/brand/trans_bg.png")}
           style={[
             style,
-            theme == "dark" && { tintColor: "rgba(255,255,255,0.67)" },
+            theme == "dark" && { tintColor: COLORS[theme].secondaryColor },
           ]}
           resizeMode={"contain"}
         />
