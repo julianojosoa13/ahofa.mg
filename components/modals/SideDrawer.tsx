@@ -3,6 +3,7 @@ import { hp, wp } from "@/utils/screensize";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import {
+  Image,
   Modal,
   Pressable,
   ScrollView,

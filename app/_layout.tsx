@@ -1,21 +1,15 @@
-import { router, Slot, Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import { I18nextProvider } from "react-i18next";
-import { Provider, useDispatch, useSelector } from "react-redux";
-
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-
 import { persistor, store } from "@/store/store";
 
 import { createNotifications } from "react-native-notificated";
 
 import "expo-dev-client";
-
 import i18n from "@/lib/i18n";
-
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useEffect, useState } from "react";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
