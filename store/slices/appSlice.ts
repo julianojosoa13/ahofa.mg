@@ -3,6 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import firestore, {
+  doc,
+  getDoc,
+  setDoc,
+} from "@react-native-firebase/firestore";
 
 interface StateTypes {
   busy: boolean;
@@ -16,11 +21,12 @@ interface StateTypes {
     | "terrain"
     | "vehicles"
     | "none";
-
   postType: "offer" | "annoucement";
   showCategorySelectModal: boolean;
   theme: "light" | "dark";
+  userRegistered: boolean; // Nouvel état
 }
+
 const initialState: StateTypes = {
   busy: false,
   firstStep: false,
@@ -30,6 +36,7 @@ const initialState: StateTypes = {
   postType: "annoucement",
   showCategorySelectModal: false,
   theme: "dark",
+  userRegistered: false, // Initialisé à false
 };
 
 const appSlice = createSlice({
@@ -60,6 +67,9 @@ const appSlice = createSlice({
     setAppTheme(state, aciton) {
       state.theme = aciton.payload;
     },
+    setUserRegistered(state, action) {
+      state.userRegistered = action.payload; // Nouveau reducer
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -78,21 +88,6 @@ const appSlice = createSlice({
   },
 });
 
-export const loginStart = createAsyncThunk(
-  "app/loginStart",
-  async (_, thunkAPI) => {
-    try {
-      const response = await onGoogleButtonPress();
-      if (!response) {
-        throw new Error("Error signing User");
-      }
-      return true; // Fulfilled action payload
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message); // Rejected action payload
-    }
-  }
-);
-
 // Selectors
 export const selectAppFirstStep = (state: RootState) => state.app.firstStep;
 export const selectAppBusy = (state: RootState) => state.app.busy;
@@ -110,6 +105,9 @@ export const selectAppShowCategorySelectModal = (state: RootState) =>
 
 export const selectAppTheme = (state: RootState) => state.app.theme;
 
+export const selectUserRegistered = (state: RootState) =>
+  state.app.userRegistered;
+
 export const {
   setAppBusy,
   setAppFirstStep,
@@ -119,5 +117,41 @@ export const {
   setAppSelectedCategory,
   setShowCategorySelectModal,
   setAppTheme,
+  setUserRegistered,
 } = appSlice.actions;
 export default appSlice.reducer;
+
+export const loginStart = createAsyncThunk(
+  "app/loginStart",
+  async (_, thunkAPI) => {
+    try {
+      const response = await onGoogleButtonPress();
+      if (!response) {
+        throw new Error("Error signing User");
+      }
+
+      // Vérifier si l'utilisateur·rice est déjà enregistré·e dans Firestore
+      const userId = response.uid;
+      const userDocRef = firestore().collection("users").doc(userId);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists) {
+        // Enregistrer l'utilisateur·rice dans Firestore
+        await setDoc(userDocRef, {
+          uid: userId,
+          email: response?.email,
+          displayName: response.displayName || "",
+          photoURL: response.photoURL || "",
+          createdAt: new Date().toISOString(),
+        });
+      }
+
+      // Mettre à jour l'état userRegistered dans Redux
+      thunkAPI.dispatch(setUserRegistered(true));
+
+      return true; // Fulfilled action payload
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message); // Rejected action payload
+    }
+  }
+);

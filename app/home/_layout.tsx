@@ -8,7 +8,7 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import { Tabs, useRouter } from "expo-router";
-import IconContainer from "../../components/IconContainer";
+import IconContainer from "../../components/ui/IconContainer";
 import {
   Image,
   Pressable,

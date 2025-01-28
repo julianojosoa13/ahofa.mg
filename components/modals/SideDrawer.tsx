@@ -1,19 +1,10 @@
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
-import {
-  AntDesign,
-  Feather,
-  FontAwesome6,
-  Fontisto,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import {
   Modal,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -25,25 +16,17 @@ import Animated, { SlideInLeft, SlideOutLeft } from "react-native-reanimated";
 import Entypo from "@expo/vector-icons/Entypo";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import LanguagesButton from "../LanguagesButton";
 import { useTranslation } from "react-i18next";
 
 import auth from "@react-native-firebase/auth";
 import { Image } from "expo-image";
 import { useAppDispatch } from "@/store/store";
-import {
-  selectAppTheme,
-  setAppBusy,
-  setShowLoginModal,
-} from "@/store/slices/appSlice";
-import { router, useRouter } from "expo-router";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import Button from "../ui/Button";
+import { selectAppTheme } from "@/store/slices/appSlice";
+
 import BusyModal from "./BusyModal";
-import { openBrowserAsync } from "expo-web-browser";
 import { useSelector } from "react-redux";
 import ThemedLogo from "../ui/ThemedLogo";
-import ThemeSwitcher from "../ThemeSwitcher";
+import ThemeSwitcher from "../ui/ThemeSwitcher";
 
 interface Props {
   visible?: boolean;
@@ -59,30 +42,6 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
 
   const user = auth().currentUser;
   const dispatch = useAppDispatch();
-  // const router = useRouter();
-
-  const handleSignOut = async () => {
-    // dispatch(setAppBusy(true));
-    try {
-      await GoogleSignin.signOut();
-      if (user?.email) await auth().signOut();
-      console.log("Router >> ", router);
-      dispatch(setAppBusy(true));
-      setTimeout(() => {
-        dispatch(setAppBusy(false));
-        router.dismissTo("/");
-      }, 1200);
-      setTimeout(() => {
-        dispatch(setShowLoginModal(true));
-      }, 3500);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleLinkPress = async () => {
-    await openBrowserAsync("https://ahofamg.web.app/tos");
-  };
 
   useEffect(() => {
     let modalTimeout: NodeJS.Timeout;
@@ -177,7 +136,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
             </View>
           </View>
 
-          <ScrollView>
+          <ScrollView style={{ marginBottom: hp(4) }}>
             {/* Mon Profile */}
             <View style={styles.line} />
             <TouchableOpacity style={styles.menuItem}>
@@ -254,48 +213,18 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
                 <Text style={styles.toolTipText}>5</Text>
               </View>
             </TouchableOpacity>
-            <Button
-              title={t("sign out")}
-              action={handleSignOut}
-              style={{
-                backgroundColor: "rgba(255,0,0,0.2)",
-                marginHorizontal: wp(4),
-                height: hp(5),
-                elevation: 0,
-              }}
-              textStyle={{
-                color: "rgba(255,0,0,01)",
-                fontWeight: "600",
-                fontSize: hp(1.6),
-              }}
-            />
-            <TouchableOpacity
-              style={{
-                alignSelf: "center",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 4,
-              }}
-              hitSlop={8}
-              onPress={handleLinkPress}
-            >
-              <Text
-                style={{
-                  color: COLORS[theme].secondaryColor,
-                  textDecorationLine: "underline",
-                  fontWeight: "300",
-                  fontSize: hp(1.5),
-                }}
-              >
-                {t("see tos")}
-              </Text>
-              <MaterialCommunityIcons
-                name="arrow-top-right"
-                size={18}
-                color={COLORS[theme].secondaryColor}
-              />
-            </TouchableOpacity>
           </ScrollView>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 13,
+              fontWeight: "200",
+              color: COLORS[theme].textColor,
+              width: wp(80),
+            }}
+          >
+            {t("all rights")}
+          </Text>
         </Animated.View>
       )}
       <Pressable style={styles.overlay} onPress={onRequestClose} />

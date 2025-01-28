@@ -110,6 +110,7 @@ const createStyles = (theme: "light" | "dark") =>
       height: hp(100),
       justifyContent: "center",
       alignItems: "center",
+      zIndex: 200,
     },
     contentContainer: {
       padding: 10,
@@ -120,6 +121,7 @@ const createStyles = (theme: "light" | "dark") =>
       width: wp(85),
       elevation: 4,
       paddingBottom: 24,
+      zIndex: 201,
     },
     title: {
       textAlign: "center",

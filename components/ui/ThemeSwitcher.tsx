@@ -35,7 +35,7 @@ const ThemeSwitcher: FC<Props> = (props) => {
         source={require("@/assets/animations/themeSwitcher.json")}
         style={{ width: wp(12.5), height: wp(12.5) }}
         loop={false}
-        speed={1.5}
+        speed={2}
       />
     </TouchableOpacity>
   );

@@ -50,6 +50,7 @@ const CreatePost: FC<Props> = (props) => {
 
   const [description, setDescription] = useState("");
   const [showAddButton, setShowAddButton] = useState(true);
+  const [showModalOverlay, setShowModalOverlay] = useState(false);
 
   const handleClose = () => {
     router.dismiss();
@@ -111,8 +112,27 @@ const CreatePost: FC<Props> = (props) => {
       entering={SlideInDown.duration(300)}
       exiting={SlideOutDown}
     >
-      <CategorySelectModal />
-      <BusyModal />
+      {showModalOverlay ? (
+        <BlurView
+          blurType={theme}
+          reducedTransparencyFallbackColor={
+            theme === "light" ? "white" : "black"
+          }
+          blurAmount={theme == "light" ? 10 : 15}
+          style={{
+            width: wp(100),
+            height: hp(100),
+            ...StyleSheet.absoluteFillObject,
+            zIndex: 100,
+          }}
+        />
+      ) : (
+        <>
+          <CategorySelectModal />
+          <BusyModal />
+        </>
+      )}
+
       <View style={styles.headerContainer}>
         <BlurView
           blurType="light"
@@ -237,9 +257,13 @@ const CreatePost: FC<Props> = (props) => {
             position: "absolute",
             bottom: hp(15),
             right: wp(4),
+            zIndex: 200,
           }}
         >
-          <RoundedButton />
+          <RoundedButton
+            onPress={() => setShowModalOverlay(!showModalOverlay)}
+            showModalOverlay={showModalOverlay}
+          />
         </View>
       )}
 
@@ -262,7 +286,7 @@ const createStyles = (top: number, theme: "light" | "dark") =>
       position: "absolute",
       left: 0,
       top: 0,
-      zIndex: 200,
+      zIndex: 90,
     },
     customHeader: {
       height: hp(7.5) + top,

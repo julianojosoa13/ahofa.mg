@@ -159,7 +159,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                 disabled={buttonDisabled}
                 style={{
                   height: hp(6),
-                  backgroundColor: buttonDisabled ? "lightgrey" : "green",
+                  backgroundColor: buttonDisabled ? "rgba(0,0,0,0.2)" : "green",
                   justifyContent: "center",
                   alignItems: "center",
                   width: wp(35),
@@ -208,7 +208,7 @@ const createStyles = (theme: "light" | "dark") =>
       height: hp(42.5),
       marginLeft: wp(3.5),
       marginRight: wp(3.5),
-      backgroundColor: "rgba(255,255,255,0.95)",
+      backgroundColor: COLORS[theme].bgColor,
       borderTopLeftRadius: 35,
       borderTopRightRadius: 8,
       borderBottomLeftRadius: 8,

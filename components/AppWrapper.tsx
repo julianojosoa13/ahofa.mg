@@ -8,6 +8,8 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useSelector } from "react-redux";
 import { selectAppBusy, setAppBusy } from "@/store/slices/appSlice";
 import { useAppDispatch } from "@/store/store";
+import i18n from "@/lib/i18n";
+import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
 
 interface Props {}
 
@@ -22,7 +24,7 @@ const AppWrapper: FC<Props> = (props) => {
 
   useEffect(() => {
     console.log("Current User >>> ", currentUser);
-    if (currentUser?.email) router.replace("/LoadingUser");
+    if (currentUser?.email) router.replace("/home");
   }, [currentUser]);
 
   function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
@@ -31,6 +33,11 @@ const AppWrapper: FC<Props> = (props) => {
       setInitializing(false);
     }
   }
+  const language = useSelector(selectTranslationsLanguage);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
 
   useEffect(() => {
     const user = auth().currentUser;
@@ -43,9 +50,9 @@ const AppWrapper: FC<Props> = (props) => {
   }, []);
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack screenOptions={{ headerShown: false }} initialRouteName="index">
       <Stack.Screen name="index" />
-      <Stack.Screen name="LoadingUser" />
+      <Stack.Screen name="HomePage" />
     </Stack>
   );
 };
