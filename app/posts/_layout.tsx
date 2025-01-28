@@ -22,13 +22,6 @@ const PostsLayout = () => {
           animation: "slide_from_bottom",
         }}
       />
-      <Stack.Screen
-        name="CreateOffer"
-        options={{
-          title: t("new post"),
-          animation: "slide_from_bottom",
-        }}
-      />
     </Stack>
   );
 };

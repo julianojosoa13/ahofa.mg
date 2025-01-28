@@ -19,9 +19,11 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Button from "../ui/Button";
 import COLORS from "@/utils/colors";
 import Animated, {
+  BounceIn,
   FadeInDown,
   FadeInUp,
   SlideInDown,
+  ZoomIn,
   ZoomInDown,
 } from "react-native-reanimated";
 import Electronics from "../Categories/Eletronics";
@@ -66,7 +68,7 @@ const CategorySelectModal: FC<Props> = (props) => {
       >
         <Animated.View
           style={styles.contentContainer}
-          entering={FadeInUp.duration(300).delay(50)}
+          entering={ZoomIn.duration(300).delay(50)}
         >
           <TouchableOpacity
             hitSlop={8}

@@ -127,10 +127,10 @@ const CreatePost: FC<Props> = (props) => {
           }}
         />
       ) : (
-        <>
+        <View style={{ zIndex: 200 }}>
           <CategorySelectModal />
           <BusyModal />
-        </>
+        </View>
       )}
 
       <View style={styles.headerContainer}>
@@ -169,7 +169,7 @@ const CreatePost: FC<Props> = (props) => {
             style={{
               backgroundColor: COLORS[theme].softBgColor,
               // elevation: 2,
-              marginBottom: hp(4),
+              marginBottom: hp(2),
               marginTop: hp(2),
               borderRadius: 8,
               paddingHorizontal: wp(2),
@@ -257,7 +257,7 @@ const CreatePost: FC<Props> = (props) => {
             position: "absolute",
             bottom: hp(15),
             right: wp(4),
-            zIndex: 200,
+            zIndex: 101,
           }}
         >
           <RoundedButton
@@ -286,7 +286,7 @@ const createStyles = (top: number, theme: "light" | "dark") =>
       position: "absolute",
       left: 0,
       top: 0,
-      zIndex: 90,
+      zIndex: 99,
     },
     customHeader: {
       height: hp(7.5) + top,
@@ -294,7 +294,7 @@ const createStyles = (top: number, theme: "light" | "dark") =>
       backgroundColor: COLORS[theme].bgColor,
       flexDirection: "row",
       alignItems: "center",
-      paddingHorizontal: wp(8),
+      paddingHorizontal: wp(5),
       gap: wp(5),
       paddingTop: top,
     },
@@ -305,7 +305,7 @@ const createStyles = (top: number, theme: "light" | "dark") =>
     },
     title: {
       fontWeight: "bold",
-      color: COLORS[theme].thirdColor,
+      color: COLORS[theme].textColor,
       fontSize: hp(2.25),
     },
     close: {},

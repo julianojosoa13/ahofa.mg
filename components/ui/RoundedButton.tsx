@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
-import { AntDesign, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  Feather,
+  FontAwesome5,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { selectAppTheme } from "@/store/slices/appSlice";
@@ -12,9 +18,22 @@ import Animated, {
   withTiming,
   Easing,
   SharedValue,
+  SlideInUp,
+  FadeInUp,
+  FadeInDown,
+  ZoomInEasyUp,
+  ZoomInUp,
+  ZoomIn,
+  ZoomOut,
+  ZoomOutEasyDown,
+  BounceIn,
+  BounceOut,
+  BounceInUp,
+  FadeIn,
 } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 import { BlurView } from "@react-native-community/blur";
+import { ZoomInZoomOut } from "react-native-notificated";
 
 interface Props {
   onPress?: () => void;
@@ -27,7 +46,6 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
   const theme = useSelector(selectAppTheme);
 
   const [expanded, setExpanded] = useState(false);
-  const [hideButtons, setHideButton] = useState(true);
 
   // Animation values
   const offsets = [0, 1, 2, 3].map(() => useSharedValue(0));
@@ -44,12 +62,6 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
           }
         );
       });
-
-      if (newExpanded) {
-        setHideButton(false);
-      } else {
-        setHideButton(true);
-      }
       return newExpanded;
     });
   };
@@ -64,24 +76,29 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
   const buttonStyles = (offset: SharedValue<number>) =>
     useAnimatedStyle(() => ({
       transform: [{ translateY: -offset.value }],
+      opacity: offset.value > 0 ? 1 : 0, // Hide buttons when not expanded
     }));
 
   const buttonData = [
     {
       icon: <MaterialIcons name="photo" size={24} color="white" />,
       label: t("addPhotos"),
+      onPress: () => console.log("Add Photos Pressed"),
     },
     {
       icon: <FontAwesome5 name="dollar-sign" size={24} color="white" />,
       label: t("setPrice"),
+      onPress: () => console.log("Set Price Pressed"),
     },
     {
       icon: <FontAwesome5 name="list" size={24} color="white" />,
       label: t("addDetails"),
+      onPress: () => console.log("Add Details Pressed"),
     },
     {
       icon: <MaterialIcons name="location-on" size={24} color="white" />,
       label: t("setLocation"),
+      onPress: () => console.log("Set Location Pressed"),
     },
   ];
 
@@ -96,26 +113,22 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
           key={index}
           style={[styles.hiddenButton, buttonStyles(offsets[index])]}
         >
-          {expanded && !hideButtons && (
-            <TouchableOpacity
-              style={[
-                styles.button,
-                { backgroundColor: COLORS[theme].imageTintColor },
-              ]}
-              activeOpacity={0.5}
-              hitSlop={10}
-            >
-              {data.icon}
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            style={[
+              styles.button,
+              { backgroundColor: COLORS[theme].imageTintColor },
+            ]}
+            activeOpacity={0.5}
+            hitSlop={10}
+            onPress={data.onPress}
+            disabled={false}
+          >
+            {data.icon}
+          </TouchableOpacity>
         </Animated.View>
       ))}
 
-      <TouchableOpacity
-        onPress={handlePress}
-        activeOpacity={0.8}
-        style={[styles.container]}
-      >
+      <TouchableOpacity onPress={handlePress} style={[styles.container]}>
         <Text
           style={{
             color: COLORS[theme].imageTintColor,
@@ -125,16 +138,37 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
             marginBottom: -hp(1.5),
           }}
         >
-          {t("add")}
+          {t(expanded ? "" : "add")}
         </Text>
-        <LottieView
-          ref={ref}
-          source={require("@/assets/animations/addButton.json")}
-          style={{ width: wp(25), height: wp(25) }}
-          loop={true}
-          speed={0.5}
-          autoPlay
-        />
+        {!expanded ? (
+          <LottieView
+            ref={ref}
+            source={require("@/assets/animations/addButton.json")}
+            style={{ width: wp(25), height: wp(25) }}
+            loop={true}
+            speed={0.5}
+            autoPlay
+          />
+        ) : (
+          <Animated.View
+            entering={BounceIn}
+            style={{
+              width: wp(16),
+              height: wp(16),
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#720e9e",
+              borderRadius: wp(8),
+              marginTop: wp(4),
+              marginBottom: wp(4),
+              elevation: 1,
+            }}
+          >
+            <Animated.View entering={BounceIn.delay(150)}>
+              <Entypo name="cross" color={"white"} size={25} />
+            </Animated.View>
+          </Animated.View>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -170,8 +204,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
-
-    zIndex: 300,
   },
 });
 

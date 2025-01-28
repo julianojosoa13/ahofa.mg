@@ -32,7 +32,7 @@ const initialState: StateTypes = {
   firstStep: false,
   showLoginModal: false,
   error: {},
-  selectedCategory: "none",
+  selectedCategory: "houses",
   postType: "annoucement",
   showCategorySelectModal: false,
   theme: "dark",
