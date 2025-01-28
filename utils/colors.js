@@ -10,16 +10,16 @@ const COLORS = {
 
     imageTintColor: "rgb(151, 59, 238)",
 
-    miniViolet: "rgb(160, 160, 202)",
+    miniViolet: "rgba(160, 160, 202,0.25)",
     violet: "rgb(000,000,100)",
 
-    miniRed: "rgb(243, 220, 220)",
+    miniRed: "rgba(243, 220, 220,0.5)",
     red: "rgb(200,100,100)",
 
-    miniYellow: "rgb(224, 224, 169)",
+    miniYellow: "rgba(224, 224, 169, 0.5)",
     yellow: "rgb(100,100,0)",
 
-    miniGreen: "rgb(158, 219, 158)",
+    miniGreen: "rgba(158, 219, 158,0.5)",
     green: "rgb(0,100,0)",
   },
   dark: {
@@ -33,16 +33,16 @@ const COLORS = {
 
     imageTintColor: "rgb(79, 25, 129)",
 
-    miniViolet: "rgb(160, 160, 202)",
+    miniViolet: "rgba(160, 160, 202,1)",
     violet: "rgb(000,000,100)",
 
-    miniRed: "rgb(243, 220, 220)",
+    miniRed: "rgba(243, 220, 220,1)",
     red: "rgb(200,100,100)",
 
-    miniYellow: "rgb(224, 224, 169)",
+    miniYellow: "rgba(224, 224, 169, 1)",
     yellow: "rgb(100,100,0)",
 
-    miniGreen: "rgb(158, 219, 158)",
+    miniGreen: "rgba(158, 219, 158,1)",
     green: "rgb(0,100,0)",
   },
 };
