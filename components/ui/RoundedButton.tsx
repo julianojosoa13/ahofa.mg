@@ -81,9 +81,9 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
 
   const buttonData = [
     {
-      icon: <MaterialIcons name="photo" size={24} color="white" />,
-      label: t("addPhotos"),
-      onPress: () => console.log("Add Photos Pressed"),
+      icon: <MaterialIcons name="location-on" size={24} color="white" />,
+      label: t("setLocation"),
+      onPress: () => console.log("Set Location Pressed"),
     },
     {
       icon: <FontAwesome5 name="dollar-sign" size={24} color="white" />,
@@ -96,9 +96,9 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
       onPress: () => console.log("Add Details Pressed"),
     },
     {
-      icon: <MaterialIcons name="location-on" size={24} color="white" />,
-      label: t("setLocation"),
-      onPress: () => console.log("Set Location Pressed"),
+      icon: <MaterialIcons name="camera-alt" size={24} color="white" />,
+      label: t("addPhotos"),
+      onPress: () => console.log("Add Photos Pressed"),
     },
   ];
 
@@ -176,9 +176,6 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
 
 const styles = StyleSheet.create({
   floatingContainer: {
-    position: "absolute",
-    bottom: hp(5),
-    right: wp(2.5),
     alignItems: "center",
   },
   container: {

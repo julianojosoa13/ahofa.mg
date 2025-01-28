@@ -237,9 +237,8 @@ const CreatePost: FC<Props> = (props) => {
           <View
             style={{
               width: wp(20),
-              height: wp(20),
+              height: hp(80),
               position: "absolute",
-              bottom: hp(15),
               right: wp(4),
             }}
           >
@@ -253,11 +252,13 @@ const CreatePost: FC<Props> = (props) => {
         <View
           style={{
             width: wp(20),
-            height: wp(20),
+            height: hp(50),
             position: "absolute",
             bottom: hp(15),
             right: wp(4),
             zIndex: 101,
+            // backgroundColor: "red",
+            justifyContent: "flex-end",
           }}
         >
           <RoundedButton
