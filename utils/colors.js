@@ -10,7 +10,17 @@ const COLORS = {
 
     imageTintColor: "rgb(151, 59, 238)",
 
-    violet: "violet",
+    miniViolet: "rgb(160, 160, 202)",
+    violet: "rgb(000,000,100)",
+
+    miniRed: "rgb(243, 220, 220)",
+    red: "rgb(200,100,100)",
+
+    miniYellow: "rgb(224, 224, 169)",
+    yellow: "rgb(100,100,0)",
+
+    miniGreen: "rgb(158, 219, 158)",
+    green: "rgb(0,100,0)",
   },
   dark: {
     mainColor: "rgba(238,142,59,1)", // Vibrant accent color
@@ -22,7 +32,18 @@ const COLORS = {
     white: "rgba(255,255,255,0.9)", // Slightly transparent white
 
     imageTintColor: "rgb(79, 25, 129)",
-    violet: "violet",
+
+    miniViolet: "rgb(160, 160, 202)",
+    violet: "rgb(000,000,100)",
+
+    miniRed: "rgb(243, 220, 220)",
+    red: "rgb(200,100,100)",
+
+    miniYellow: "rgb(224, 224, 169)",
+    yellow: "rgb(100,100,0)",
+
+    miniGreen: "rgb(158, 219, 158)",
+    green: "rgb(0,100,0)",
   },
 };
 

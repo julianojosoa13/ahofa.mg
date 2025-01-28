@@ -81,24 +81,38 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
 
   const buttonData = [
     {
-      icon: <MaterialIcons name="location-on" size={24} color="white" />,
+      icon: (
+        <MaterialIcons name="location-on" size={24} color={COLORS.dark.green} />
+      ),
       label: t("setLocation"),
       onPress: () => console.log("Set Location Pressed"),
+      bgColor: COLORS.dark.miniGreen,
+      fbColor: COLORS.dark.green,
     },
     {
-      icon: <FontAwesome5 name="dollar-sign" size={24} color="white" />,
+      icon: (
+        <FontAwesome5 name="dollar-sign" size={24} color={COLORS.dark.red} />
+      ),
       label: t("setPrice"),
       onPress: () => console.log("Set Price Pressed"),
+      bgColor: COLORS.dark.miniRed,
+      fbColor: COLORS.dark.red,
     },
     {
-      icon: <FontAwesome5 name="list" size={24} color="white" />,
+      icon: <FontAwesome5 name="list" size={24} color={COLORS.dark.yellow} />,
       label: t("addDetails"),
       onPress: () => console.log("Add Details Pressed"),
+      bgColor: COLORS.dark.miniYellow,
+      fbColor: COLORS.dark.yellow,
     },
     {
-      icon: <MaterialIcons name="camera-alt" size={24} color="white" />,
+      icon: (
+        <MaterialIcons name="camera-alt" size={24} color={COLORS.dark.violet} />
+      ),
       label: t("addPhotos"),
       onPress: () => console.log("Add Photos Pressed"),
+      bgColor: COLORS.dark.miniViolet,
+      fbColor: COLORS.dark.violet,
     },
   ];
 
@@ -114,10 +128,7 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
           style={[styles.hiddenButton, buttonStyles(offsets[index])]}
         >
           <TouchableOpacity
-            style={[
-              styles.button,
-              { backgroundColor: COLORS[theme].imageTintColor },
-            ]}
+            style={[styles.button, { backgroundColor: data.bgColor }]}
             activeOpacity={0.5}
             hitSlop={10}
             onPress={data.onPress}
