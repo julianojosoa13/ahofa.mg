@@ -10,9 +10,11 @@ import { BlurView } from "@react-native-community/blur";
 
 import * as Linking from "expo-linking";
 import Button from "../ui/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAcceptedToS } from "@/store/slices/onboardingSlice";
-import { setShowLoginModal } from "@/store/slices/appSlice";
+import { selectAppTheme, setShowLoginModal } from "@/store/slices/appSlice";
+
+import { openBrowserAsync } from "expo-web-browser";
 
 interface Props {
   onClose?: () => void;
@@ -22,6 +24,9 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
+
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -36,7 +41,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   };
 
   const handleLinkPress = () => {
-    Linking.openURL("https://ahofamg.web.app/tos");
+    openBrowserAsync("https://ahofamg.web.app/tos");
     setTimeout(() => {
       setButtonDisabled(false);
     }, 3000);
@@ -90,7 +95,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               </View>
               <Text
                 style={{
-                  color: COLORS.secondaryColor,
+                  color: COLORS[theme].secondaryColor,
                   textTransform: "uppercase",
                   fontSize: hp(2),
                   textAlign: "center",
@@ -114,7 +119,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               >
                 <Text
                   style={{
-                    color: COLORS.secondaryColor,
+                    color: COLORS[theme].secondaryColor,
                     textDecorationLine: "underline",
                     fontWeight: "500",
                     fontSize: hp(1.5),
@@ -125,7 +130,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                 <MaterialCommunityIcons
                   name="arrow-top-right"
                   size={18}
-                  color={COLORS.secondaryColor}
+                  color={COLORS[theme].secondaryColor}
                 />
               </TouchableOpacity>
             </View>
@@ -133,7 +138,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               style={{
                 textAlign: "center",
                 marginTop: hp(2),
-                color: COLORS.mainColor,
+                color: COLORS[theme].mainColor,
                 fontWeight: "300",
                 height: hp(10),
                 verticalAlign: "middle",
@@ -154,7 +159,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                 disabled={buttonDisabled}
                 style={{
                   height: hp(6),
-                  backgroundColor: buttonDisabled ? "lightgrey" : "green",
+                  backgroundColor: buttonDisabled ? "rgba(0,0,0,0.2)" : "green",
                   justifyContent: "center",
                   alignItems: "center",
                   width: wp(35),
@@ -191,32 +196,33 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   );
 });
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    width: wp(100),
-    height: hp(72.5),
-    backgroundColor: "transparent",
-  },
-  modalBox: {
-    width: wp(93),
-    height: hp(42.5),
-    marginLeft: wp(3.5),
-    marginRight: wp(3.5),
-    backgroundColor: "rgba(255,255,255,0.95)",
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 35,
-    marginBottom: hp(2),
-  },
-  title: { color: COLORS.secondaryColor },
-  backdrop: {
-    backgroundColor: "rgba(0,0,0,0.33)",
-  },
-  header: {
-    height: hp(10),
-    paddingHorizontal: wp(7),
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    contentContainer: {
+      width: wp(100),
+      height: hp(72.5),
+      backgroundColor: "transparent",
+    },
+    modalBox: {
+      width: wp(93),
+      height: hp(42.5),
+      marginLeft: wp(3.5),
+      marginRight: wp(3.5),
+      backgroundColor: COLORS[theme].bgColor,
+      borderTopLeftRadius: 35,
+      borderTopRightRadius: 8,
+      borderBottomLeftRadius: 8,
+      borderBottomRightRadius: 35,
+      marginBottom: hp(2),
+    },
+    title: { color: COLORS[theme].secondaryColor },
+    backdrop: {
+      backgroundColor: "rgba(0,0,0,0.33)",
+    },
+    header: {
+      height: hp(10),
+      paddingHorizontal: wp(7),
+    },
+  });
 
 export default ToSModal;

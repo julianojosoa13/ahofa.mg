@@ -7,8 +7,8 @@ import {
   MaterialIcons,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
-import IconContainer from "../../components/IconContainer";
+import { Tabs, useRouter } from "expo-router";
+import IconContainer from "../../components/ui/IconContainer";
 import {
   Image,
   Pressable,
@@ -19,13 +19,22 @@ import {
 } from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import SideDrawer from "@/components/modals/SideDrawer";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import LottieView from "lottie-react-native";
+import { useAppDispatch } from "@/store/store";
+import { useSelector } from "react-redux";
+import { selectAppTheme } from "@/store/slices/appSlice";
+import { BlurView } from "@react-native-community/blur";
 
 const marginBottom = hp(0.25);
 
 const HomeLayout = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const theme = useSelector(selectAppTheme);
+  const router = useRouter();
 
   return (
     <Tabs
@@ -39,8 +48,8 @@ const HomeLayout = () => {
           position: "absolute",
           bottom: 0,
         },
-        tabBarActiveTintColor: COLORS.mainColor,
-        tabBarInactiveTintColor: COLORS.secondaryColor,
+        tabBarActiveTintColor: COLORS[theme].mainColor,
+        tabBarInactiveTintColor: COLORS[theme].secondaryColor,
         headerLeft: () => {
           const [visible, setVisible] = useState(false);
           return (
@@ -52,7 +61,11 @@ const HomeLayout = () => {
               }}
             >
               <TouchableOpacity onPress={() => setVisible(true)}>
-                <Entypo name="menu" size={34} color={COLORS.thirdColor} />
+                <Entypo
+                  name="menu"
+                  size={40}
+                  color={COLORS[theme].thirdColor}
+                />
               </TouchableOpacity>
 
               <SideDrawer
@@ -62,7 +75,16 @@ const HomeLayout = () => {
             </View>
           );
         },
+        headerStyle: { backgroundColor: COLORS[theme].bgColor },
         headerRight: () => {
+          const animRef = useRef<LottieView | null>(null);
+
+          const handlePress = () => {
+            animRef.current?.play();
+            setTimeout(() => {
+              router.navigate("/posts/CreatePost");
+            }, 600);
+          };
           return (
             <Animated.View
               style={{
@@ -71,37 +93,71 @@ const HomeLayout = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Pressable
+              <TouchableOpacity
+                activeOpacity={0.67}
                 style={{
-                  width: wp(77),
+                  width: wp(74),
                   height: hp(5),
-                  borderRadius: 8,
-                  justifyContent: "center",
+                  borderRadius: 40,
+                  flexDirection: "row",
+                  paddingHorizontal: wp(2),
+                  justifyContent: "space-between",
                   alignItems: "center",
                   paddingLeft: wp(2.5),
-                  backgroundColor: COLORS.bgColor,
+                  backgroundColor: COLORS[theme].softBgColor,
+                  borderColor: "lightgrey",
                 }}
               >
                 <Text
                   style={{
-                    color: COLORS.secondaryColor,
-                    fontWeight: "300",
+                    fontWeight: "200",
                     fontSize: hp(1.9),
+                    color: COLORS[theme].textColor,
                   }}
                 >
                   {t("what are you thinking")}
                 </Text>
-              </Pressable>
+                <AntDesign
+                  name="search1"
+                  size={25}
+                  color={COLORS[theme].textColor}
+                />
+              </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  marginRight: wp(2),
+                  marginRight: wp(2.5),
                 }}
+                onPress={handlePress}
               >
-                <AntDesign name="search1" size={30} />
+                <LottieView
+                  source={require("@/assets/animations/plusAlt.json")}
+                  style={{
+                    width: 40,
+                    height: 40,
+                    marginLeft: 0,
+                    backgroundColor: COLORS[theme].mainColor,
+                  }}
+                  ref={animRef}
+                  speed={1.5}
+                  loop={false}
+                />
               </TouchableOpacity>
             </Animated.View>
+          );
+        },
+        tabBarBackground: () => {
+          return (
+            <View
+              style={{
+                backgroundColor: COLORS[theme].bgColor,
+                position: "absolute",
+                height: 60,
+                width: "100%",
+                bottom: 0,
+              }}
+            ></View>
           );
         },
       }}
@@ -115,7 +171,11 @@ const HomeLayout = () => {
               <IconContainer delay={0} focused={focused}>
                 <AntDesign
                   name="home"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -132,7 +192,11 @@ const HomeLayout = () => {
               <IconContainer delay={150} focused={focused}>
                 <AntDesign
                   name="car"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -149,7 +213,11 @@ const HomeLayout = () => {
               <IconContainer delay={300} focused={focused}>
                 <MaterialIcons
                   name="landscape"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -166,7 +234,11 @@ const HomeLayout = () => {
               <IconContainer delay={450} focused={focused}>
                 <SimpleLineIcons
                   name="music-tone-alt"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={25}
                 />
               </IconContainer>
@@ -183,7 +255,11 @@ const HomeLayout = () => {
               <IconContainer delay={600} focused={focused}>
                 <FontAwesome6
                   name="computer"
-                  color={focused ? COLORS.bgColor : COLORS.secondaryColor}
+                  color={
+                    focused
+                      ? COLORS[theme].bgColor
+                      : COLORS[theme].secondaryColor
+                  }
                   size={22}
                 />
               </IconContainer>

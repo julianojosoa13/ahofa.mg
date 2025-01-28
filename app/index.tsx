@@ -1,58 +1,66 @@
-import { hp, wp } from "@/utils/screensize";
-import { BlurView } from "@react-native-community/blur";
+import { selectAppTheme } from "@/store/slices/appSlice";
+import COLORS from "@/utils/colors";
+import { wp } from "@/utils/screensize";
 import LottieView from "lottie-react-native";
-import React, { FC } from "react";
-import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import React, { FC, useEffect } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import auth from "@react-native-firebase/auth";
+import { Image } from "expo-image";
+import ThemedLogo from "@/components/ui/ThemedLogo";
+import { useRouter } from "expo-router";
 
 interface Props {}
 
-const Index: FC<Props> = (props) => {
-  return (
-    <View style={styles.contentContainer}>
-      <BlurView
-        blurType="light"
-        blurAmount={10}
-        reducedTransparencyFallbackColor="white"
-        style={styles.contentContainer}
-      >
-        <View
-          style={{
-            alignSelf: "center",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={require("@/assets/images/brand/trans_bg.png")}
-            style={{
-              width: wp(27.5),
-              height: hp(27.5),
-              marginBottom: -hp(7.5),
-            }}
-            resizeMode={"contain"}
-          />
+const Loading: FC<Props> = (props) => {
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
+  const user = auth().currentUser;
+  const router = useRouter();
 
-          <LottieView
-            source={require("@/assets/animations/activityIndicator.json")}
-            autoPlay
-            loop
-            speed={1.25}
-            style={{ width: wp(20), height: wp(20) }}
-          />
-        </View>
-      </BlurView>
-    </View>
+  useEffect(() => {
+    if (!user) setTimeout(() => router.replace("/HomePage"), 2000);
+  }, []);
+  return (
+    <SafeAreaView style={styles.container}>
+      <ThemedLogo style={styles.logo} entering={null} />
+
+      <LottieView
+        source={require("@/assets/animations/activityIndicator.json")}
+        autoPlay
+        loop
+        style={styles.anim}
+      />
+      {/* {user && (
+        <Image source={{ uri: user?.photoURL }} style={styles.userAvatar} />
+      )} */}
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    width: wp(100),
-    height: hp(100),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: COLORS[theme].softBgColor,
+    },
+    anim: {
+      width: wp(25),
+      height: wp(25),
+    },
+    userAvatar: {
+      width: wp(20),
+      height: wp(20),
+      borderRadius: wp(10),
+      borderWidth: 4,
+      borderColor: COLORS[theme].thirdColor,
+    },
+    logo: {
+      width: wp(35),
+      height: wp(35),
+    },
+  });
 
-export default Index;
+export default Loading;

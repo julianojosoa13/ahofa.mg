@@ -1,3 +1,4 @@
+import { selectAppTheme } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { AntDesign, Entypo } from "@expo/vector-icons";
@@ -10,6 +11,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 interface Props {
   label: string;
@@ -32,6 +34,8 @@ const FormInput: FC<Props> = ({
 }) => {
   const [focused, setFocused] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(secret);
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
 
   const handleFocus = () => {
     setFocused(true);
@@ -47,11 +51,11 @@ const FormInput: FC<Props> = ({
 
   const focusedStyle = {
     borderWidth: 2,
-    borderColor: COLORS.mainColor,
+    borderColor: COLORS[theme].mainColor,
   };
 
   const focusedLabel = {
-    color: COLORS.mainColor,
+    color: COLORS[theme].mainColor,
   };
 
   return (
@@ -62,7 +66,7 @@ const FormInput: FC<Props> = ({
         <TextInput
           style={[
             styles.input,
-            focused && { borderLeftColor: COLORS.mainColor },
+            focused && { borderLeftColor: COLORS[theme].mainColor },
           ]}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -77,7 +81,7 @@ const FormInput: FC<Props> = ({
             name={secureTextEntry ? "eye" : "eye-with-line"}
             onPress={handleEyePress}
             size={23}
-            color={focused ? COLORS.mainColor : "rgba(200,203,203,1)"}
+            color={focused ? COLORS[theme].mainColor : COLORS[theme].thirdColor}
           />
         )}
       </View>
@@ -85,31 +89,34 @@ const FormInput: FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    margin: wp(2),
-  },
-  label: {
-    color: "grey",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingLeft: wp(2),
-    paddingRight: wp(2),
-    marginVertical: hp(0.5),
-    borderWidth: 0.75,
-    height: hp(5),
-    borderRadius: wp(2),
-    borderColor: "lightgrey",
-    gap: wp(2),
-  },
-  input: {
-    flex: 1,
-    borderLeftWidth: 1,
-    paddingLeft: wp(2),
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      margin: wp(2),
+    },
+    label: {
+      color: "grey",
+    },
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      paddingLeft: wp(2),
+      paddingRight: wp(2),
+      marginVertical: hp(0.5),
+      borderWidth: 1,
+      height: hp(5),
+      borderRadius: wp(2),
+      borderColor: COLORS[theme].thirdColor,
+      gap: wp(2),
+    },
+    input: {
+      flex: 1,
+      borderLeftWidth: 0.75,
+      paddingLeft: wp(2),
+      borderLeftColor: COLORS[theme].thirdColor,
+      color: COLORS[theme].textColor,
+    },
+  });
 
 export default FormInput;

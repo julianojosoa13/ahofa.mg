@@ -1,19 +1,10 @@
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
-import {
-  AntDesign,
-  Feather,
-  FontAwesome6,
-  Fontisto,
-  Ionicons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import {
-  Image,
   Modal,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -25,14 +16,17 @@ import Animated, { SlideInLeft, SlideOutLeft } from "react-native-reanimated";
 import Entypo from "@expo/vector-icons/Entypo";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import LanguagesButton from "../LanguagesButton";
 import { useTranslation } from "react-i18next";
 
 import auth from "@react-native-firebase/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { Image } from "expo-image";
 import { useAppDispatch } from "@/store/store";
-import { setAppBusy, setShowLoginModal } from "@/store/slices/appSlice";
-import { router } from "expo-router";
+import { selectAppTheme } from "@/store/slices/appSlice";
+
+import BusyModal from "./BusyModal";
+import { useSelector } from "react-redux";
+import ThemedLogo from "../ui/ThemedLogo";
+import ThemeSwitcher from "../ui/ThemeSwitcher";
 
 interface Props {
   visible?: boolean;
@@ -42,19 +36,12 @@ interface Props {
 const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
-  console.log("t >> ", t);
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
+
   const user = auth().currentUser;
-
-  const handleSignOut = async () => {
-    // dispatch(setAppBusy(true));
-    await GoogleSignin.signOut();
-    await auth().signOut();
-    // dispatch(setAppBusy(false));
-    dispatch(setShowLoginModal(true));
-    router.navigate("/Onboarding");
-  };
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let modalTimeout: NodeJS.Timeout;
@@ -75,21 +62,26 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
       visible={showModal}
       onRequestClose={onRequestClose}
     >
+      <BusyModal />
       {visible && (
         <Animated.View
           style={styles.container}
           entering={SlideInLeft.duration(300)}
           exiting={SlideOutLeft.duration(300)}
         >
+          <View style={styles.themeButton}>
+            <ThemeSwitcher />
+            <Text style={styles.themeButtonLabel}>{t(theme)}</Text>
+          </View>
           <TouchableOpacity
             style={styles.closeButton}
             onPress={onRequestClose}
             hitSlop={8}
           >
-            <FontAwesome6 name="x" size={25} />
+            <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
           </TouchableOpacity>
-          <Animated.Image
-            source={require("@/assets/images/brand/trans_bg.png")}
+          <ThemedLogo
+            entering={undefined}
             style={{
               width: wp(25),
               height: wp(25),
@@ -102,7 +94,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
               textAlign: "center",
               fontWeight: "500",
               fontSize: hp(2.25),
-              color: COLORS.mainColor,
+              color: COLORS[theme].mainColor,
             }}
           >
             {t("account management").toUpperCase()}
@@ -123,54 +115,81 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
                 <AntDesign
                   name="user"
                   size={75}
-                  color={"#fff"}
+                  color={COLORS[theme].bgColor}
                   style={{
-                    backgroundColor: COLORS.mainColor,
+                    backgroundColor: COLORS[theme].mainColor,
                     borderRadius: 75 / 2,
                   }}
                 />
               )}
             </TouchableOpacity>
 
-            <Pressable onPress={handleSignOut}>
-              <Text style={{ fontWeight: "200" }}>
+            <View>
+              <Text
+                style={{ fontWeight: "500", color: COLORS[theme].textColor }}
+              >
                 {user ? user.displayName : t("not connected")}
               </Text>
-              <Text style={styles.loginButtton}>
-                {user ? t("sign out") : t("sign in")}
+              <Text style={styles.email} numberOfLines={1}>
+                {user ? user?.email : t("sign in")}
               </Text>
-            </Pressable>
+            </View>
           </View>
 
-          <ScrollView>
+          <ScrollView style={{ marginBottom: hp(4) }}>
             {/* Mon Profile */}
             <View style={styles.line} />
             <TouchableOpacity style={styles.menuItem}>
-              <FontAwesome name="user-o" size={24} color="black" />
+              <FontAwesome
+                name="user-o"
+                size={24}
+                color={"rgba(200,200,0,1)"}
+                // color={COLORS[theme].textColor}
+              />
               <Text style={styles.menuLabel}>{t("my profile")}</Text>
             </TouchableOpacity>
 
             {/* Parametres */}
             <TouchableOpacity style={styles.menuItem}>
-              <Entypo name="tools" size={24} color="black" />
+              <Entypo
+                name="tools"
+                size={24}
+                //  color={COLORS[theme].textColor}
+                color={"rgba(100,100,200,1)"}
+              />
               <Text style={styles.menuLabel}>{t("settings")}</Text>
             </TouchableOpacity>
 
             {/* Mes Locations */}
             <TouchableOpacity style={styles.menuItem}>
-              <Ionicons name="bag-handle-outline" size={24} color="black" />
+              <Ionicons
+                name="bag-handle-outline"
+                size={24}
+                // color={COLORS[theme].textColor}
+                color={"rgba(200,100,200,1)"}
+              />
               <Text style={styles.menuLabel}>{t("my rentals")}</Text>
             </TouchableOpacity>
 
             {/* Mes Achats */}
             <TouchableOpacity style={styles.menuItem}>
-              <FontAwesome name="credit-card" size={24} color="black" />
+              <FontAwesome
+                name="credit-card"
+                size={24}
+                // color={COLORS[theme].textColor}
+                color={"rgba(100,200,100,1)"}
+              />
               <Text style={styles.menuLabel}>{t("my purchases")}</Text>
             </TouchableOpacity>
 
             {/* Mes messages */}
             <TouchableOpacity style={styles.menuItem}>
-              <Ionicons name="chatbubble-outline" size={24} color="black" />
+              <Ionicons
+                name="chatbubble-outline"
+                size={24}
+                // color={COLORS[theme].textColor}
+                color={"rgba(100,200,200,1)"}
+              />
               <Text style={styles.menuLabel}>{t("messages")}</Text>
 
               {/* ToolTip */}
@@ -181,7 +200,12 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
 
             {/* Mes notifications */}
             <TouchableOpacity style={styles.menuItem}>
-              <AntDesign name="bells" size={24} color="black" />
+              <AntDesign
+                name="bells"
+                size={24}
+                // color={COLORS[theme].textColor}
+                color={"rgba(200,100,100,1)"}
+              />
               <Text style={styles.menuLabel}>{t("notifications")}</Text>
 
               {/* ToolTip */}
@@ -190,6 +214,17 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
               </View>
             </TouchableOpacity>
           </ScrollView>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 13,
+              fontWeight: "200",
+              color: COLORS[theme].textColor,
+              width: wp(80),
+            }}
+          >
+            {t("all rights")}
+          </Text>
         </Animated.View>
       )}
       <Pressable style={styles.overlay} onPress={onRequestClose} />
@@ -197,85 +232,100 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: wp(80),
-    height: hp(100),
-    backgroundColor: "rgba(255,255,255,0.95)",
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    zIndex: -1,
-  },
-  closeButton: {
-    position: "absolute",
-    top: hp(0.5),
-    left: wp(70),
-  },
-  header: {
-    flexDirection: "row",
-    gap: wp(0.5),
-    alignItems: "center",
-    // marginTop: hp(2.5),
-  },
-  userAvatar: {
-    margin: wp(2.5),
-    width: wp(20),
-    height: wp(20),
-    borderRadius: wp(10),
-
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginButtton: {
-    fontWeight: "600",
-    color: COLORS.secondaryColor,
-    fontSize: hp(2),
-  },
-  line: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: "rgba(0,0,0,0.25)",
-    marginHorizontal: wp(15),
-    marginTop: hp(1.5),
-    marginBottom: hp(1.5),
-  },
-  menuItem: {
-    flexDirection: "row",
-    width: wp(71),
-    marginHorizontal: hp(2),
-    marginVertical: hp(1.1),
-    gap: hp(1.5),
-    paddingLeft: wp(5),
-    paddingVertical: hp(0.75),
-    justifyContent: "flex-start",
-    alignItems: "center",
-    // elevation: 1,
-    backgroundColor: COLORS.bgColor,
-    // borderRadius: 8,
-  },
-  menuLabel: {
-    fontSize: hp(1.55),
-    color: COLORS.secondaryColor,
-    fontWeight: "300",
-  },
-  toolTip: {
-    width: wp(7.5),
-    height: wp(7.5),
-    borderRadius: hp(3.75),
-    backgroundColor: "red",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    right: 10,
-    top: -10,
-  },
-  toolTipText: {
-    textAlign: "center",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 12,
-  },
-});
+const createStyles = (theme: "dark" | "light") =>
+  StyleSheet.create({
+    container: {
+      width: wp(80),
+      height: hp(100),
+      backgroundColor: COLORS[theme].bgColor,
+    },
+    overlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: "rgba(0,0,0,0.5)",
+      zIndex: -1,
+    },
+    closeButton: {
+      position: "absolute",
+      top: hp(0.5),
+      left: wp(70),
+    },
+    themeButton: {
+      position: "absolute",
+      top: hp(0.125),
+      left: wp(4),
+      flexDirection: "row",
+      alignItems: "center",
+      gap: wp(1),
+    },
+    themeButtonLabel: {
+      color: COLORS[theme].textColor,
+      fontSize: hp(1.4),
+      fontWeight: "300",
+    },
+    header: {
+      flexDirection: "row",
+      gap: wp(2),
+      alignItems: "center",
+      // marginTop: hp(2.5),
+    },
+    userAvatar: {
+      marginLeft: wp(2.5),
+      width: wp(20),
+      height: wp(20),
+      borderRadius: wp(10),
+      backgroundColor: COLORS[theme].mainColor,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    email: {
+      fontWeight: "300",
+      color: COLORS[theme].secondaryColor,
+      fontSize: hp(1.2),
+      maxWidth: wp(50),
+    },
+    line: {
+      borderBottomWidth: 0.5,
+      borderBottomColor: COLORS[theme].textColor,
+      marginHorizontal: wp(15),
+      marginTop: hp(1.5),
+      marginBottom: hp(1.5),
+    },
+    menuItem: {
+      flexDirection: "row",
+      width: wp(71),
+      marginHorizontal: hp(2),
+      marginVertical: hp(1.1),
+      gap: hp(1.5),
+      paddingLeft: wp(5),
+      paddingVertical: hp(0.75),
+      justifyContent: "flex-start",
+      alignItems: "center",
+      // elevation: 1,
+      backgroundColor: COLORS[theme].softBgColor,
+      borderRadius: 8,
+    },
+    menuLabel: {
+      fontSize: hp(1.55),
+      color: COLORS[theme].secondaryColor,
+      fontWeight: "300",
+    },
+    toolTip: {
+      width: wp(7.5),
+      height: wp(7.5),
+      borderRadius: hp(3.75),
+      backgroundColor: "red",
+      justifyContent: "center",
+      alignItems: "center",
+      position: "absolute",
+      right: 10,
+      top: -10,
+    },
+    toolTipText: {
+      textAlign: "center",
+      color: "white",
+      fontWeight: "bold",
+      fontSize: 12,
+    },
+  });
 
 export default SideDrawer;

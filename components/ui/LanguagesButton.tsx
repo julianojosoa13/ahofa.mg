@@ -24,6 +24,8 @@ import {
 } from "@/store/slices/translationsSlice";
 
 import { checkPersistedLanguage } from "@/utils/helpers";
+import { selectAppTheme } from "@/store/slices/appSlice";
+import COLORS from "@/utils/colors";
 
 interface Props {}
 
@@ -33,6 +35,10 @@ const LanguagesButton: FC<Props> = (props) => {
 
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+
+  const theme = useSelector(selectAppTheme);
+
+  const styles = createStyles(theme);
 
   const setCurrentLanguage = (code: string) => {
     dispatch(setLanguage(code));
@@ -60,13 +66,12 @@ const LanguagesButton: FC<Props> = (props) => {
             ...StyleSheet.absoluteFillObject,
             width: wp(100),
             height: hp(100),
-            backgroundColor: "rgba(255,255,255,0.1)",
           }}
           onPress={() => setShowModal(false)}
         ></Pressable>
         <View style={styles.modal}>
           <Pressable style={styles.option} onPress={() => switchLanguage("fr")}>
-            <Text>{t("french")}</Text>
+            <Text style={styles.optionText}>{t("french")}</Text>
             <Image
               style={styles.flag}
               source={require("@/assets/images/flags/fr.jpeg")}
@@ -74,7 +79,7 @@ const LanguagesButton: FC<Props> = (props) => {
           </Pressable>
 
           <Pressable style={styles.option} onPress={() => switchLanguage("en")}>
-            <Text>{t("english")}</Text>
+            <Text style={styles.optionText}>{t("english")}</Text>
             <Image
               style={styles.flag}
               source={require("@/assets/images/flags/us.jpeg")}
@@ -82,7 +87,7 @@ const LanguagesButton: FC<Props> = (props) => {
           </Pressable>
 
           <Pressable style={styles.option} onPress={() => switchLanguage("mg")}>
-            <Text>{t("malagasy")}</Text>
+            <Text style={styles.optionText}>{t("malagasy")}</Text>
             <Image
               style={styles.flag}
               source={require("@/assets/images/flags/mg.jpeg")}
@@ -94,40 +99,45 @@ const LanguagesButton: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: wp(2),
-  },
-  label: {
-    fontSize: hp(1.75),
-    fontWeight: "300",
-  },
-  flag: {
-    width: wp(10),
-    height: wp(7.5),
-    borderWidth: 0.25,
-    borderColor: "grey",
-  },
-  modal: {
-    position: "absolute",
-    top: hp(7.5),
-    right: wp(5),
-    width: wp(40),
-    height: wp(50),
-    backgroundColor: "white",
-    elevation: 5,
-    borderRadius: 16,
-  },
-  option: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-    gap: wp(3),
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: wp(2),
+    },
+    label: {
+      fontSize: hp(1.75),
+      fontWeight: "300",
+      color: COLORS[theme].textColor,
+    },
+    flag: {
+      width: wp(10),
+      height: wp(7.5),
+      borderWidth: 0.25,
+      borderColor: COLORS[theme].softBgColor,
+    },
+    modal: {
+      position: "absolute",
+      top: hp(7.5),
+      right: wp(5),
+      width: wp(40),
+      height: wp(50),
+      backgroundColor: COLORS[theme].bgColor,
+      elevation: 5,
+      borderRadius: 16,
+    },
+    optionText: {
+      color: COLORS[theme].textColor,
+    },
+    option: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: wp(4),
+      paddingVertical: hp(2),
+      gap: wp(3),
+    },
+  });
 
 export default LanguagesButton;

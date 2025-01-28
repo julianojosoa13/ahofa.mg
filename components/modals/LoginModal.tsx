@@ -1,4 +1,5 @@
 import {
+  selectAppTheme,
   selectShowLoginModal,
   setShowLoginModal,
 } from "@/store/slices/appSlice";
@@ -25,7 +26,9 @@ interface Props {}
 
 const LoginModal: FC<Props> = (props) => {
   const showLoginModal = useSelector(selectShowLoginModal);
-  console.log("showLoginModal >> ", showLoginModal);
+  const theme = useSelector(selectAppTheme);
+  const styles = createStyles(theme);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -38,6 +41,11 @@ const LoginModal: FC<Props> = (props) => {
   const [notRegistered, setNotRegistered] = useState(false);
 
   const closeModal = () => {
+    setFormData({
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
     dispatch(setShowLoginModal(false));
   };
 
@@ -51,11 +59,16 @@ const LoginModal: FC<Props> = (props) => {
     };
   }, []);
   return (
-    <Modal transparent visible={showLoginModal} style={styles.container}>
+    <Modal
+      transparent
+      visible={showLoginModal}
+      style={styles.container}
+      onRequestClose={closeModal}
+    >
       <BlurView
         blurAmount={10}
-        blurType="light"
-        reducedTransparencyFallbackColor="white"
+        blurType={theme}
+        reducedTransparencyFallbackColor={theme == "light" ? "white" : "black"}
         style={styles.container}
       >
         <Animated.View
@@ -72,7 +85,7 @@ const LoginModal: FC<Props> = (props) => {
             }}
             onPress={closeModal}
           >
-            <AntDesign name="close" size={25} />
+            <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
           </TouchableOpacity>
           <Text style={styles.title}>{t("sign in")}</Text>
           <GoogleSignInButton />
@@ -94,16 +107,25 @@ const LoginModal: FC<Props> = (props) => {
               onChangeText={(text) => handleFormChange("email", text)}
               value={formData.email}
               icon={
-                <AntDesign name="mail" size={25} color={COLORS.thirdColor} />
+                <AntDesign
+                  name="mail"
+                  size={25}
+                  color={COLORS[theme].thirdColor}
+                />
               }
               keyboardType="email-address"
+              autoCapitalize="none"
             />
             <FormInput
               label={t("password")}
               onChangeText={(text) => handleFormChange("password", text)}
               value={formData.password}
               icon={
-                <AntDesign name="lock" size={25} color={COLORS.thirdColor} />
+                <AntDesign
+                  name="lock"
+                  size={25}
+                  color={COLORS[theme].thirdColor}
+                />
               }
               secret={true}
             />
@@ -115,7 +137,11 @@ const LoginModal: FC<Props> = (props) => {
                 }
                 value={formData.confirmPassword}
                 icon={
-                  <AntDesign name="lock" size={25} color={COLORS.thirdColor} />
+                  <AntDesign
+                    name="lock"
+                    size={25}
+                    color={COLORS[theme].thirdColor}
+                  />
                 }
                 secret={true}
               />
@@ -140,46 +166,49 @@ const LoginModal: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: wp(100),
-    height: hp(100),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  contentContainer: {
-    padding: 10,
-    borderRadius: wp(5),
-    backgroundColor: "white",
-    height: hp(70),
-    width: wp(85),
-    elevation: 4,
-    paddingBottom: 24,
-  },
-  title: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: hp(2.2),
-    color: COLORS.thirdColor,
-  },
-  or: {
-    textAlign: "center",
-    fontSize: hp(1.75),
-    marginTop: 10,
-  },
-  alternativeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: hp(1),
-    paddingHorizontal: wp(2),
-  },
-  alternativeAction: {
-    fontWeight: "bold",
-  },
-  alternativeLabel: {
-    fontWeight: "200",
-  },
-});
+const createStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      width: wp(100),
+      height: hp(100),
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    contentContainer: {
+      padding: 10,
+      borderRadius: wp(5),
+      backgroundColor: COLORS[theme].bgColor,
+      height: hp(70),
+      width: wp(85),
+      elevation: 4,
+      paddingBottom: 24,
+    },
+    title: {
+      textAlign: "center",
+      fontWeight: "bold",
+      fontSize: hp(2.2),
+      color: COLORS[theme].thirdColor,
+    },
+    or: {
+      textAlign: "center",
+      fontSize: hp(1.75),
+      marginTop: 10,
+    },
+    alternativeContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: hp(1),
+      paddingHorizontal: wp(2),
+    },
+    alternativeAction: {
+      fontWeight: "bold",
+      color: COLORS[theme].textColor,
+    },
+    alternativeLabel: {
+      fontWeight: "200",
+      color: COLORS[theme].textColor,
+    },
+  });
 
 export default LoginModal;
