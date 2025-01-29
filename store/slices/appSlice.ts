@@ -35,7 +35,7 @@ const initialState: StateTypes = {
   selectedCategory: "houses",
   postType: "annoucement",
   showCategorySelectModal: false,
-  theme: "dark",
+  theme: "light",
   userRegistered: false, // Initialisé à false
 };
 

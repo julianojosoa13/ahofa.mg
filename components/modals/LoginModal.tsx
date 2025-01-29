@@ -95,7 +95,7 @@ const LoginModal: FC<Props> = (props) => {
               borderBottomWidth: 1.5,
               alignSelf: "center",
               width: wp(25),
-              marginVertical: hp(2.5),
+              marginVertical: hp(1.5),
             }}
           />
           <Text style={styles.title}>
@@ -182,31 +182,34 @@ const createStyles = (theme: "light" | "dark") =>
       height: hp(70),
       width: wp(85),
       elevation: 4,
-      paddingBottom: 24,
+      paddingBottom: 10,
     },
     title: {
       textAlign: "center",
-      fontWeight: "bold",
-      fontSize: hp(2.2),
+      fontSize: hp(2.1),
       color: COLORS[theme].thirdColor,
+      fontFamily: "Oswald_700Bold",
     },
     or: {
       textAlign: "center",
       fontSize: hp(1.75),
-      marginTop: 10,
+      marginTop: 5,
     },
     alternativeContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: hp(1),
+      marginTop: hp(0.5),
       paddingHorizontal: wp(2),
     },
     alternativeAction: {
-      fontWeight: "bold",
+      fontSize: hp(1.6),
+      fontFamily: "Poppins_600SemiBold",
       color: COLORS[theme].textColor,
     },
     alternativeLabel: {
-      fontWeight: "200",
+      fontFamily: "Poppins_200ExtraLight",
+      fontSize: hp(1.4),
+      marginTop: 4,
       color: COLORS[theme].textColor,
     },
   });

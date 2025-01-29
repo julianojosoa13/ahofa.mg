@@ -111,7 +111,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
             <TouchableOpacity style={styles.userAvatar}>
               {user ? (
                 <Animated.Image
-                  entering={BounceIn.delay(500)}
+                  entering={BounceIn.delay(750)}
                   source={{ uri: user?.photoURL! }}
                   style={{
                     width: 75,

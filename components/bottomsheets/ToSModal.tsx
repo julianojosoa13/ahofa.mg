@@ -99,7 +99,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   textTransform: "uppercase",
                   fontSize: hp(2),
                   textAlign: "center",
-                  fontWeight: "200",
+                  fontFamily: "Oswald_200ExtraLight",
                   maxWidth: wp(75),
                   alignSelf: "center",
                 }}
@@ -121,8 +121,9 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   style={{
                     color: COLORS[theme].secondaryColor,
                     textDecorationLine: "underline",
-                    fontWeight: "500",
+                    fontFamily: "Poppins_500Medium",
                     fontSize: hp(1.5),
+                    marginTop: 6,
                   }}
                 >
                   {t("see tos")}
@@ -138,10 +139,11 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               style={{
                 textAlign: "center",
                 marginTop: hp(2),
-                color: COLORS[theme].mainColor,
-                fontWeight: "300",
+                color: COLORS[theme].textColor,
+                fontFamily: "Poppins_300Light",
                 height: hp(10),
                 verticalAlign: "middle",
+                fontSize: hp(1.5),
               }}
             >
               {t("for legal reasons")}
@@ -164,10 +166,16 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   alignItems: "center",
                   width: wp(35),
                   borderRadius: hp(2),
-                  elevation: 2,
+                  elevation: buttonDisabled ? 0 : 2,
                 }}
               >
-                <Text style={{ fontWeight: "600", color: "white" }}>
+                <Text
+                  style={{
+                    marginTop: 6,
+                    fontFamily: "Poppins_600SemiBold",
+                    color: buttonDisabled ? "grey" : "white",
+                  }}
+                >
                   {t("accept all")}
                 </Text>
               </TouchableOpacity>
@@ -184,7 +192,13 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   elevation: 2,
                 }}
               >
-                <Text style={{ fontWeight: "600", color: "white" }}>
+                <Text
+                  style={{
+                    marginTop: 6,
+                    fontFamily: "Poppins_600SemiBold",
+                    color: "white",
+                  }}
+                >
                   {t("refuse all")}
                 </Text>
               </TouchableOpacity>

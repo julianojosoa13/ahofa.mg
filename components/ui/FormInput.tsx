@@ -50,7 +50,7 @@ const FormInput: FC<Props> = ({
   };
 
   const focusedStyle = {
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: COLORS[theme].mainColor,
   };
 
@@ -95,7 +95,8 @@ const createStyles = (theme: "light" | "dark") =>
       margin: wp(2),
     },
     label: {
-      color: "grey",
+      color: COLORS[theme].thirdColor,
+      fontFamily: "Poppins_400Regular",
     },
     inputContainer: {
       flexDirection: "row",
@@ -105,9 +106,10 @@ const createStyles = (theme: "light" | "dark") =>
       paddingRight: wp(2),
       marginVertical: hp(0.5),
       borderWidth: 1,
-      height: hp(5),
-      borderRadius: wp(2),
-      borderColor: COLORS[theme].thirdColor,
+      height: hp(6),
+      borderRadius: wp(5),
+      borderColor: COLORS[theme].miniViolet,
+      backgroundColor: COLORS[theme].softBgColor,
       gap: wp(2),
     },
     input: {
@@ -116,6 +118,8 @@ const createStyles = (theme: "light" | "dark") =>
       paddingLeft: wp(2),
       borderLeftColor: COLORS[theme].thirdColor,
       color: COLORS[theme].textColor,
+      marginTop: 3,
+      fontFamily: "Poppins_500Medium",
     },
   });
 

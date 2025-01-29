@@ -28,8 +28,10 @@ const Button = (props: Props) => {
 
   const defaultTextStyle = {
     color: COLORS[theme].white,
-    fontSize: hp(2.5),
-    fontWeight: "600",
+    fontSize: hp(1.85),
+    fontFamily: "Poppins_600SemiBold",
+    marginTop: 6,
+    textTransform: "uppercase",
   };
   const launchAction = () => {
     if (!disabled && action) action();
