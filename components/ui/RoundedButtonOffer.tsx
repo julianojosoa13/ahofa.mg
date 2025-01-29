@@ -27,7 +27,7 @@ interface Props {
   showModalOverlay?: boolean;
 }
 
-const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
+const RoundedButtonOffer = ({ onPress, showModalOverlay = false }: Props) => {
   const ref = useRef<LottieView | null>(null);
   const { t } = useTranslation();
   const theme = useSelector(selectAppTheme);
@@ -69,22 +69,6 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
 
   const buttonData = [
     {
-      icon: <FontAwesome5 name="list" size={24} color={COLORS[theme].yellow} />,
-      label: t("addDetails"),
-      onPress: () => console.log("Add Details Pressed"),
-      bgColor: COLORS[theme].miniYellow,
-      fbColor: COLORS[theme].yellow,
-    },
-    {
-      icon: (
-        <FontAwesome5 name="dollar-sign" size={24} color={COLORS[theme].red} />
-      ),
-      label: t("setPrice"),
-      onPress: () => console.log("Set Price Pressed"),
-      bgColor: COLORS[theme].miniRed,
-      fbColor: COLORS[theme].red,
-    },
-    {
       icon: (
         <MaterialIcons
           name="location-on"
@@ -96,6 +80,35 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
       onPress: () => console.log("Set Location Pressed"),
       bgColor: COLORS[theme].miniGreen,
       fbColor: COLORS[theme].green,
+    },
+    {
+      icon: (
+        <FontAwesome5 name="dollar-sign" size={24} color={COLORS[theme].red} />
+      ),
+      label: t("setPrice"),
+      onPress: () => console.log("Set Price Pressed"),
+      bgColor: COLORS[theme].miniRed,
+      fbColor: COLORS[theme].red,
+    },
+    {
+      icon: <FontAwesome5 name="list" size={24} color={COLORS[theme].yellow} />,
+      label: t("addDetails"),
+      onPress: () => console.log("Add Details Pressed"),
+      bgColor: COLORS[theme].miniYellow,
+      fbColor: COLORS[theme].yellow,
+    },
+    {
+      icon: (
+        <MaterialIcons
+          name="camera-alt"
+          size={24}
+          color={COLORS[theme].violet}
+        />
+      ),
+      label: t("addPhotos"),
+      onPress: () => console.log("Add Photos Pressed"),
+      bgColor: COLORS[theme].miniViolet,
+      fbColor: COLORS[theme].violet,
     },
   ];
 
@@ -198,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoundedButton;
+export default RoundedButtonOffer;

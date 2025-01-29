@@ -48,6 +48,7 @@ const HomeLayout = () => {
           position: "absolute",
           bottom: 0,
         },
+
         tabBarActiveTintColor: COLORS[theme].mainColor,
         tabBarInactiveTintColor: COLORS[theme].secondaryColor,
         headerLeft: () => {
@@ -110,7 +111,8 @@ const HomeLayout = () => {
               >
                 <Text
                   style={{
-                    fontWeight: "200",
+                    marginTop: 6,
+                    fontFamily: "Poppins_200ExtraLight",
                     fontSize: hp(1.9),
                     color: COLORS[theme].textColor,
                   }}

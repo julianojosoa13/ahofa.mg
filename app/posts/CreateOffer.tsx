@@ -24,24 +24,21 @@ import {
   selectAppTheme,
   setAppBusy,
   setAppPostType,
-  setShowYesNoDialog,
 } from "@/store/slices/appSlice";
 import BusyModal from "@/components/modals/BusyModal";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
-import Announcement from "@/components/PostTypes/Announcement";
+import Offer from "@/components/PostTypes/Offer";
 
 import CategoryChanger from "@/components/Categories/CategoryChanger";
 import CategorySelectModal from "@/components/modals/CategorySelectModal";
 import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import { useNotifications } from "react-native-notificated";
-import RoundedButton from "@/components/ui/RoundedButton";
-import YesNoDialog from "@/components/modals/YesNoDialog";
-import Offer from "@/components/PostTypes/Offer";
+import RoundedButtonOffer from "@/components/ui/RoundedButtonOffer";
 
 interface Props {}
 
-const CreatePost: FC<Props> = (props) => {
+const CreateOffer: FC<Props> = (props) => {
   const { notify } = useNotifications();
 
   const { top } = useSafeAreaInsets();
@@ -95,7 +92,7 @@ const CreatePost: FC<Props> = (props) => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(setAppPostType("announcement"));
+    dispatch(setAppPostType("offer"));
 
     const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
       setShowAddButton(false);
@@ -139,13 +136,6 @@ const CreatePost: FC<Props> = (props) => {
         <View style={{ zIndex: 200 }}>
           <CategorySelectModal />
           <BusyModal />
-          <YesNoDialog
-            title={t("change post type")}
-            yesAction={() => router.replace("/posts/CreateOffer")}
-            noAction={() => dispatch(setShowYesNoDialog(false))}
-          >
-            <Offer />
-          </YesNoDialog>
         </View>
       )}
 
@@ -178,9 +168,7 @@ const CreatePost: FC<Props> = (props) => {
             />
             <View>
               <Text style={styles.userName}>{user?.displayName}</Text>
-              <Announcement
-                onPress={() => dispatch(setShowYesNoDialog(true))}
-              />
+              <Offer />
             </View>
           </View>
           <View
@@ -273,7 +261,7 @@ const CreatePost: FC<Props> = (props) => {
               right: wp(4),
             }}
           >
-            <RoundedButton />
+            <RoundedButtonOffer />
           </View>
         )}
         <Button title={t("publish")} action={handlePublish}></Button>
@@ -292,7 +280,7 @@ const CreatePost: FC<Props> = (props) => {
             justifyContent: "flex-end",
           }}
         >
-          <RoundedButton
+          <RoundedButtonOffer
             onPress={() => setShowModalOverlay(!showModalOverlay)}
             showModalOverlay={showModalOverlay}
           />
@@ -390,4 +378,4 @@ const createStyles = (top: number, theme: "light" | "dark") =>
     },
   });
 
-export default CreatePost;
+export default CreateOffer;

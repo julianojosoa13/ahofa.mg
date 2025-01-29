@@ -11,10 +11,14 @@ import { BlurView } from "@react-native-community/blur";
 import * as Linking from "expo-linking";
 import Button from "../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setAcceptedToS } from "@/store/slices/onboardingSlice";
+import {
+  selectAcceptedToS,
+  setAcceptedToS,
+} from "@/store/slices/onboardingSlice";
 import { selectAppTheme, setShowLoginModal } from "@/store/slices/appSlice";
 
 import { openBrowserAsync } from "expo-web-browser";
+import { useAppDispatch } from "@/store/store";
 
 interface Props {
   onClose?: () => void;
@@ -23,11 +27,12 @@ interface Props {
 const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   const { t } = useTranslation();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const theme = useSelector(selectAppTheme);
   const styles = createStyles(theme);
 
+  const acceptedToS = useSelector(selectAcceptedToS);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -35,8 +40,9 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   }, []);
 
   const accepteTos = () => {
-    if (onClose) onClose();
     dispatch(setAcceptedToS(true));
+    if (onClose) onClose();
+    console.log("Accepted ToS >>> ", accepteTos);
     dispatch(setShowLoginModal(true));
   };
 
