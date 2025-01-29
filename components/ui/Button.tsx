@@ -28,7 +28,7 @@ const Button = (props: Props) => {
 
   const defaultTextStyle = {
     color: COLORS[theme].white,
-    fontSize: hp(2),
+    fontSize: hp(2.5),
     fontWeight: "600",
   };
   const launchAction = () => {
