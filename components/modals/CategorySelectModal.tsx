@@ -20,6 +20,7 @@ import Button from "../ui/Button";
 import COLORS from "@/utils/colors";
 import Animated, {
   BounceIn,
+  FadeIn,
   FadeInDown,
   FadeInUp,
   SlideInDown,
@@ -92,11 +93,25 @@ const CategorySelectModal: FC<Props> = (props) => {
               marginTop: hp(3),
             }}
           >
-            <Electronics />
-            <Vehicle />
-            <Houses />
-            <Terrain />
-            <Sound />
+            <Animated.View entering={FadeInUp.delay(300)}>
+              <Electronics />
+            </Animated.View>
+
+            <Animated.View entering={FadeInUp.delay(450)}>
+              <Vehicle />
+            </Animated.View>
+
+            <Animated.View entering={FadeInUp.delay(600)}>
+              <Houses />
+            </Animated.View>
+
+            <Animated.View entering={FadeInDown.delay(750)}>
+              <Terrain />
+            </Animated.View>
+
+            <Animated.View entering={FadeInDown.delay(900)}>
+              <Sound />
+            </Animated.View>
           </View>
         </Animated.View>
       </BlurView>

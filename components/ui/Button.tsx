@@ -23,13 +23,13 @@ const Button = (props: Props) => {
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 5,
+    // elevation: 1,
   };
 
   const defaultTextStyle = {
     color: COLORS[theme].white,
     fontSize: hp(2),
-    fontWeight: "300",
+    fontWeight: "600",
   };
   const launchAction = () => {
     if (!disabled && action) action();
@@ -44,6 +44,7 @@ const Button = (props: Props) => {
         disabled && { backgroundColor: "lightgrey" },
       ]}
       activeOpacity={disabled ? 1 : 0.5}
+      disabled={disabled}
     >
       <Text style={[defaultTextStyle, textStyle]}>{title}</Text>
     </TouchableOpacity>

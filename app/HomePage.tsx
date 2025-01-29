@@ -1,6 +1,11 @@
 import { hp, wp } from "@/utils/screensize";
 import { Text, View } from "react-native";
-import Animated, { FadeInDown, ZoomInDown } from "react-native-reanimated";
+import Animated, {
+  BounceIn,
+  FadeIn,
+  FadeInDown,
+  ZoomInDown,
+} from "react-native-reanimated";
 
 import { useTranslation } from "react-i18next";
 import COLORS from "@/utils/colors";
@@ -125,7 +130,7 @@ export default function Home() {
           </Text>
         </Animated.Text>
         <Animated.View
-          entering={ZoomInDown.delay(900).duration(300)}
+          entering={FadeInDown.delay(900)}
           style={{ width: wp(80) }}
         >
           <Button
