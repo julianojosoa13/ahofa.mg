@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet, Text } from "react-native";
 
 interface Props {}
 
-const Lands: FC<Props> = (props) => {
+const Create: FC<Props> = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <BusyModal />
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default Lands;
+export default Create;

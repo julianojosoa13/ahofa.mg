@@ -23,6 +23,8 @@ interface Props {
   noAction?: () => void;
   title?: string;
   children?: ReactNode;
+  yesLabel?: string;
+  noLabel?: string;
 }
 
 const YesNoDialog: FC<Props> = ({
@@ -30,6 +32,8 @@ const YesNoDialog: FC<Props> = ({
   noAction,
   title,
   children = null,
+  yesLabel = "yes",
+  noLabel = "no",
 }) => {
   const showModal = useSelector(selectShoYesNoDialog);
   const { t } = useTranslation();
@@ -78,21 +82,19 @@ const YesNoDialog: FC<Props> = ({
 
           <View style={styles.buttonsContainer}>
             <Button
-              title={t("yes")}
+              title={t(yesLabel)}
               action={yesAction}
-              textStyle={{ color: COLORS[theme].green }}
               style={{
-                backgroundColor: COLORS[theme].miniGreen,
+                backgroundColor: "green",
                 width: wp(25),
                 marginVertical: 0,
               }}
             />
             <Button
-              title={t("no")}
+              title={t(noLabel)}
               action={noAction}
-              textStyle={{ color: "red" }}
               style={{
-                backgroundColor: "pink",
+                backgroundColor: "red",
                 width: wp(25),
                 marginVertical: 0,
               }}
@@ -120,7 +122,7 @@ const createStyles = (theme: "light" | "dark") =>
       backgroundColor: COLORS[theme].bgColor,
       justifyContent: "space-around",
       alignItems: "center",
-      height: hp(33),
+      height: hp(20),
       width: wp(85),
       elevation: 4,
       paddingBottom: 24,

@@ -83,8 +83,8 @@ const HomeLayout = () => {
           const handlePress = () => {
             animRef.current?.play();
             setTimeout(() => {
-              router.navigate("/posts/CreatePost");
-            }, 600);
+              // router.navigate("/posts/CreatePost");
+            }, 300);
           };
           return (
             <Animated.View
@@ -134,12 +134,12 @@ const HomeLayout = () => {
                 onPress={handlePress}
               >
                 <LottieView
-                  source={require("@/assets/animations/plusAlt.json")}
+                  source={require("@/assets/animations/notification.json")}
                   style={{
-                    width: 40,
-                    height: 40,
+                    width: 45,
+                    height: 45,
                     marginLeft: 0,
-                    backgroundColor: COLORS[theme].mainColor,
+                    // backgroundColor: COLORS[theme].mainColor,
                   }}
                   ref={animRef}
                   speed={1.5}
@@ -207,20 +207,22 @@ const HomeLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="Lands"
+        name="Create"
         options={{
-          title: t("terrains"),
+          title: t(""),
+
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={300} focused={focused}>
                 <MaterialIcons
-                  name="landscape"
+                  name="add-box"
                   color={
                     focused
                       ? COLORS[theme].bgColor
                       : COLORS[theme].secondaryColor
                   }
-                  size={25}
+                  style={!focused ? { marginTop: 15 } : null}
+                  size={33}
                 />
               </IconContainer>
             );
