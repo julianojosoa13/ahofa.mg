@@ -210,7 +210,6 @@ const HomeLayout = () => {
         name="Create"
         options={{
           title: t(""),
-
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={300} focused={focused}>

@@ -11,7 +11,7 @@ const COLORS = {
     imageTintColor: "rgb(151, 59, 238)",
 
     miniViolet: "rgba(160, 160, 202,0.35)",
-    violet: "rgb(000,000,100)",
+    violet: "rgb(73, 5, 128)",
 
     miniRed: "rgba(243, 220, 220,0.5)",
     red: "rgb(200,100,100)",
