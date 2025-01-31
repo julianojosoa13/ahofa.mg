@@ -1,10 +1,15 @@
-import { selectAppBusy, selectAppTheme } from "@/store/slices/appSlice";
+import {
+  selectAppBusy,
+  selectAppTheme,
+  setAppBusy,
+} from "@/store/slices/appSlice";
+import { useAppDispatch } from "@/store/store";
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { BlurView } from "@react-native-community/blur";
 import { StatusBar } from "expo-status-bar";
 import LottieView from "lottie-react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Modal, SafeAreaView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -15,7 +20,14 @@ const BusyModal: FC<Props> = (props) => {
 
   const theme = useSelector(selectAppTheme);
 
+  const dispatch = useAppDispatch();
+
   const styles = createStyles(theme);
+  useEffect(() => {
+    return () => {
+      dispatch(setAppBusy(false));
+    };
+  }, []);
 
   console.log("busy >> ", busy);
   return (

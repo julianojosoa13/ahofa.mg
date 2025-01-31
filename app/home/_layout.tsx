@@ -48,6 +48,7 @@ const HomeLayout = () => {
           position: "absolute",
           bottom: 0,
         },
+
         tabBarActiveTintColor: COLORS[theme].mainColor,
         tabBarInactiveTintColor: COLORS[theme].secondaryColor,
         headerLeft: () => {
@@ -82,8 +83,8 @@ const HomeLayout = () => {
           const handlePress = () => {
             animRef.current?.play();
             setTimeout(() => {
-              router.navigate("/posts/CreatePost");
-            }, 600);
+              // router.navigate("/posts/CreatePost");
+            }, 300);
           };
           return (
             <Animated.View
@@ -96,7 +97,7 @@ const HomeLayout = () => {
               <TouchableOpacity
                 activeOpacity={0.67}
                 style={{
-                  width: wp(74),
+                  width: wp(70),
                   height: hp(5),
                   borderRadius: 40,
                   flexDirection: "row",
@@ -110,7 +111,8 @@ const HomeLayout = () => {
               >
                 <Text
                   style={{
-                    fontWeight: "200",
+                    marginTop: 6,
+                    fontFamily: "Poppins_200ExtraLight",
                     fontSize: hp(1.9),
                     color: COLORS[theme].textColor,
                   }}
@@ -132,12 +134,12 @@ const HomeLayout = () => {
                 onPress={handlePress}
               >
                 <LottieView
-                  source={require("@/assets/animations/plusAlt.json")}
+                  source={require("@/assets/animations/notification.json")}
                   style={{
-                    width: 40,
-                    height: 40,
+                    width: 45,
+                    height: 45,
                     marginLeft: 0,
-                    backgroundColor: COLORS[theme].mainColor,
+                    // backgroundColor: COLORS[theme].mainColor,
                   }}
                   ref={animRef}
                   speed={1.5}
@@ -205,20 +207,21 @@ const HomeLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="Lands"
+        name="Create"
         options={{
-          title: t("terrains"),
+          title: t(""),
           tabBarIcon: ({ focused }) => {
             return (
               <IconContainer delay={300} focused={focused}>
                 <MaterialIcons
-                  name="landscape"
+                  name="add-box"
                   color={
                     focused
                       ? COLORS[theme].bgColor
                       : COLORS[theme].secondaryColor
                   }
-                  size={25}
+                  style={!focused ? { marginTop: 15 } : null}
+                  size={33}
                 />
               </IconContainer>
             );

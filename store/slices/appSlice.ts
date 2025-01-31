@@ -21,10 +21,11 @@ interface StateTypes {
     | "terrain"
     | "vehicles"
     | "none";
-  postType: "offer" | "annoucement";
+  postType: "offer" | "announcement" | "none";
   showCategorySelectModal: boolean;
   theme: "light" | "dark";
   userRegistered: boolean; // Nouvel état
+  showYesNoDialog: boolean;
 }
 
 const initialState: StateTypes = {
@@ -33,10 +34,11 @@ const initialState: StateTypes = {
   showLoginModal: false,
   error: {},
   selectedCategory: "houses",
-  postType: "annoucement",
+  postType: "none",
   showCategorySelectModal: false,
-  theme: "dark",
+  theme: "light",
   userRegistered: false, // Initialisé à false
+  showYesNoDialog: false,
 };
 
 const appSlice = createSlice({
@@ -69,6 +71,9 @@ const appSlice = createSlice({
     },
     setUserRegistered(state, action) {
       state.userRegistered = action.payload; // Nouveau reducer
+    },
+    setShowYesNoDialog(state, action) {
+      state.showYesNoDialog = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -108,6 +113,9 @@ export const selectAppTheme = (state: RootState) => state.app.theme;
 export const selectUserRegistered = (state: RootState) =>
   state.app.userRegistered;
 
+export const selectShoYesNoDialog = (state: RootState) =>
+  state.app.showYesNoDialog;
+
 export const {
   setAppBusy,
   setAppFirstStep,
@@ -118,6 +126,7 @@ export const {
   setShowCategorySelectModal,
   setAppTheme,
   setUserRegistered,
+  setShowYesNoDialog,
 } = appSlice.actions;
 export default appSlice.reducer;
 

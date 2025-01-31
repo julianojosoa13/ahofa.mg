@@ -50,7 +50,7 @@ const createStyles = (theme: "light" | "dark") =>
       backgroundColor: COLORS[theme].softBgColor,
       elevation: 3,
       borderRadius: 8,
-      marginVertical: hp(2),
+      marginVertical: hp(1),
       height: hp(6.5),
       justifyContent: "flex-start",
       alignItems: "center",
@@ -60,8 +60,10 @@ const createStyles = (theme: "light" | "dark") =>
       // borderWidth: 0.1,
     },
     buttonLabel: {
-      fontWeight: "600",
-      color: "grey",
+      fontFamily: "Poppins_600SemiBold",
+      fontSize: hp(1.5),
+      color: COLORS[theme].textColor,
+      marginTop: 6,
     },
   });
 

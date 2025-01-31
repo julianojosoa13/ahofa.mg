@@ -9,6 +9,7 @@ import auth from "@react-native-firebase/auth";
 import { Image } from "expo-image";
 import ThemedLogo from "@/components/ui/ThemedLogo";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 interface Props {}
 
@@ -23,6 +24,7 @@ const Loading: FC<Props> = (props) => {
   }, []);
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style={theme == "light" ? "dark" : "light"} />
       <ThemedLogo style={styles.logo} entering={null} />
 
       <LottieView

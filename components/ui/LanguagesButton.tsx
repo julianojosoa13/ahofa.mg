@@ -107,8 +107,9 @@ const createStyles = (theme: "light" | "dark") =>
       gap: wp(2),
     },
     label: {
-      fontSize: hp(1.75),
-      fontWeight: "300",
+      fontSize: hp(1.65),
+      fontFamily: "Poppins_300Light",
+      marginTop: 6,
       color: COLORS[theme].textColor,
     },
     flag: {
@@ -123,12 +124,15 @@ const createStyles = (theme: "light" | "dark") =>
       right: wp(5),
       width: wp(40),
       height: wp(50),
-      backgroundColor: COLORS[theme].bgColor,
+      backgroundColor: COLORS[theme].softBgColor,
       elevation: 5,
       borderRadius: 16,
     },
     optionText: {
       color: COLORS[theme].textColor,
+      fontFamily: "Poppins_400Regular",
+      fontSize: hp(1.5),
+      marginTop: 6,
     },
     option: {
       flexDirection: "row",

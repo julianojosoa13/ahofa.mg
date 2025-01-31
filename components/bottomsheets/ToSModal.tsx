@@ -11,10 +11,14 @@ import { BlurView } from "@react-native-community/blur";
 import * as Linking from "expo-linking";
 import Button from "../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setAcceptedToS } from "@/store/slices/onboardingSlice";
+import {
+  selectAcceptedToS,
+  setAcceptedToS,
+} from "@/store/slices/onboardingSlice";
 import { selectAppTheme, setShowLoginModal } from "@/store/slices/appSlice";
 
 import { openBrowserAsync } from "expo-web-browser";
+import { useAppDispatch } from "@/store/store";
 
 interface Props {
   onClose?: () => void;
@@ -23,11 +27,12 @@ interface Props {
 const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   const { t } = useTranslation();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const theme = useSelector(selectAppTheme);
   const styles = createStyles(theme);
 
+  const acceptedToS = useSelector(selectAcceptedToS);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -35,8 +40,9 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
   }, []);
 
   const accepteTos = () => {
-    if (onClose) onClose();
     dispatch(setAcceptedToS(true));
+    if (onClose) onClose();
+    console.log("Accepted ToS >>> ", accepteTos);
     dispatch(setShowLoginModal(true));
   };
 
@@ -99,7 +105,7 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   textTransform: "uppercase",
                   fontSize: hp(2),
                   textAlign: "center",
-                  fontWeight: "200",
+                  fontFamily: "Oswald_200ExtraLight",
                   maxWidth: wp(75),
                   alignSelf: "center",
                 }}
@@ -121,8 +127,9 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   style={{
                     color: COLORS[theme].secondaryColor,
                     textDecorationLine: "underline",
-                    fontWeight: "500",
+                    fontFamily: "Poppins_500Medium",
                     fontSize: hp(1.5),
+                    marginTop: 6,
                   }}
                 >
                   {t("see tos")}
@@ -138,10 +145,11 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
               style={{
                 textAlign: "center",
                 marginTop: hp(2),
-                color: COLORS[theme].mainColor,
-                fontWeight: "300",
+                color: COLORS[theme].textColor,
+                fontFamily: "Poppins_300Light",
                 height: hp(10),
                 verticalAlign: "middle",
+                fontSize: hp(1.5),
               }}
             >
               {t("for legal reasons")}
@@ -164,10 +172,16 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   alignItems: "center",
                   width: wp(35),
                   borderRadius: hp(2),
-                  elevation: 2,
+                  elevation: buttonDisabled ? 0 : 2,
                 }}
               >
-                <Text style={{ fontWeight: "600", color: "white" }}>
+                <Text
+                  style={{
+                    marginTop: 6,
+                    fontFamily: "Poppins_600SemiBold",
+                    color: buttonDisabled ? "grey" : "white",
+                  }}
+                >
                   {t("accept all")}
                 </Text>
               </TouchableOpacity>
@@ -184,7 +198,13 @@ const ToSModal = forwardRef<BottomSheetModal, Props>(({ onClose }, ref) => {
                   elevation: 2,
                 }}
               >
-                <Text style={{ fontWeight: "600", color: "white" }}>
+                <Text
+                  style={{
+                    marginTop: 6,
+                    fontFamily: "Poppins_600SemiBold",
+                    color: "white",
+                  }}
+                >
                   {t("refuse all")}
                 </Text>
               </TouchableOpacity>

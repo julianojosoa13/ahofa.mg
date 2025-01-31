@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 const onboardingSlice = createSlice({
   name: "onboarding",
@@ -13,7 +14,8 @@ const onboardingSlice = createSlice({
 });
 
 // Selectors
-export const selectAcceptedToS = (state) => state.onboarding.acceptedToS;
+export const selectAcceptedToS = (state: RootState) =>
+  state.onboarding.acceptedToS;
 
 export const { setAcceptedToS } = onboardingSlice.actions;
 export default onboardingSlice.reducer;

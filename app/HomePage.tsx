@@ -1,6 +1,11 @@
 import { hp, wp } from "@/utils/screensize";
 import { Text, View } from "react-native";
-import Animated, { FadeInDown, ZoomInDown } from "react-native-reanimated";
+import Animated, {
+  BounceIn,
+  FadeIn,
+  FadeInDown,
+  ZoomInDown,
+} from "react-native-reanimated";
 
 import { useTranslation } from "react-i18next";
 import COLORS from "@/utils/colors";
@@ -70,8 +75,9 @@ export default function Home() {
           <Text
             style={{
               color: COLORS[theme].textColor,
-              fontWeight: "100",
               textTransform: "capitalize",
+              fontFamily: "Poppins_200ExtraLight",
+              marginTop: 4,
             }}
           >
             {t(theme)}
@@ -108,24 +114,24 @@ export default function Home() {
           entering={FadeInDown.delay(600).duration(300)}
           style={{
             fontSize: hp(1.8),
-            fontWeight: "300",
             textAlign: "center",
             color: COLORS[theme].textColor,
+            fontFamily: "Poppins_300Light",
           }}
         >
           {t("welcome_to")}
           <Text
             style={{
-              fontWeight: "bold",
               color: COLORS[theme].thirdColor,
               fontSize: hp(2.3),
+              fontFamily: "Poppins_600SemiBold",
             }}
           >
             AHOFA.MG!
           </Text>
         </Animated.Text>
         <Animated.View
-          entering={ZoomInDown.delay(900).duration(300)}
+          entering={FadeInDown.delay(900)}
           style={{ width: wp(80) }}
         >
           <Button
@@ -146,10 +152,10 @@ export default function Home() {
         style={{
           textAlign: "center",
           fontSize: 13,
-          fontWeight: "200",
           position: "absolute",
           bottom: hp(2.5),
           color: COLORS[theme].textColor,
+          fontFamily: "Poppins_200ExtraLight",
         }}
       >
         {t("all rights")}

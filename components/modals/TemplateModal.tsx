@@ -1,5 +1,6 @@
 // import {
 //   selectAppShowCategorySelectModal,
+//   selectAppTheme,
 //   setShowCategorySelectModal,
 // } from "@/store/slices/appSlice";
 // import { hp, wp } from "@/utils/screensize";
@@ -16,7 +17,7 @@
 
 // interface Props {}
 
-// const BaseModal: FC<Props> = (props) => {
+// const YesNoDialog: FC<Props> = (props) => {
 //   const showModal = useSelector(selectAppShowCategorySelectModal);
 //   const { t } = useTranslation();
 //   const dispatch = useDispatch();
@@ -24,6 +25,9 @@
 //   const closeModal = () => {
 //     dispatch(setShowCategorySelectModal(false));
 //   };
+
+//   const theme = useSelector(selectAppTheme);
+//   const styles = createStyles(theme);
 
 //   useEffect(() => {
 //     return () => {
@@ -35,8 +39,8 @@
 //     <Modal transparent visible={showModal} style={styles.container}>
 //       <BlurView
 //         blurAmount={10}
-//         blurType="light"
-//         reducedTransparencyFallbackColor="white"
+//         blurType={theme}
+//         reducedTransparencyFallbackColor={theme == "light" ? "white" : "black"}
 //         style={styles.container}
 //       >
 //         <Animated.View
@@ -53,49 +57,39 @@
 //             }}
 //             onPress={closeModal}
 //           >
-//             <AntDesign name="close" size={25} />
+//             <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
 //           </TouchableOpacity>
-//           <Text style={styles.title}>{t("sign in")}</Text>
-//           <GoogleSignInButton />
-//           <View
-//             style={{
-//               borderBottomColor: "lightgrey",
-//               borderBottomWidth: 1.5,
-//               alignSelf: "center",
-//               width: wp(25),
-//               marginVertical: hp(2.5),
-//             }}
-//           />
-//           <Text style={styles.title}>{t("select a category")}</Text>
 //         </Animated.View>
 //       </BlurView>
 //     </Modal>
 //   );
 // };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     width: wp(100),
-//     height: hp(100),
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   contentContainer: {
-//     padding: 10,
-//     borderRadius: wp(5),
-//     backgroundColor: "white",
-//     height: hp(70),
-//     width: wp(85),
-//     elevation: 4,
-//     paddingBottom: 24,
-//   },
-//   title: {
-//     textAlign: "center",
-//     fontWeight: "bold",
-//     fontSize: hp(2.2),
-//     color: COLORS.thirdColor,
-//   },
-// });
+// const createStyles = (theme: "light" | "dark") =>
+//   StyleSheet.create({
+//     container: {
+//       flex: 1,
+//       width: wp(100),
+//       height: hp(100),
+//       justifyContent: "center",
+//       alignItems: "center",
+//     },
+//     contentContainer: {
+//       padding: 10,
+//       borderRadius: wp(5),
+//       backgroundColor: COLORS[theme].bgColor,
+//       height: hp(70),
+//       width: wp(85),
+//       elevation: 4,
+//       paddingBottom: 24,
+//     },
+//     title: {
+//       textAlign: "center",
+//       fontWeight: "bold",
+//       fontSize: hp(2.2),
+//       color: COLORS[theme].thirdColor,
+//       fontFamily: "Oswald_700Bold",
+//     },
+//   });
 
-// export default BaseModal;
+// export default YesNoDialog;

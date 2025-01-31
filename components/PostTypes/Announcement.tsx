@@ -7,14 +7,16 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
-interface Props {}
+interface Props {
+  onPress?: () => void;
+}
 
-const Announcement: FC<Props> = (props) => {
+const Announcement: FC<Props> = ({ onPress }) => {
   const theme = useSelector(selectAppTheme);
   const styles = createStyles(theme);
   const { t } = useTranslation();
   return (
-    <TouchableOpacity style={styles.selectPostTypeButton}>
+    <TouchableOpacity style={styles.selectPostTypeButton} onPress={onPress}>
       <MaterialIcons
         name="arrow-drop-down"
         size={24}

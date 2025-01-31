@@ -11,7 +11,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Animated, { SlideInLeft, SlideOutLeft } from "react-native-reanimated";
+import Animated, {
+  BounceIn,
+  FadeInDown,
+  FadeInUp,
+  SlideInLeft,
+  SlideOutLeft,
+} from "react-native-reanimated";
 
 import Entypo from "@expo/vector-icons/Entypo";
 
@@ -27,6 +33,7 @@ import BusyModal from "./BusyModal";
 import { useSelector } from "react-redux";
 import ThemedLogo from "../ui/ThemedLogo";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
+import LogOutButton from "../ui/LogOutButton";
 
 interface Props {
   visible?: boolean;
@@ -103,7 +110,8 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           <View style={styles.header}>
             <TouchableOpacity style={styles.userAvatar}>
               {user ? (
-                <Image
+                <Animated.Image
+                  entering={BounceIn.delay(750)}
                   source={{ uri: user?.photoURL! }}
                   style={{
                     width: 75,
@@ -139,80 +147,96 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           <ScrollView style={{ marginBottom: hp(4) }}>
             {/* Mon Profile */}
             <View style={styles.line} />
-            <TouchableOpacity style={styles.menuItem}>
-              <FontAwesome
-                name="user-o"
-                size={24}
-                color={"rgba(200,200,0,1)"}
-                // color={COLORS[theme].textColor}
-              />
-              <Text style={styles.menuLabel}>{t("my profile")}</Text>
-            </TouchableOpacity>
+            <Animated.View entering={FadeInUp.delay(300)}>
+              <TouchableOpacity style={styles.menuItem}>
+                <FontAwesome
+                  name="user-o"
+                  size={24}
+                  color={"rgba(200,200,0,1)"}
+                  // color={COLORS[theme].textColor}
+                />
+                <Text style={styles.menuLabel}>{t("my profile")}</Text>
+              </TouchableOpacity>
+            </Animated.View>
 
             {/* Parametres */}
-            <TouchableOpacity style={styles.menuItem}>
-              <Entypo
-                name="tools"
-                size={24}
-                //  color={COLORS[theme].textColor}
-                color={"rgba(100,100,200,1)"}
-              />
-              <Text style={styles.menuLabel}>{t("settings")}</Text>
-            </TouchableOpacity>
+            <Animated.View entering={FadeInUp.delay(375)}>
+              <TouchableOpacity style={styles.menuItem}>
+                <Entypo
+                  name="tools"
+                  size={24}
+                  //  color={COLORS[theme].textColor}
+                  color={"rgba(100,100,200,1)"}
+                />
+                <Text style={styles.menuLabel}>{t("settings")}</Text>
+              </TouchableOpacity>
+            </Animated.View>
 
             {/* Mes Locations */}
-            <TouchableOpacity style={styles.menuItem}>
-              <Ionicons
-                name="bag-handle-outline"
-                size={24}
-                // color={COLORS[theme].textColor}
-                color={"rgba(200,100,200,1)"}
-              />
-              <Text style={styles.menuLabel}>{t("my rentals")}</Text>
-            </TouchableOpacity>
+            <Animated.View entering={FadeInUp.delay(450)}>
+              <TouchableOpacity style={styles.menuItem}>
+                <Ionicons
+                  name="bag-handle-outline"
+                  size={24}
+                  // color={COLORS[theme].textColor}
+                  color={"rgba(200,100,200,1)"}
+                />
+                <Text style={styles.menuLabel}>{t("my rentals")}</Text>
+              </TouchableOpacity>
+            </Animated.View>
 
             {/* Mes Achats */}
-            <TouchableOpacity style={styles.menuItem}>
-              <FontAwesome
-                name="credit-card"
-                size={24}
-                // color={COLORS[theme].textColor}
-                color={"rgba(100,200,100,1)"}
-              />
-              <Text style={styles.menuLabel}>{t("my purchases")}</Text>
-            </TouchableOpacity>
+            <Animated.View entering={FadeInUp.delay(525)}>
+              <TouchableOpacity style={styles.menuItem}>
+                <FontAwesome
+                  name="credit-card"
+                  size={24}
+                  // color={COLORS[theme].textColor}
+                  color={"rgba(100,200,100,1)"}
+                />
+                <Text style={styles.menuLabel}>{t("my purchases")}</Text>
+              </TouchableOpacity>
+            </Animated.View>
 
             {/* Mes messages */}
-            <TouchableOpacity style={styles.menuItem}>
-              <Ionicons
-                name="chatbubble-outline"
-                size={24}
-                // color={COLORS[theme].textColor}
-                color={"rgba(100,200,200,1)"}
-              />
-              <Text style={styles.menuLabel}>{t("messages")}</Text>
+            <Animated.View entering={FadeInUp.delay(600)}>
+              <TouchableOpacity style={styles.menuItem}>
+                <Ionicons
+                  name="chatbubble-outline"
+                  size={24}
+                  // color={COLORS[theme].textColor}
+                  color={"rgba(100,200,200,1)"}
+                />
+                <Text style={styles.menuLabel}>{t("messages")}</Text>
 
-              {/* ToolTip */}
-              <View style={styles.toolTip}>
-                <Text style={styles.toolTipText}>2</Text>
-              </View>
-            </TouchableOpacity>
+                {/* ToolTip */}
+                <View style={styles.toolTip}>
+                  <Text style={styles.toolTipText}>2</Text>
+                </View>
+              </TouchableOpacity>
+            </Animated.View>
 
             {/* Mes notifications */}
-            <TouchableOpacity style={styles.menuItem}>
-              <AntDesign
-                name="bells"
-                size={24}
-                // color={COLORS[theme].textColor}
-                color={"rgba(200,100,100,1)"}
-              />
-              <Text style={styles.menuLabel}>{t("notifications")}</Text>
+            <Animated.View entering={FadeInDown.delay(675)}>
+              <TouchableOpacity style={styles.menuItem}>
+                <AntDesign
+                  name="bells"
+                  size={24}
+                  // color={COLORS[theme].textColor}
+                  color={"rgba(200,100,100,1)"}
+                />
+                <Text style={styles.menuLabel}>{t("notifications")}</Text>
 
-              {/* ToolTip */}
-              <View style={styles.toolTip}>
-                <Text style={styles.toolTipText}>5</Text>
-              </View>
-            </TouchableOpacity>
+                {/* ToolTip */}
+                <View style={styles.toolTip}>
+                  <Text style={styles.toolTipText}>5</Text>
+                </View>
+              </TouchableOpacity>
+            </Animated.View>
+
+            <Animated.View entering={FadeInDown.delay(750)}>
+              <LogOutButton />
+            </Animated.View>
           </ScrollView>
           <Text
             style={{
@@ -273,7 +297,9 @@ const createStyles = (theme: "dark" | "light") =>
       width: wp(20),
       height: wp(20),
       borderRadius: wp(10),
-      backgroundColor: COLORS[theme].mainColor,
+      borderColor: COLORS[theme].mainColor,
+      backgroundColor: COLORS[theme].miniViolet,
+      borderWidth: 1,
       justifyContent: "center",
       alignItems: "center",
     },
