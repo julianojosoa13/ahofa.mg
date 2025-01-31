@@ -97,7 +97,7 @@ const HomeLayout = () => {
               <TouchableOpacity
                 activeOpacity={0.67}
                 style={{
-                  width: wp(74),
+                  width: wp(70),
                   height: hp(5),
                   borderRadius: 40,
                   flexDirection: "row",

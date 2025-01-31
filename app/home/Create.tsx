@@ -1,16 +1,23 @@
 import BusyModal from "@/components/modals/BusyModal";
-import { selectAppTheme } from "@/store/slices/appSlice";
+import {
+  selectAppPostType,
+  selectAppTheme,
+  setAppPostType,
+} from "@/store/slices/appSlice";
+import { useAppDispatch } from "@/store/store";
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import {
   AntDesign,
   Entypo,
   Feather,
+  Fontisto,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
-import React, { FC } from "react";
+import LottieView from "lottie-react-native";
+import React, { FC, useLayoutEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   SafeAreaView,
@@ -28,8 +35,17 @@ const Create: FC<Props> = (props) => {
   const { t } = useTranslation();
   const theme = useSelector(selectAppTheme);
   const styles = createStyles(theme);
+  const ref1 = useRef<LottieView>(null);
+  const ref2 = useRef<LottieView>(null);
+
+  const selectedPostType = useSelector(selectAppPostType);
+  const dispatch = useAppDispatch();
 
   const isFocused = useIsFocused();
+
+  useLayoutEffect(() => {
+    if (isFocused) dispatch(setAppPostType("none"));
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,33 +57,65 @@ const Create: FC<Props> = (props) => {
             <Animated.Text style={styles.title} entering={FadeInDown}>
               {t("create")} <AntDesign name="plus" size={wp(7.5)} />
             </Animated.Text>
-            <Animated.View entering={FadeInDown}>
-              <TouchableOpacity style={styles.announcementsContainer}>
+            <Animated.View entering={FadeInDown.delay(150)}>
+              <TouchableOpacity
+                style={styles.announcementsContainer}
+                onPress={() => {
+                  if (selectedPostType !== "announcement") {
+                    ref2?.current?.play(90, 0);
+                    ref1?.current?.play(0, 90);
+                    dispatch(setAppPostType("announcement"));
+                  }
+                }}
+              >
                 <Entypo
                   name="megaphone"
                   size={60}
-                  color={COLORS[theme].bgColor}
+                  color={
+                    theme == "dark"
+                      ? COLORS[theme].textColor
+                      : COLORS[theme].bgColor
+                  }
                 />
                 <View style={styles.announcementContent}>
-                  <Text style={styles.subtitle}>{t("annoucements")}</Text>
+                  <Text style={styles.subtitle}>{t("announcement")}</Text>
                   <Text style={styles.textContent}>
-                    {t("annouce to the users what you are looking for now!")}
+                    {t("announce to the users what you are looking for now!")}
                   </Text>
                 </View>
-                <AntDesign
-                  name="plus"
-                  size={wp(7)}
-                  color={COLORS[theme].bgColor}
+                <LottieView
+                  ref={ref1}
+                  source={require("@/assets/animations/plusCheckAlt.json")}
+                  loop={false}
+                  style={{
+                    width: wp(5),
+                    height: wp(5),
+                    outlineColor: COLORS[theme].textColor,
+                  }}
+                  speed={2}
                 />
               </TouchableOpacity>
             </Animated.View>
 
-            <Animated.View entering={FadeInDown}>
-              <TouchableOpacity style={styles.offerContainer}>
+            <Animated.View entering={FadeInDown.delay(300)}>
+              <TouchableOpacity
+                style={styles.offerContainer}
+                onPress={() => {
+                  if (selectedPostType !== "offer") {
+                    ref1?.current?.play(90, 0);
+                    ref2?.current?.play(0, 90);
+                    dispatch(setAppPostType("offer"));
+                  }
+                }}
+              >
                 <MaterialIcons
                   name="local-offer"
                   size={60}
-                  color={COLORS[theme].bgColor}
+                  color={
+                    theme == "dark"
+                      ? COLORS[theme].textColor
+                      : COLORS[theme].bgColor
+                  }
                 />
                 <View style={styles.offerContent}>
                   <Text style={styles.subtitle}>{t("offer")}</Text>
@@ -75,10 +123,13 @@ const Create: FC<Props> = (props) => {
                     {t("create an offer for everyone to see")}
                   </Text>
                 </View>
-                <AntDesign
-                  name="plus"
-                  size={wp(7)}
-                  color={COLORS[theme].bgColor}
+
+                <LottieView
+                  ref={ref2}
+                  source={require("@/assets/animations/plusCheckAlt.json")}
+                  loop={false}
+                  style={{ width: wp(5), height: wp(5) }}
+                  speed={2}
                 />
               </TouchableOpacity>
             </Animated.View>
@@ -103,16 +154,17 @@ const createStyles = (theme: "light" | "dark") =>
       fontSize: hp(4.5),
       color: COLORS[theme].textColor,
       fontFamily: "Oswald_700Bold",
-      textTransform: "capitalize",
+      // textTransform: "capitalize",
       lineHeight: hp(5.5),
     },
     announcementsContainer: {
-      backgroundColor: COLORS[theme].miniViolet,
+      backgroundColor:
+        theme === "light" ? COLORS[theme].miniViolet : COLORS[theme].violet,
       borderWidth: 1,
-      borderColor: COLORS[theme].violet,
-      borderRadius: 10,
+      borderColor: COLORS[theme].green,
+      borderRadius: 8,
       padding: 15,
-      marginVertical: 20,
+      marginVertical: 10,
       flexDirection: "row",
       gap: 15,
       alignItems: "center",
@@ -125,21 +177,22 @@ const createStyles = (theme: "light" | "dark") =>
       fontSize: hp(2),
       textTransform: "capitalize",
       fontFamily: "Oswald_700Bold",
-      color: COLORS[theme].textColor,
+      color: COLORS[theme].mainColor,
     },
     textContent: {
       fontSize: hp(1.5),
       color: COLORS[theme].textColor,
       fontFamily: "Poppins_300Light",
-      textTransform: "capitalize",
+      textTransform: "none",
     },
     offerContainer: {
-      backgroundColor: COLORS[theme].miniRed,
+      backgroundColor:
+        theme === "light" ? COLORS[theme].miniGreen : COLORS[theme].green,
       borderWidth: 1,
       borderColor: COLORS[theme].red,
-      borderRadius: 10,
+      borderRadius: 8,
       padding: 15,
-      marginVertical: 20,
+      marginVertical: 10,
       flexDirection: "row",
       gap: 15,
       alignItems: "center",

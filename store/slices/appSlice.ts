@@ -21,7 +21,7 @@ interface StateTypes {
     | "terrain"
     | "vehicles"
     | "none";
-  postType: "offer" | "annoucement";
+  postType: "offer" | "announcement" | "none";
   showCategorySelectModal: boolean;
   theme: "light" | "dark";
   userRegistered: boolean; // Nouvel état
@@ -34,7 +34,7 @@ const initialState: StateTypes = {
   showLoginModal: false,
   error: {},
   selectedCategory: "houses",
-  postType: "annoucement",
+  postType: "none",
   showCategorySelectModal: false,
   theme: "light",
   userRegistered: false, // Initialisé à false
