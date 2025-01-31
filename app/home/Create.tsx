@@ -29,6 +29,8 @@ import {
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 
+import { TouchableRipple } from "react-native-paper";
+
 interface Props {}
 
 const Create: FC<Props> = (props) => {
@@ -58,7 +60,7 @@ const Create: FC<Props> = (props) => {
               {t("create")} <AntDesign name="plus" size={wp(7.5)} />
             </Animated.Text>
             <Animated.View entering={FadeInDown.delay(150)}>
-              <TouchableOpacity
+              <TouchableRipple
                 style={styles.announcementsContainer}
                 onPress={() => {
                   if (selectedPostType !== "announcement") {
@@ -68,37 +70,39 @@ const Create: FC<Props> = (props) => {
                   }
                 }}
               >
-                <Entypo
-                  name="megaphone"
-                  size={60}
-                  color={
-                    theme == "dark"
-                      ? COLORS[theme].textColor
-                      : COLORS[theme].bgColor
-                  }
-                />
-                <View style={styles.announcementContent}>
-                  <Text style={styles.subtitle}>{t("announcement")}</Text>
-                  <Text style={styles.textContent}>
-                    {t("announce to the users what you are looking for now!")}
-                  </Text>
-                </View>
-                <LottieView
-                  ref={ref1}
-                  source={require("@/assets/animations/plusCheckAlt.json")}
-                  loop={false}
-                  style={{
-                    width: wp(5),
-                    height: wp(5),
-                    outlineColor: COLORS[theme].textColor,
-                  }}
-                  speed={2}
-                />
-              </TouchableOpacity>
+                <>
+                  <Entypo
+                    name="megaphone"
+                    size={60}
+                    color={
+                      theme == "dark"
+                        ? COLORS[theme].textColor
+                        : COLORS[theme].bgColor
+                    }
+                  />
+                  <View style={styles.announcementContent}>
+                    <Text style={styles.subtitle}>{t("announcement")}</Text>
+                    <Text style={styles.textContent}>
+                      {t("announce to the users what you are looking for now!")}
+                    </Text>
+                  </View>
+                  <LottieView
+                    ref={ref1}
+                    source={require("@/assets/animations/plusCheckAlt.json")}
+                    loop={false}
+                    style={{
+                      width: wp(5),
+                      height: wp(5),
+                      outlineColor: COLORS[theme].textColor,
+                    }}
+                    speed={2}
+                  />
+                </>
+              </TouchableRipple>
             </Animated.View>
 
             <Animated.View entering={FadeInDown.delay(300)}>
-              <TouchableOpacity
+              <TouchableRipple
                 style={styles.offerContainer}
                 onPress={() => {
                   if (selectedPostType !== "offer") {
@@ -108,30 +112,32 @@ const Create: FC<Props> = (props) => {
                   }
                 }}
               >
-                <MaterialIcons
-                  name="local-offer"
-                  size={60}
-                  color={
-                    theme == "dark"
-                      ? COLORS[theme].textColor
-                      : COLORS[theme].bgColor
-                  }
-                />
-                <View style={styles.offerContent}>
-                  <Text style={styles.subtitle}>{t("offer")}</Text>
-                  <Text style={styles.textContent}>
-                    {t("create an offer for everyone to see")}
-                  </Text>
-                </View>
+                <>
+                  <MaterialIcons
+                    name="local-offer"
+                    size={60}
+                    color={
+                      theme == "dark"
+                        ? COLORS[theme].textColor
+                        : COLORS[theme].bgColor
+                    }
+                  />
+                  <View style={styles.offerContent}>
+                    <Text style={styles.subtitle}>{t("offer")}</Text>
+                    <Text style={styles.textContent}>
+                      {t("create an offer for everyone to see")}
+                    </Text>
+                  </View>
 
-                <LottieView
-                  ref={ref2}
-                  source={require("@/assets/animations/plusCheckAlt.json")}
-                  loop={false}
-                  style={{ width: wp(5), height: wp(5) }}
-                  speed={2}
-                />
-              </TouchableOpacity>
+                  <LottieView
+                    ref={ref2}
+                    source={require("@/assets/animations/plusCheckAlt.json")}
+                    loop={false}
+                    style={{ width: wp(5), height: wp(5) }}
+                    speed={2}
+                  />
+                </>
+              </TouchableRipple>
             </Animated.View>
           </View>
         </>

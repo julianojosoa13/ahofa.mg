@@ -2,6 +2,7 @@ import { selectAppTheme } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { TouchableRipple } from "react-native-paper";
 import { useSelector } from "react-redux";
 
 interface Props {
@@ -38,18 +39,17 @@ const Button = (props: Props) => {
   };
 
   return (
-    <TouchableOpacity
+    <TouchableRipple
       onPress={launchAction}
       style={[
         defaultStyle,
         style,
         disabled && { backgroundColor: "lightgrey" },
       ]}
-      activeOpacity={disabled ? 1 : 0.5}
       disabled={disabled}
     >
       <Text style={[defaultTextStyle, textStyle]}>{title}</Text>
-    </TouchableOpacity>
+    </TouchableRipple>
   );
 };
 
