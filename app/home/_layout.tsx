@@ -4,6 +4,7 @@ import {
   AntDesign,
   Entypo,
   FontAwesome6,
+  MaterialCommunityIcons,
   MaterialIcons,
   SimpleLineIcons,
 } from "@expo/vector-icons";
@@ -26,6 +27,7 @@ import { useAppDispatch } from "@/store/store";
 import { useSelector } from "react-redux";
 import { selectAppTheme } from "@/store/slices/appSlice";
 import { BlurView } from "@react-native-community/blur";
+import { TouchableRipple } from "react-native-paper";
 
 const marginBottom = hp(0.25);
 
@@ -62,10 +64,10 @@ const HomeLayout = () => {
               }}
             >
               <TouchableOpacity onPress={() => setVisible(true)}>
-                <Entypo
-                  name="menu"
+                <MaterialCommunityIcons
+                  name="microsoft-xbox-controller-menu"
                   size={40}
-                  color={COLORS[theme].thirdColor}
+                  color={COLORS[theme].mainColor}
                 />
               </TouchableOpacity>
 
@@ -97,7 +99,7 @@ const HomeLayout = () => {
               <TouchableOpacity
                 activeOpacity={0.67}
                 style={{
-                  width: wp(70),
+                  width: wp(85),
                   height: hp(5),
                   borderRadius: 40,
                   flexDirection: "row",
@@ -105,6 +107,7 @@ const HomeLayout = () => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   paddingLeft: wp(2.5),
+                  marginRight: wp(3.5),
                   backgroundColor: COLORS[theme].softBgColor,
                   borderColor: "lightgrey",
                 }}
@@ -123,27 +126,6 @@ const HomeLayout = () => {
                   name="search1"
                   size={25}
                   color={COLORS[theme].textColor}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginRight: wp(2.5),
-                }}
-                onPress={handlePress}
-              >
-                <LottieView
-                  source={require("@/assets/animations/notification.json")}
-                  style={{
-                    width: 45,
-                    height: 45,
-                    marginLeft: 0,
-                    // backgroundColor: COLORS[theme].mainColor,
-                  }}
-                  ref={animRef}
-                  speed={1.5}
-                  loop={false}
                 />
               </TouchableOpacity>
             </Animated.View>

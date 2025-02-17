@@ -24,7 +24,7 @@ import BusyModal from "@/components/modals/BusyModal";
 import { selectAppTheme, setShowLoginModal } from "@/store/slices/appSlice";
 import LoginModal from "@/components/modals/LoginModal";
 import { selectAcceptedToS } from "@/store/slices/onboardingSlice";
-import ThemedLogo from "@/components/ui/ThemedLogo";
+// import ThemedLogo from "@/components/ui/ThemedLogo";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 
 export default function Home() {
@@ -51,7 +51,7 @@ export default function Home() {
     <View
       style={{
         flex: 1,
-        justifyContent: "space-around",
+        // justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: COLORS[theme].softBgColor,
       }}
@@ -85,29 +85,27 @@ export default function Home() {
         </View>
         <LanguagesButton />
       </View>
-
-      <ThemedLogo
-        style={{
-          width: wp(50),
-          height: hp(25),
-          marginTop: hp(10),
-          marginBottom: -hp(10),
-        }}
-        entering={FadeInDown.delay(1200).duration(300)}
-      />
       <View
         style={{
-          borderRadius: "50%",
-          backgroundColor: COLORS[theme].bgColor,
+          justifyContent: "center",
+          alignItems: "center",
+          height: hp(60),
+          marginTop: hp(15),
         }}
       >
-        <LottieView
-          source={require("@/assets/animations/shop.json")}
-          autoPlay
-          loop
-          speed={0.75}
-          style={{ width: wp(55), height: wp(55) }}
-        />
+        <View
+          style={{
+            borderRadius: "50%",
+          }}
+        >
+          <LottieView
+            source={require("@/assets/animations/handShake.json")}
+            autoPlay
+            loop
+            speed={1.5}
+            style={{ width: wp(45), height: wp(45) }}
+          />
+        </View>
       </View>
       <View>
         <Animated.Text
@@ -122,14 +120,24 @@ export default function Home() {
           {t("welcome_to")}
           <Text
             style={{
-              color: COLORS[theme].thirdColor,
+              color: COLORS[theme].mainColor,
               fontSize: hp(2.3),
-              fontFamily: "Poppins_600SemiBold",
+              fontFamily: "Poppins_300Light_Italic",
             }}
           >
             AHOFA.MG!
           </Text>
         </Animated.Text>
+        <Text
+          style={{
+            color: COLORS[theme].mainColor,
+            fontSize: hp(1.5),
+            fontFamily: "Poppins_200ExtraLight",
+            textAlign: "center",
+          }}
+        >
+          {t("Rental of goods and services")}
+        </Text>
         <Animated.View
           entering={FadeInDown.delay(900)}
           style={{ width: wp(80) }}

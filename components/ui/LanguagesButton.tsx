@@ -26,6 +26,8 @@ import {
 import { checkPersistedLanguage } from "@/utils/helpers";
 import { selectAppTheme } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
+import { BlurView } from "@react-native-community/blur";
+import Animated, { FadeIn, FadeInUp } from "react-native-reanimated";
 
 interface Props {}
 
@@ -54,11 +56,15 @@ const LanguagesButton: FC<Props> = (props) => {
   }, [currentLanguage]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.5}
+      onPress={() => setShowModal(true)}
+    >
       <Text style={styles.label}>{t("language")}</Text>
-      <TouchableOpacity activeOpacity={0.5} onPress={() => setShowModal(true)}>
+      <View>
         <FlagImage code={currentLanguage} style={styles.flag} />
-      </TouchableOpacity>
+      </View>
 
       <Modal visible={showModal} style={styles.modal} transparent>
         <Pressable
@@ -68,8 +74,18 @@ const LanguagesButton: FC<Props> = (props) => {
             height: hp(100),
           }}
           onPress={() => setShowModal(false)}
-        ></Pressable>
-        <View style={styles.modal}>
+        >
+          <BlurView
+            style={{ ...StyleSheet.absoluteFillObject }}
+            blurType={theme}
+            blurAmount={5}
+            blurRadius={5}
+          />
+        </Pressable>
+        <Animated.View
+          style={styles.modal}
+          entering={FadeInUp.duration(300).delay(150)}
+        >
           <Pressable style={styles.option} onPress={() => switchLanguage("fr")}>
             <Text style={styles.optionText}>{t("french")}</Text>
             <Image
@@ -93,9 +109,9 @@ const LanguagesButton: FC<Props> = (props) => {
               source={require("@/assets/images/flags/mg.jpeg")}
             />
           </Pressable>
-        </View>
+        </Animated.View>
       </Modal>
-    </SafeAreaView>
+    </TouchableOpacity>
   );
 };
 
@@ -126,7 +142,7 @@ const createStyles = (theme: "light" | "dark") =>
       height: wp(50),
       backgroundColor: COLORS[theme].softBgColor,
       elevation: 5,
-      borderRadius: 16,
+      borderRadius: 4,
     },
     optionText: {
       color: COLORS[theme].textColor,

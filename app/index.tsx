@@ -7,7 +7,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import auth from "@react-native-firebase/auth";
 import { Image } from "expo-image";
-import ThemedLogo from "@/components/ui/ThemedLogo";
+// import ThemedLogo from "@/components/ui/ThemedLogo";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
@@ -25,7 +25,7 @@ const Loading: FC<Props> = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style={theme == "light" ? "dark" : "light"} />
-      <ThemedLogo style={styles.logo} entering={null} />
+      {/* <ThemedLogo style={styles.logo} entering={null} /> */}
 
       <LottieView
         source={require("@/assets/animations/activityIndicator.json")}

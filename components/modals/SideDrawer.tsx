@@ -31,7 +31,7 @@ import { selectAppTheme } from "@/store/slices/appSlice";
 
 import BusyModal from "./BusyModal";
 import { useSelector } from "react-redux";
-import ThemedLogo from "../ui/ThemedLogo";
+// import ThemedLogo from "../ui/ThemedLogo";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 import LogOutButton from "../ui/LogOutButton";
 
@@ -87,21 +87,14 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
           >
             <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
           </TouchableOpacity>
-          <ThemedLogo
-            entering={undefined}
-            style={{
-              width: wp(25),
-              height: wp(25),
-              marginLeft: wp(27.5),
-              marginTop: hp(2.5),
-            }}
-          />
+
           <Text
             style={{
               textAlign: "center",
               fontWeight: "500",
               fontSize: hp(2.25),
               color: COLORS[theme].mainColor,
+              marginTop: hp(7),
             }}
           >
             {t("account management").toUpperCase()}

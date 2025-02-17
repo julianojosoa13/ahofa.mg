@@ -69,6 +69,11 @@ const Create: FC<Props> = (props) => {
                     dispatch(setAppPostType("announcement"));
                   }
                 }}
+                rippleColor={
+                  theme == "dark"
+                    ? COLORS[theme].miniViolet
+                    : COLORS[theme].violet
+                }
               >
                 <>
                   <Entypo
@@ -88,7 +93,11 @@ const Create: FC<Props> = (props) => {
                   </View>
                   <LottieView
                     ref={ref1}
-                    source={require("@/assets/animations/plusCheckAlt.json")}
+                    source={
+                      theme === "light"
+                        ? require("@/assets/animations/plusCheck.json")
+                        : require("@/assets/animations/plusCheckAlt.json")
+                    }
                     loop={false}
                     style={{
                       width: wp(5),
@@ -111,6 +120,11 @@ const Create: FC<Props> = (props) => {
                     dispatch(setAppPostType("offer"));
                   }
                 }}
+                rippleColor={
+                  theme == "dark"
+                    ? COLORS[theme].miniGreen
+                    : COLORS[theme].green
+                }
               >
                 <>
                   <MaterialIcons
@@ -131,7 +145,11 @@ const Create: FC<Props> = (props) => {
 
                   <LottieView
                     ref={ref2}
-                    source={require("@/assets/animations/plusCheckAlt.json")}
+                    source={
+                      theme === "light"
+                        ? require("@/assets/animations/plusCheck.json")
+                        : require("@/assets/animations/plusCheckAlt.json")
+                    }
                     loop={false}
                     style={{ width: wp(5), height: wp(5) }}
                     speed={2}

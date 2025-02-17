@@ -20,7 +20,9 @@ import Animated, {
   FadeInDown,
   SlideInDown,
   ZoomInDown,
+  ZoomInUp,
 } from "react-native-reanimated";
+import LottieView from "lottie-react-native";
 
 interface Props {}
 
@@ -73,7 +75,7 @@ const LoginModal: FC<Props> = (props) => {
       >
         <Animated.View
           style={styles.contentContainer}
-          entering={ZoomInDown.duration(300).delay(50)}
+          entering={ZoomInUp.duration(500).delay(100)}
         >
           <TouchableOpacity
             hitSlop={8}
