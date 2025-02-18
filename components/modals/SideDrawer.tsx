@@ -31,9 +31,9 @@ import { selectAppTheme } from "@/store/slices/appSlice";
 
 import BusyModal from "./BusyModal";
 import { useSelector } from "react-redux";
-// import ThemedLogo from "../ui/ThemedLogo";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 import LogOutButton from "../ui/LogOutButton";
+import DynamicStatusBar from "../DynamicStatusBar";
 
 interface Props {
   visible?: boolean;

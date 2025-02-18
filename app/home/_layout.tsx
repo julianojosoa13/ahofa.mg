@@ -42,7 +42,8 @@ const HomeLayout = () => {
     <Tabs
       screenOptions={{
         tabBarShowLabel: true,
-        headerShown: true,
+
+        headerShown: false,
         headerTitle: () => null,
         headerShadowVisible: false,
         tabBarStyle: {
@@ -53,84 +54,6 @@ const HomeLayout = () => {
 
         tabBarActiveTintColor: COLORS[theme].mainColor,
         tabBarInactiveTintColor: COLORS[theme].secondaryColor,
-        headerLeft: () => {
-          const [visible, setVisible] = useState(false);
-          return (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                paddingLeft: wp(1),
-              }}
-            >
-              <TouchableOpacity onPress={() => setVisible(true)}>
-                <MaterialCommunityIcons
-                  name="microsoft-xbox-controller-menu"
-                  size={40}
-                  color={COLORS[theme].mainColor}
-                />
-              </TouchableOpacity>
-
-              <SideDrawer
-                visible={visible}
-                onRequestClose={() => setVisible(false)}
-              />
-            </View>
-          );
-        },
-        headerStyle: { backgroundColor: COLORS[theme].bgColor },
-        headerRight: () => {
-          const animRef = useRef<LottieView | null>(null);
-
-          const handlePress = () => {
-            animRef.current?.play();
-            setTimeout(() => {
-              // router.navigate("/posts/CreatePost");
-            }, 300);
-          };
-          return (
-            <Animated.View
-              style={{
-                flexDirection: "row",
-                gap: wp(2),
-                justifyContent: "space-between",
-              }}
-            >
-              <TouchableOpacity
-                activeOpacity={0.67}
-                style={{
-                  width: wp(85),
-                  height: hp(5),
-                  borderRadius: 40,
-                  flexDirection: "row",
-                  paddingHorizontal: wp(2),
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingLeft: wp(2.5),
-                  marginRight: wp(3.5),
-                  backgroundColor: COLORS[theme].softBgColor,
-                  borderColor: "lightgrey",
-                }}
-              >
-                <Text
-                  style={{
-                    marginTop: 6,
-                    fontFamily: "Poppins_200ExtraLight",
-                    fontSize: hp(1.9),
-                    color: COLORS[theme].textColor,
-                  }}
-                >
-                  {t("what are you thinking")}
-                </Text>
-                <AntDesign
-                  name="search1"
-                  size={25}
-                  color={COLORS[theme].textColor}
-                />
-              </TouchableOpacity>
-            </Animated.View>
-          );
-        },
         tabBarBackground: () => {
           return (
             <View
