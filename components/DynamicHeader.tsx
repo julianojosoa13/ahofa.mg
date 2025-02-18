@@ -91,23 +91,17 @@ const DynamicHeader: FC<Props> = (props) => {
             borderWidth: 0.5,
           }}
         >
-          <>
-            <Text
-              style={{
-                marginTop: 6,
-                fontFamily: "Poppins_200ExtraLight",
-                fontSize: hp(1.9),
-                color: COLORS[theme].textColor,
-              }}
-            >
-              {t("what are you thinking")}
-            </Text>
-            <AntDesign
-              name="search1"
-              size={25}
-              color={COLORS[theme].textColor}
-            />
-          </>
+          <Text
+            style={{
+              marginTop: 6,
+              fontFamily: "Poppins_200ExtraLight",
+              fontSize: hp(1.9),
+              color: COLORS[theme].textColor,
+            }}
+          >
+            {t("what are you thinking")}
+          </Text>
+          <AntDesign name="search1" size={25} color={COLORS[theme].textColor} />
         </TouchableOpacity>
       </Animated.View>
     </SafeAreaView>

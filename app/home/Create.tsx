@@ -1,229 +1,245 @@
-import BusyModal from "@/components/modals/BusyModal";
-import {
-  selectAppPostType,
-  selectAppTheme,
-  setAppPostType,
-} from "@/store/slices/appSlice";
-import { useAppDispatch } from "@/store/store";
-import COLORS from "@/utils/colors";
-import { hp, wp } from "@/utils/screensize";
-import {
-  AntDesign,
-  Entypo,
-  Feather,
-  Fontisto,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
-import { useIsFocused } from "@react-navigation/native";
-import LottieView from "lottie-react-native";
-import React, { FC, useLayoutEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from "react-native";
-import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
+import { ScrollView } from "react-native-gesture-handler";
+import Animated, {
+  FadeInDown,
+  FadeInLeft,
+  ZoomIn,
+} from "react-native-reanimated";
 import { useSelector } from "react-redux";
-
-import { TouchableRipple } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import { Image } from "expo-image";
+import LottieView from "lottie-react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "@/store/store";
+import { selectAppTheme, setAppPostType } from "@/store/slices/appSlice";
+import COLORS from "@/utils/colors";
+import { hp, wp } from "@/utils/screensize";
+import { useIsFocused } from "@react-navigation/native";
 
 interface Props {}
 
 const Create: FC<Props> = (props) => {
   const { t } = useTranslation();
   const theme = useSelector(selectAppTheme);
-  const styles = createStyles(theme);
-  const ref1 = useRef<LottieView>(null);
-  const ref2 = useRef<LottieView>(null);
-
-  const selectedPostType = useSelector(selectAppPostType);
+  const { top } = useSafeAreaInsets();
+  const styles = createStyles(theme, top);
+  const router = useRouter();
   const dispatch = useAppDispatch();
-
   const isFocused = useIsFocused();
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [labelWidths, setLabelWidths] = useState<number[]>([]);
+  const topScrollViewRef = useRef<ScrollView>(null);
+  const labelScrollViewRef = useRef<ScrollView>(null);
+
+  const labels = [t("houses"), t("vehicles"), t("sound"), t("electronic")];
 
   useLayoutEffect(() => {
     if (isFocused) dispatch(setAppPostType("none"));
   }, [isFocused]);
 
+  const handleTopScroll = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const pageWidth = Dimensions.get("window").width;
+    const page = Math.round(offsetX / pageWidth);
+    setCurrentPage(page);
+
+    // Scroll the label to the center
+    if (labelScrollViewRef.current) {
+      labelScrollViewRef.current.scrollTo({
+        x: page * (wp(20) + 8), // Adjust based on your label width and margin
+        animated: true,
+      });
+    }
+  };
+
+  const handleLabelPress = (index: number) => {
+    if (topScrollViewRef.current) {
+      topScrollViewRef.current.scrollTo({
+        x: index * Dimensions.get("window").width,
+        animated: true,
+      });
+    }
+  };
+
+  const handleLabelLayout = (index: number, event: any) => {
+    const { width } = event.nativeEvent.layout;
+    setLabelWidths((prevWidths) => {
+      const newWidths = [...prevWidths];
+      newWidths[index] = width;
+      return newWidths;
+    });
+  };
+
+  const handleLabelScroll = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    let cumulativeWidth = 0;
+    for (let i = 0; i < labelWidths.length; i++) {
+      cumulativeWidth += labelWidths[i] - 15; // Add marginHorizontal of 7.5 on both sides
+
+      if (offsetX < cumulativeWidth) {
+        setCurrentPage(i);
+        // setTimeout(() => handleLabelPress(i), 600);
+
+        break;
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {isFocused && (
-        <>
-          <View style={styles.flex}>
-            <BusyModal />
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setTimeout(() => router.back(), 300)}
+          >
+            <AntDesign name="close" size={25} color={"white"} />
+          </TouchableOpacity>
+          <ScrollView
+            ref={topScrollViewRef}
+            style={styles.scrollView}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleTopScroll}
+            scrollEventThrottle={16}
+          >
+            {/* Section 1 */}
+            <View style={styles.sectionContainer}>
+              <Animated.Image
+                entering={FadeInLeft}
+                source={require("@/assets/images/pexels-perqued-13203179.jpg")}
+                style={styles.image}
+              />
+            </View>
 
-            <Animated.Text style={styles.title} entering={FadeInDown}>
-              {t("create")} <AntDesign name="plus" size={wp(7.5)} />
-            </Animated.Text>
-            <Animated.View entering={FadeInDown.delay(150)}>
-              <TouchableRipple
-                style={styles.announcementsContainer}
-                onPress={() => {
-                  if (selectedPostType !== "announcement") {
-                    ref2?.current?.play(90, 0);
-                    ref1?.current?.play(0, 90);
-                    dispatch(setAppPostType("announcement"));
-                  }
-                }}
-                rippleColor={
-                  theme == "dark"
-                    ? COLORS[theme].miniViolet
-                    : COLORS[theme].violet
-                }
+            {/* Section 2 */}
+            <View style={styles.sectionContainer}>
+              <Animated.Image
+                entering={ZoomIn}
+                source={require("@/assets/images/pexels-borta-2790256-30751893.jpg")}
+                style={styles.image}
+              />
+            </View>
+
+            {/* Section 3 */}
+            <View style={styles.sectionContainer}>
+              <Animated.Image
+                entering={ZoomIn}
+                source={require("@/assets/images/pexels-pavel-danilyuk-7120379.jpg")}
+                style={styles.image}
+              />
+            </View>
+
+            {/* Section 4 */}
+            <View style={styles.sectionContainer}>
+              <Animated.Image
+                entering={ZoomIn}
+                source={require("@/assets/images/pexels-amar-8981847.jpg")}
+                style={styles.image}
+              />
+            </View>
+          </ScrollView>
+          <ScrollView
+            ref={labelScrollViewRef}
+            style={styles.labels}
+            contentContainerStyle={styles.labelsContent}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleLabelScroll}
+            scrollEventThrottle={16}
+          >
+            {labels.map((label, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleLabelPress(index)}
+                onLayout={(event) => handleLabelLayout(index, event)}
               >
-                <>
-                  <Entypo
-                    name="megaphone"
-                    size={60}
-                    color={
-                      theme == "dark"
-                        ? COLORS[theme].textColor
-                        : COLORS[theme].bgColor
-                    }
-                  />
-                  <View style={styles.announcementContent}>
-                    <Text style={styles.subtitle}>{t("announcement")}</Text>
-                    <Text style={styles.textContent}>
-                      {t("announce to the users what you are looking for now!")}
-                    </Text>
-                  </View>
-                  <LottieView
-                    ref={ref1}
-                    source={
-                      theme === "light"
-                        ? require("@/assets/animations/plusCheck.json")
-                        : require("@/assets/animations/plusCheckAlt.json")
-                    }
-                    loop={false}
-                    style={{
-                      width: wp(5),
-                      height: wp(5),
-                      outlineColor: COLORS[theme].textColor,
-                    }}
-                    speed={2}
-                  />
-                </>
-              </TouchableRipple>
-            </Animated.View>
-
-            <Animated.View entering={FadeInDown.delay(300)}>
-              <TouchableRipple
-                style={styles.offerContainer}
-                onPress={() => {
-                  if (selectedPostType !== "offer") {
-                    ref1?.current?.play(90, 0);
-                    ref2?.current?.play(0, 90);
-                    dispatch(setAppPostType("offer"));
-                  }
-                }}
-                rippleColor={
-                  theme == "dark"
-                    ? COLORS[theme].miniGreen
-                    : COLORS[theme].green
-                }
-              >
-                <>
-                  <MaterialIcons
-                    name="local-offer"
-                    size={60}
-                    color={
-                      theme == "dark"
-                        ? COLORS[theme].textColor
-                        : COLORS[theme].bgColor
-                    }
-                  />
-                  <View style={styles.offerContent}>
-                    <Text style={styles.subtitle}>{t("offer")}</Text>
-                    <Text style={styles.textContent}>
-                      {t("create an offer for everyone to see")}
-                    </Text>
-                  </View>
-
-                  <LottieView
-                    ref={ref2}
-                    source={
-                      theme === "light"
-                        ? require("@/assets/animations/plusCheck.json")
-                        : require("@/assets/animations/plusCheckAlt.json")
-                    }
-                    loop={false}
-                    style={{ width: wp(5), height: wp(5) }}
-                    speed={2}
-                  />
-                </>
-              </TouchableRipple>
-            </Animated.View>
-          </View>
-        </>
+                <Animated.Text
+                  style={[
+                    styles.title,
+                    currentPage === index && styles.selectedTitle,
+                  ]}
+                  entering={FadeInDown.delay(index * 150)}
+                >
+                  {label}
+                </Animated.Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
       )}
     </SafeAreaView>
   );
 };
 
-const createStyles = (theme: "light" | "dark") =>
+const createStyles = (theme: "light" | "dark", top: number) =>
   StyleSheet.create({
     container: {
-      padding: wp(4),
+      paddingTop: top + 10,
       backgroundColor: COLORS[theme].softBgColor,
       flex: 1,
     },
-    flex: {
-      flex: 1,
-    },
     title: {
-      fontSize: hp(4.5),
+      fontSize: hp(1.8),
       color: COLORS[theme].textColor,
-      fontFamily: "Oswald_700Bold",
-      // textTransform: "capitalize",
+      fontFamily: "Oswald_500Medium",
       lineHeight: hp(5.5),
+      marginHorizontal: 7,
+      textAlign: "center",
     },
-    announcementsContainer: {
-      backgroundColor:
-        theme === "light" ? COLORS[theme].miniViolet : COLORS[theme].violet,
-      borderWidth: 1,
-      borderColor: COLORS[theme].green,
-      borderRadius: 8,
-      padding: 15,
-      marginVertical: 10,
-      flexDirection: "row",
-      gap: 15,
+    selectedTitle: {
+      color: COLORS[theme].mainColor, // Change to your selected color
+      fontWeight: "bold",
+    },
+    closeButton: {
+      position: "absolute",
+      top: 10,
+      left: 30,
+      zIndex: 10,
+      justifyContent: "center",
       alignItems: "center",
+      backgroundColor: COLORS[theme].miniViolet,
+      borderRadius: 20,
+      width: 40,
+      height: 40,
     },
-    announcementContent: {
+    scrollView: {
       flex: 1,
-      gap: 5,
     },
-    subtitle: {
-      fontSize: hp(2),
-      textTransform: "capitalize",
-      fontFamily: "Oswald_700Bold",
-      color: COLORS[theme].mainColor,
+    sectionContainer: {
+      width: Dimensions.get("window").width,
+      paddingHorizontal: 20,
     },
-    textContent: {
-      fontSize: hp(1.5),
-      color: COLORS[theme].textColor,
-      fontFamily: "Poppins_300Light",
-      textTransform: "none",
+    image: {
+      width: wp(100) - 40,
+      height: hp(75),
+      borderRadius: 16,
     },
-    offerContainer: {
-      backgroundColor:
-        theme === "light" ? COLORS[theme].miniGreen : COLORS[theme].green,
-      borderWidth: 1,
-      borderColor: COLORS[theme].red,
-      borderRadius: 8,
-      padding: 15,
-      marginVertical: 10,
-      flexDirection: "row",
-      gap: 15,
+    labels: {
+      height: 40,
+      position: "absolute",
+      bottom: hp(14),
+      left: 0,
+      zIndex: 20,
+    },
+    labelsContent: {
+      paddingLeft: wp(40),
+      paddingRight: wp(40),
+      height: 40,
+      justifyContent: "center",
       alignItems: "center",
-    },
-    offerContent: {
-      flex: 1,
-      gap: 5,
     },
   });
 
