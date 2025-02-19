@@ -8,7 +8,7 @@ import { hp, wp } from "@/utils/screensize";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface Props {
   disabled?: boolean;

@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { openBrowserAsync } from "expo-web-browser";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
 interface Props {}

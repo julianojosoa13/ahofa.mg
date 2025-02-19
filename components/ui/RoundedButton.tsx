@@ -123,17 +123,6 @@ const RoundedButton = ({ onPress, showModalOverlay = false }: Props) => {
       ))}
 
       <TouchableOpacity onPress={handlePress} style={[styles.container]}>
-        <Text
-          style={{
-            color: COLORS[theme].imageTintColor,
-            fontWeight: "bold",
-            fontSize: hp(2),
-            textTransform: "capitalize",
-            marginBottom: -hp(1.5),
-          }}
-        >
-          {t(expanded ? "" : "add")}
-        </Text>
         {!expanded ? (
           <LottieView
             ref={ref}

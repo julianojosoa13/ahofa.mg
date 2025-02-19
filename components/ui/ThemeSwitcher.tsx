@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/store/store";
 import { wp } from "@/utils/screensize";
 import LottieView from "lottie-react-native";
 import React, { FC, useEffect, useRef } from "react";
-import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
 interface Props {}

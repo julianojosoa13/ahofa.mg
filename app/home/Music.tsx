@@ -1,17 +1,17 @@
 import DynamicHeader from "@/components/DynamicHeader";
 import BusyModal from "@/components/modals/BusyModal";
 import React, { FC } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 interface Props {}
 
 const Music: FC<Props> = (props) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <BusyModal />
       <DynamicHeader />
       <Text></Text>
-    </SafeAreaView>
+    </View>
   );
 };
 

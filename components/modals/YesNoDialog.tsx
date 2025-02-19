@@ -17,6 +17,7 @@ import { AntDesign } from "@expo/vector-icons";
 import COLORS from "@/utils/colors";
 import Animated, { ZoomInDown } from "react-native-reanimated";
 import Button from "../ui/Button";
+import { StatusBar } from "expo-status-bar";
 
 interface Props {
   yesAction?: () => void;
@@ -25,6 +26,7 @@ interface Props {
   children?: ReactNode;
   yesLabel?: string;
   noLabel?: string;
+  inverted?: boolean;
 }
 
 const YesNoDialog: FC<Props> = ({
@@ -34,6 +36,7 @@ const YesNoDialog: FC<Props> = ({
   children = null,
   yesLabel = "yes",
   noLabel = "no",
+  inverted = false,
 }) => {
   const showModal = useSelector(selectShoYesNoDialog);
   const { t } = useTranslation();
@@ -53,56 +56,76 @@ const YesNoDialog: FC<Props> = ({
   }, []);
 
   return (
-    <Modal transparent visible={showModal} style={styles.container}>
-      <BlurView
-        blurAmount={10}
-        blurType={theme}
-        reducedTransparencyFallbackColor={theme == "light" ? "white" : "black"}
-        style={styles.container}
-      >
-        <Animated.View
-          style={styles.contentContainer}
-          entering={ZoomInDown.duration(300).delay(50)}
+    <View style={{ ...StyleSheet.absoluteFillObject, flex: 1 }}>
+      <Modal transparent visible={showModal} style={styles.container}>
+        <BlurView
+          blurAmount={10}
+          blurType={theme}
+          reducedTransparencyFallbackColor={
+            theme == "light" ? "white" : "black"
+          }
+          style={styles.container}
         >
-          <TouchableOpacity
-            hitSlop={8}
-            style={{
-              position: "absolute",
-              top: hp(2),
-              right: wp(4),
-              zIndex: 10,
-            }}
-            onPress={closeModal}
+          <Animated.View
+            style={styles.contentContainer}
+            entering={ZoomInDown.duration(300).delay(50)}
           >
-            <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
-          </TouchableOpacity>
-          <Text style={styles.title}>{title}</Text>
-
-          {children}
-
-          <View style={styles.buttonsContainer}>
-            <Button
-              title={t(yesLabel)}
-              action={yesAction}
+            <TouchableOpacity
+              hitSlop={8}
               style={{
-                backgroundColor: "green",
-                width: wp(25),
-                marginVertical: 0,
+                position: "absolute",
+                top: hp(2),
+                right: wp(4),
+                zIndex: 10,
               }}
-            />
-            <Button
-              title={t(noLabel)}
-              action={noAction}
-              style={{
-                backgroundColor: "red",
-                width: wp(25),
-                marginVertical: 0,
-              }}
-            />
-          </View>
-        </Animated.View>
-      </BlurView>
-    </Modal>
+              onPress={closeModal}
+            >
+              <AntDesign
+                name="close"
+                size={25}
+                color={COLORS[theme].textColor}
+              />
+            </TouchableOpacity>
+            <Text style={styles.title}>{title}</Text>
+
+            {children}
+
+            <View style={styles.buttonsContainer}>
+              <Button
+                title={t(noLabel)}
+                action={noAction}
+                style={{
+                  width: wp(37.5),
+                  marginVertical: 0,
+                  backgroundColor: inverted ? COLORS[theme].softBgColor : "red",
+                  elevation: inverted ? 2 : 0,
+                }}
+                textStyle={{
+                  fontSize: hp(1.6),
+                  color: inverted
+                    ? COLORS[theme].textColor
+                    : COLORS[theme].white,
+                }}
+              />
+              <Button
+                title={t(yesLabel)}
+                action={yesAction}
+                textStyle={{
+                  fontSize: hp(1.6),
+                }}
+                style={{
+                  backgroundColor: inverted
+                    ? "red"
+                    : COLORS[theme].imageTintColor,
+                  width: wp(37.5),
+                  marginVertical: 0,
+                }}
+              />
+            </View>
+          </Animated.View>
+        </BlurView>
+      </Modal>
+    </View>
   );
 };
 
@@ -110,8 +133,8 @@ const createStyles = (theme: "light" | "dark") =>
   StyleSheet.create({
     container: {
       flex: 1,
-      width: wp(100),
-      height: hp(100),
+      // width: wp(100),
+      // height: hp(125),
       justifyContent: "center",
       alignItems: "center",
     },
@@ -122,7 +145,7 @@ const createStyles = (theme: "light" | "dark") =>
       backgroundColor: COLORS[theme].bgColor,
       justifyContent: "space-around",
       alignItems: "center",
-      height: hp(20),
+      // height: hp(20),
       width: wp(85),
       elevation: 4,
       paddingBottom: 24,

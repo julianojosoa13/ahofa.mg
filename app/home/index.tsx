@@ -1,11 +1,5 @@
 import React, { FC, useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
 import BusyModal from "@/components/modals/BusyModal";
@@ -31,11 +25,11 @@ const HomeScreen: FC<Props> = (props) => {
   const styles = createStyles(theme);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <DynamicHeader />
       <BusyModal />
       <Text></Text>
-    </SafeAreaView>
+    </View>
   );
 };
 

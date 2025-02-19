@@ -2,13 +2,7 @@ import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { TouchableRipple } from "react-native-paper";
 import SideDrawer from "./modals/SideDrawer";
 import Animated from "react-native-reanimated";
@@ -26,7 +20,7 @@ const DynamicHeader: FC<Props> = (props) => {
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <DynamicStatusBar />
       <View
         style={{
@@ -104,7 +98,7 @@ const DynamicHeader: FC<Props> = (props) => {
           <AntDesign name="search1" size={25} color={COLORS[theme].textColor} />
         </TouchableOpacity>
       </Animated.View>
-    </SafeAreaView>
+    </View>
   );
 };
 

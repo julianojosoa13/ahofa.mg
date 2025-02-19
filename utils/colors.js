@@ -31,7 +31,8 @@ const COLORS = {
     softBgColor: "rgba(30, 32, 40, 1)", // Softer dark gray
     white: "rgba(255, 255, 255, 0.9)",
 
-    imageTintColor: "rgba(34, 180, 180, 1)",
+    // imageTintColor: "rgba(34, 180, 180, 1)",
+    imageTintColor: "rgba(34, 150, 150, 1)",
 
     miniViolet: "rgba(110, 110, 140, 1)",
     violet: "rgba(80, 80, 120, 1)",

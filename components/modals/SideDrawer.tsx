@@ -73,7 +73,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
       {visible && (
         <Animated.View
           style={styles.container}
-          entering={SlideInLeft.duration(300)}
+          entering={SlideInLeft.duration(500)}
           exiting={SlideOutLeft.duration(300)}
         >
           <View style={styles.themeButton}>
@@ -88,18 +88,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
             <AntDesign name="close" size={25} color={COLORS[theme].textColor} />
           </TouchableOpacity>
 
-          <Text
-            style={{
-              textAlign: "center",
-              fontWeight: "500",
-              fontSize: hp(2.25),
-              color: COLORS[theme].mainColor,
-              marginTop: hp(7),
-            }}
-          >
-            {t("account management").toUpperCase()}
-          </Text>
-          <View style={styles.line} />
+          {/* <View style={styles.line} /> */}
           <View style={styles.header}>
             <TouchableOpacity style={styles.userAvatar}>
               {user ? (
@@ -139,7 +128,7 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
 
           <ScrollView style={{ marginBottom: hp(4) }}>
             {/* Mon Profile */}
-            <View style={styles.line} />
+            {/* <View style={styles.line} /> */}
             <Animated.View entering={FadeInUp.delay(300)}>
               <TouchableOpacity style={styles.menuItem}>
                 <FontAwesome
@@ -227,9 +216,9 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
               </TouchableOpacity>
             </Animated.View>
 
-            <Animated.View entering={FadeInDown.delay(750)}>
+            {/* <Animated.View entering={FadeInDown.delay(750)}>
               <LogOutButton />
-            </Animated.View>
+            </Animated.View> */}
           </ScrollView>
           <Text
             style={{
@@ -283,7 +272,8 @@ const createStyles = (theme: "dark" | "light") =>
       flexDirection: "row",
       gap: wp(2),
       alignItems: "center",
-      // marginTop: hp(2.5),
+      marginTop: hp(7.5),
+      marginBottom: hp(2.5),
     },
     userAvatar: {
       marginLeft: wp(2.5),

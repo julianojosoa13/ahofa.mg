@@ -10,7 +10,7 @@ import { BlurView } from "@react-native-community/blur";
 import { StatusBar } from "expo-status-bar";
 import LottieView from "lottie-react-native";
 import React, { FC, useEffect } from "react";
-import { Modal, SafeAreaView, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 
 interface Props {}

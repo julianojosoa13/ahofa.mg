@@ -7,7 +7,7 @@ import { onGoogleButtonPress } from "@/lib/firebase/googleSignIn";
 import {
   Image,
   Keyboard,
-  SafeAreaView,
+  View,
   StyleSheet,
   Text,
   TouchableOpacity,

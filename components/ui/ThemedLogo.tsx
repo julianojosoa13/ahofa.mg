@@ -3,7 +3,7 @@ import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
 import { ImageStyle } from "expo-image";
 import React, { FC, Fragment } from "react";
-import { SafeAreaView, StyleProp, StyleSheet } from "react-native";
+import { View, StyleProp, StyleSheet } from "react-native";
 import Animated, {
   AnimatedStyle,
   EntryAnimationsValues,
@@ -44,9 +44,7 @@ const ThemedLogo: FC<Props> = ({ style, entering }) => {
     );
   };
   return (
-    <SafeAreaView style={{ backgroundColor: "transparent" }}>
-      {switchTheme()}
-    </SafeAreaView>
+    <View style={{ backgroundColor: "transparent" }}>{switchTheme()}</View>
   );
 };
 

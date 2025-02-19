@@ -3,7 +3,7 @@ import COLORS from "@/utils/colors";
 import { wp } from "@/utils/screensize";
 import LottieView from "lottie-react-native";
 import React, { FC, useEffect } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import auth from "@react-native-firebase/auth";
 import { Image } from "expo-image";
@@ -23,7 +23,7 @@ const Loading: FC<Props> = (props) => {
     if (!user) setTimeout(() => router.replace("/HomePage"), 2000);
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style={theme == "light" ? "dark" : "light"} />
       {/* <ThemedLogo style={styles.logo} entering={null} /> */}
 
@@ -36,7 +36,7 @@ const Loading: FC<Props> = (props) => {
       {/* {user && (
         <Image source={{ uri: user?.photoURL }} style={styles.userAvatar} />
       )} */}
-    </SafeAreaView>
+    </View>
   );
 };
 

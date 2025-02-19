@@ -3,7 +3,7 @@ import {
   setShowCategorySelectModal,
 } from "@/store/slices/appSlice";
 import React, { FC } from "react";
-import { SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import Electronics from "./Eletronics";
 import Houses from "./Houses";

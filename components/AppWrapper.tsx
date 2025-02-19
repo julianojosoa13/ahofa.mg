@@ -1,12 +1,17 @@
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { Stack, useRouter } from "expo-router";
 import React, { FC, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useSelector } from "react-redux";
-import { selectAppBusy, setAppBusy } from "@/store/slices/appSlice";
+import {
+  selectAppBusy,
+  selectShoYesNoDialog,
+  setAppBusy,
+  setShowYesNoDialog,
+} from "@/store/slices/appSlice";
 import { useAppDispatch } from "@/store/store";
 import i18n from "@/lib/i18n";
 import { selectTranslationsLanguage } from "@/store/slices/translationsSlice";
@@ -20,6 +25,7 @@ const AppWrapper: FC<Props> = (props) => {
     {} as FirebaseAuthTypes.User | null
   );
   const busy = useSelector(selectAppBusy);
+  const confirmDialog = useSelector(selectShoYesNoDialog);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -42,7 +48,7 @@ const AppWrapper: FC<Props> = (props) => {
   useEffect(() => {
     const user = auth().currentUser;
     if (busy) dispatch(setAppBusy(false));
-
+    if (confirmDialog) dispatch(setShowYesNoDialog(false));
     console.log("Current user >> ", user);
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

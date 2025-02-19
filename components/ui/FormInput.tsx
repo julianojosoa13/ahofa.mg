@@ -5,7 +5,6 @@ import { AntDesign, Entypo } from "@expo/vector-icons";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import {
   KeyboardTypeOptions,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -59,7 +58,7 @@ const FormInput: FC<Props> = ({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={[styles.label, focused ? focusedLabel : null]}>{label}</Text>
       <View style={[styles.inputContainer, focused ? focusedStyle : null]}>
         {icon}
@@ -85,7 +84,7 @@ const FormInput: FC<Props> = ({
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

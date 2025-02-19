@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Button from "./Button";
 import { hp, wp } from "@/utils/screensize";
 import { useTranslation } from "react-i18next";
