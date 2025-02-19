@@ -214,7 +214,7 @@ const CreatePost: FC<Props> = (props) => {
               entering={FadeInRight.delay(50).duration(600)}
               style={styles.pagetitle}
             >
-              {t(labels[currentPage])}
+              {t(labels[currentPage])} +
             </Animated.Text>
           )}
         </View>
