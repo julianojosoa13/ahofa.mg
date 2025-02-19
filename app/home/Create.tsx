@@ -16,10 +16,11 @@ import {
   Alert,
   BackHandler,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Pressable, ScrollView } from "react-native-gesture-handler";
 import Animated, {
   FadeInDown,
   FadeInLeft,
+  FadeInRight,
   ZoomIn,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
@@ -62,7 +63,10 @@ const Create: FC<Props> = (props) => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [labelWidths, setLabelWidths] = useState<number[]>([]);
+  const [showToolTip, setShowToolTip] = useState(true);
+
   const [activeScrollView, setActiveScrollView] = useState(0);
+
   const topScrollViewRef = useRef<ScrollView>(null);
   const labelScrollViewRef = useRef<ScrollView>(null);
 
@@ -73,6 +77,7 @@ const Create: FC<Props> = (props) => {
   }, [isFocused]);
 
   const handleTopScroll = (event: any) => {
+    if (showToolTip) setShowToolTip(false);
     const offsetX = event.nativeEvent.contentOffset.x;
     const pageWidth = Dimensions.get("window").width;
     const page = Math.round(offsetX / pageWidth);
@@ -114,6 +119,10 @@ const Create: FC<Props> = (props) => {
     if (!isFocused) setCurrentPage(0);
   }, [isFocused]);
 
+  useEffect(() => {
+    setTimeout(() => setShowToolTip(false), 5500);
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -142,6 +151,27 @@ const Create: FC<Props> = (props) => {
       end={{ x: 1, y: 1 }}
       style={styles.container}
     >
+      {showToolTip && (
+        <Pressable
+          focusable
+          onPress={() => setShowToolTip(false)}
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            flex: 1,
+            zIndex: 200,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.8)",
+          }}
+        >
+          <LottieView
+            source={require("@/assets/animations/swipeLeft.json")}
+            style={{ width: 175, height: 175 }}
+            autoPlay
+            speed={0.75}
+          />
+        </Pressable>
+      )}
       {isFocused && (
         <View style={{ flex: 1 }}>
           <YesNoDialog
@@ -189,26 +219,28 @@ const Create: FC<Props> = (props) => {
                   end={{ x: 0, y: 1 }}
                   style={styles.gradient}
                 >
-                  <Animated.View
-                    style={styles.buttonContainer}
-                    entering={FadeInDown.delay(400)}
-                  >
-                    <Button
-                      title={t("create")}
-                      style={{
-                        marginHorizontal: 25,
-                        borderRadius: 10,
-                        backgroundColor: COLORS[theme].imageTintColor,
-                      }}
-                      textStyle={{ textTransform: "capitalize" }}
+                  {currentPage === 0 && (
+                    <Animated.View
+                      style={styles.buttonContainer}
+                      entering={FadeInLeft.duration(450)}
                     >
-                      <MaterialIcons
-                        name="add-home"
-                        size={24}
-                        color={COLORS[theme].white}
-                      />
-                    </Button>
-                  </Animated.View>
+                      <Button
+                        title={t("create")}
+                        style={{
+                          marginHorizontal: 25,
+                          borderRadius: 10,
+                          backgroundColor: COLORS[theme].imageTintColor,
+                        }}
+                        textStyle={{ textTransform: "capitalize" }}
+                      >
+                        <MaterialIcons
+                          name="add-home"
+                          size={24}
+                          color={COLORS[theme].white}
+                        />
+                      </Button>
+                    </Animated.View>
+                  )}
                 </LinearGradient>
               </ImageBackground>
             </View>
@@ -227,25 +259,30 @@ const Create: FC<Props> = (props) => {
                   end={{ x: 0, y: 1 }}
                   style={styles.gradient}
                 >
-                  <View style={styles.buttonContainer}>
-                    <Button
-                      title={t("create")}
-                      style={{
-                        marginHorizontal: 25,
-                        borderRadius: 10,
-                        backgroundColor: COLORS[theme].violet,
-                        textTransform: "capitalize",
-                        fontSize: hp(1.5),
-                      }}
-                      textStyle={{ textTransform: "capitalize" }}
+                  {currentPage === 1 && (
+                    <Animated.View
+                      style={styles.buttonContainer}
+                      entering={FadeInLeft.duration(450)}
                     >
-                      <FontAwesome5
-                        name="car"
-                        size={24}
-                        color={COLORS[theme].white}
-                      />
-                    </Button>
-                  </View>
+                      <Button
+                        title={t("create")}
+                        style={{
+                          marginHorizontal: 25,
+                          borderRadius: 10,
+                          backgroundColor: COLORS[theme].violet,
+                          textTransform: "capitalize",
+                          fontSize: hp(1.5),
+                        }}
+                        textStyle={{ textTransform: "capitalize" }}
+                      >
+                        <FontAwesome5
+                          name="car"
+                          size={24}
+                          color={COLORS[theme].white}
+                        />
+                      </Button>
+                    </Animated.View>
+                  )}
                 </LinearGradient>
               </ImageBackground>
             </View>
@@ -263,25 +300,30 @@ const Create: FC<Props> = (props) => {
                   end={{ x: 0, y: 1 }}
                   style={styles.gradient}
                 >
-                  <View style={styles.buttonContainer}>
-                    <Button
-                      title={t("create")}
-                      style={{
-                        marginHorizontal: 25,
-                        borderRadius: 10,
-                        backgroundColor: COLORS[theme].yellow,
-                        textTransform: "capitalize",
-                        fontSize: hp(1.5),
-                      }}
-                      textStyle={{ textTransform: "capitalize" }}
+                  {currentPage === 2 && (
+                    <Animated.View
+                      style={styles.buttonContainer}
+                      entering={FadeInRight.duration(450)}
                     >
-                      <Feather
-                        name="music"
-                        size={24}
-                        color={COLORS[theme].white}
-                      />
-                    </Button>
-                  </View>
+                      <Button
+                        title={t("create")}
+                        style={{
+                          marginHorizontal: 25,
+                          borderRadius: 10,
+                          backgroundColor: COLORS[theme].yellow,
+                          textTransform: "capitalize",
+                          fontSize: hp(1.5),
+                        }}
+                        textStyle={{ textTransform: "capitalize" }}
+                      >
+                        <Feather
+                          name="music"
+                          size={24}
+                          color={COLORS[theme].white}
+                        />
+                      </Button>
+                    </Animated.View>
+                  )}
                 </LinearGradient>
               </ImageBackground>
             </View>
@@ -298,25 +340,30 @@ const Create: FC<Props> = (props) => {
                   end={{ x: 0, y: 1 }}
                   style={styles.gradient}
                 >
-                  <View style={styles.buttonContainer}>
-                    <Button
-                      title={t("create")}
-                      style={{
-                        marginHorizontal: 25,
-                        borderRadius: 10,
-                        backgroundColor: COLORS[theme].red,
-                        textTransform: "capitalize",
-                        fontSize: hp(1.5),
-                      }}
-                      textStyle={{ textTransform: "capitalize" }}
+                  {currentPage === 3 && (
+                    <Animated.View
+                      style={styles.buttonContainer}
+                      entering={FadeInRight.duration(450)}
                     >
-                      <FontAwesome6
-                        name="computer"
-                        size={24}
-                        color={COLORS[theme].white}
-                      />
-                    </Button>
-                  </View>
+                      <Button
+                        title={t("create")}
+                        style={{
+                          marginHorizontal: 25,
+                          borderRadius: 10,
+                          backgroundColor: COLORS[theme].red,
+                          textTransform: "capitalize",
+                          fontSize: hp(1.5),
+                        }}
+                        textStyle={{ textTransform: "capitalize" }}
+                      >
+                        <FontAwesome6
+                          name="computer"
+                          size={24}
+                          color={COLORS[theme].white}
+                        />
+                      </Button>
+                    </Animated.View>
+                  )}
                 </LinearGradient>
               </ImageBackground>
             </View>

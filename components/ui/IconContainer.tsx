@@ -39,6 +39,7 @@ const IconContainer: FC<Props> = ({ focused, children, delay }) => {
           elevation: focused ? 5 : 0,
           borderWidth: focused ? 0.33 : 0,
           borderColor: COLORS[theme].mainColor,
+          zIndex: 300,
         },
       ]}
     >
