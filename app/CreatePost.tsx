@@ -19,9 +19,12 @@ import {
 import { Pressable, ScrollView } from "react-native-gesture-handler";
 import Animated, {
   BounceIn,
+  BounceInRight,
+  BounceOut,
   FadeInDown,
   FadeInLeft,
   FadeInRight,
+  FadeOutRight,
   ZoomIn,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
@@ -121,14 +124,14 @@ const CreatePost: FC<Props> = (props) => {
   }, [isFocused]);
 
   useEffect(() => {
-    setTimeout(() => setShowToolTip(false), 3666);
+    setTimeout(() => setShowToolTip(false), 1883);
   }, []);
 
   useEffect(() => {
     setShowTitle(false);
     setTimeout(() => {
       setShowTitle(true);
-    }, 10);
+    }, 150);
   }, [currentPage]);
 
   useFocusEffect(
@@ -211,7 +214,8 @@ const CreatePost: FC<Props> = (props) => {
           </TouchableOpacity>
           {showTitle && (
             <Animated.Text
-              entering={FadeInRight.delay(50).duration(600)}
+              entering={BounceIn.delay(150).duration(750)}
+              exiting={FadeOutRight}
               style={styles.pagetitle}
             >
               {t(labels[currentPage])} +
