@@ -22,7 +22,7 @@ const Button = (props: Props) => {
   const defaultStyle = {
     backgroundColor: COLORS[theme].mainColor,
     marginVertical: hp(1.5),
-    height: hp(6),
+    height: 50,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",

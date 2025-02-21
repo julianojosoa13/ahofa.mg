@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Modal,
 } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import {
@@ -140,13 +141,12 @@ const CreateApartmentBottomSheet: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    bottomSheetRef.current?.expand();
+  }, []);
+
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      index={0}
-      snapPoints={["50%", "90%"]}
-      enablePanDownToClose
-    >
+    <Modal visible={true}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
           style={[styles.tab, activeTab === "Details" && styles.activeTab]}
@@ -267,7 +267,7 @@ const CreateApartmentBottomSheet: React.FC = () => {
       )}
 
       <Button title="Post" onPress={handlePost} />
-    </BottomSheet>
+    </Modal>
   );
 };
 

@@ -148,6 +148,7 @@ const Create: FC<Props> = (props) => {
       end={{ x: 1, y: 1 }}
       style={styles.container}
     >
+      <CreateApartmentBottomSheet />
       {showToolTip && (
         <Pressable
           focusable
@@ -222,7 +223,6 @@ const Create: FC<Props> = (props) => {
               source={require("@/assets/images/pexels-perqued-13203179.jpg")}
               style={styles.image}
             >
-              <CreateApartmentBottomSheet />
               <LinearGradient
                 colors={["rgba(0,0,0,0.35)", "rgba(0,0,0,0.95)"]}
                 start={{ x: 0, y: 0.35 }}
