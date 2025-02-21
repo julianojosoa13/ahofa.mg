@@ -53,6 +53,7 @@ import RoundedButton from "@/components/ui/RoundedButton";
 import Button from "@/components/ui/Button";
 import { LinearGradient } from "expo-linear-gradient";
 import YesNoDialog from "@/components/modals/YesNoDialog";
+import CreateApartmentBottomSheet from "@/components/posts/CreateApartmentBottomSheet";
 
 interface Props {}
 
@@ -141,7 +142,7 @@ const Create: FC<Props> = (props) => {
     <LinearGradient
       colors={[
         "rgba(0,0,150,0.5)",
-        theme == "light" ? "rgba(0,0,0,0.65)" : "rgba(0,0,0,0.5)",
+        theme == "light" ? "rgba(0,0,0,0.25)" : "rgba(0,0,0,0.5)",
       ]}
       start={{ x: 0.6, y: 0.15 }}
       end={{ x: 1, y: 1 }}
@@ -221,6 +222,7 @@ const Create: FC<Props> = (props) => {
               source={require("@/assets/images/pexels-perqued-13203179.jpg")}
               style={styles.image}
             >
+              <CreateApartmentBottomSheet />
               <LinearGradient
                 colors={["rgba(0,0,0,0.35)", "rgba(0,0,0,0.95)"]}
                 start={{ x: 0, y: 0.35 }}
@@ -257,7 +259,7 @@ const Create: FC<Props> = (props) => {
                       <Button
                         title={t("create")}
                         style={{
-                          marginHorizontal: 25,
+                          marginHorizontal: wp(10),
                           borderRadius: 10,
                           backgroundColor: COLORS[theme].imageTintColor,
                         }}
@@ -320,7 +322,7 @@ const Create: FC<Props> = (props) => {
                       <Button
                         title={t("create")}
                         style={{
-                          marginHorizontal: 25,
+                          marginHorizontal: wp(10),
                           borderRadius: 10,
                           backgroundColor: COLORS[theme].violet,
                           textTransform: "capitalize",
@@ -384,7 +386,7 @@ const Create: FC<Props> = (props) => {
                       <Button
                         title={t("create")}
                         style={{
-                          marginHorizontal: 25,
+                          marginHorizontal: wp(10),
                           borderRadius: 10,
                           backgroundColor: COLORS[theme].yellow,
                           textTransform: "capitalize",
@@ -447,7 +449,7 @@ const Create: FC<Props> = (props) => {
                       <Button
                         title={t("create")}
                         style={{
-                          marginHorizontal: 25,
+                          marginHorizontal: wp(10),
                           borderRadius: 10,
                           backgroundColor: COLORS[theme].red,
                           textTransform: "capitalize",
@@ -508,7 +510,7 @@ const createStyles = (theme: "light" | "dark", top: number) =>
     },
     title: {
       fontSize: hp(1.8),
-      color: COLORS[theme].white,
+      color: COLORS[theme].textColor,
       fontFamily: "Oswald_500Medium",
       lineHeight: hp(5.5),
       marginHorizontal: 7,
@@ -556,21 +558,21 @@ const createStyles = (theme: "light" | "dark", top: number) =>
     },
     image: {
       width: wp(100) - 20,
-      height: hp(75),
-      borderRadius: 16,
+      height: hp(76),
+      borderRadius: 32,
       overflow: "hidden",
     },
     gradient: {
       width: wp(100) - 20,
-      height: hp(75),
-      borderRadius: 16,
+      height: hp(76),
+      borderRadius: 32,
       overflow: "hidden",
       justifyContent: "flex-end",
     },
     labels: {
       height: 40,
       position: "absolute",
-      bottom: hp(15),
+      bottom: hp(12.5),
       left: 0,
       zIndex: 20,
     },
