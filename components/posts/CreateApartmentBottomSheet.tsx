@@ -10,11 +10,7 @@ import {
   Modal,
 } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
-import {
-  launchImageLibrary,
-  launchCamera,
-  Asset,
-} from "react-native-image-picker";
+import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { Switch } from "react-native";
 import { Button } from "react-native-elements";
@@ -36,10 +32,10 @@ type FormData = {
 };
 
 type ImagePickerResponse = {
-  assets: Asset[];
+  assets: [];
 };
 
-const CreateApartmentBottomSheet: React.FC = () => {
+const CreateApartmentBottomSheet = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [activeTab, setActiveTab] = useState<"Details" | "Pictures">("Details");
   const [formData, setFormData] = useState<FormData>({
@@ -59,37 +55,24 @@ const CreateApartmentBottomSheet: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleImagePicker = () => {
-    const options = {
-      title: "Select Picture",
-      storageOptions: {
-        skipBackup: true,
-        path: "images",
-      },
-    };
-
-    launchImageLibrary(options, (response: ImagePickerResponse) => {
-      if (response.assets && response.assets.length > 0) {
-        const newPictures = [
-          ...formData.pictures,
-          ...response.assets.map((asset) => asset.uri!),
-        ];
-        if (newPictures.length <= 5) {
-          setFormData({ ...formData, pictures: newPictures });
-        } else {
-          alert("You can only upload up to 5 pictures.");
-        }
+  const handleImagePicker = async () => {
+    const response = await ImagePicker.launchImageLibraryAsync();
+    if (response.assets && response.assets.length > 0) {
+      const newPictures = [
+        ...formData.pictures,
+        ...response.assets.map((asset: any) => asset.uri!),
+      ];
+      if (newPictures.length <= 5) {
+        setFormData({ ...formData, pictures: newPictures });
+      } else {
+        alert("You can only upload up to 5 pictures.");
       }
-    });
+    }
   };
 
-  const handleTakePhoto = () => {
-    const options = {
-      mediaType: "photo",
-      quality: 1,
-    };
-
-    launchCamera(options, (response: ImagePickerResponse) => {
+  const handleTakePhoto = async () => {
+    try {
+      const response = await ImagePicker.launchCameraAsync();
       if (response.assets && response.assets.length > 0) {
         const newPictures = [...formData.pictures, response.assets[0].uri!];
         if (newPictures.length <= 5) {
@@ -98,7 +81,9 @@ const CreateApartmentBottomSheet: React.FC = () => {
           alert("You can only upload up to 5 pictures.");
         }
       }
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleDeletePicture = (index: number) => {
@@ -261,7 +246,10 @@ const CreateApartmentBottomSheet: React.FC = () => {
             </ScrollView>
           )}
           {formData.pictures.length < 5 && (
-            <Button title="Add Picture" onPress={handleImagePicker} />
+            <>
+              <Button title="Add Picture" onPress={handleImagePicker} />
+              <Button title="Take Photo" onPress={handleTakePhoto} />
+            </>
           )}
         </View>
       )}
