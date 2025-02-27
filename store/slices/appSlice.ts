@@ -8,6 +8,7 @@ import firestore, {
   getDoc,
   setDoc,
 } from "@react-native-firebase/firestore";
+import COLORS from "@/utils/colors";
 
 interface StateTypes {
   busy: boolean;
@@ -26,6 +27,7 @@ interface StateTypes {
   theme: "light" | "dark";
   userRegistered: boolean; // Nouvel état
   showYesNoDialog: boolean;
+  specialColor: string;
 }
 
 const initialState: StateTypes = {
@@ -39,6 +41,7 @@ const initialState: StateTypes = {
   theme: "light",
   userRegistered: false, // Initialisé à false
   showYesNoDialog: false,
+  specialColor: COLORS.light.mainColor,
 };
 
 const appSlice = createSlice({
@@ -74,6 +77,9 @@ const appSlice = createSlice({
     },
     setShowYesNoDialog(state, action) {
       state.showYesNoDialog = action.payload;
+    },
+    setSpecialColor(state, action) {
+      state.specialColor = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -116,6 +122,9 @@ export const selectUserRegistered = (state: RootState) =>
 export const selectShoYesNoDialog = (state: RootState) =>
   state.app.showYesNoDialog;
 
+export const selectAppSpecialColor = (state: RootState) =>
+  state.app.specialColor;
+
 export const {
   setAppBusy,
   setAppFirstStep,
@@ -127,6 +136,7 @@ export const {
   setAppTheme,
   setUserRegistered,
   setShowYesNoDialog,
+  setSpecialColor,
 } = appSlice.actions;
 export default appSlice.reducer;
 

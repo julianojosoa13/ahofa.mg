@@ -1,4 +1,4 @@
-import { selectAppTheme } from "@/store/slices/appSlice";
+import { selectAppSpecialColor, selectAppTheme } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
 import { hp } from "@/utils/screensize";
 import React, { FC, ReactNode } from "react";
@@ -13,10 +13,17 @@ interface Props {
   focused: boolean;
   children: ReactNode;
   delay: number;
+  special?: boolean;
 }
 const mbValue = hp(2.75);
-const IconContainer: FC<Props> = ({ focused, children, delay }) => {
+const IconContainer: FC<Props> = ({
+  focused,
+  children,
+  delay,
+  special = false,
+}) => {
   const theme = useSelector(selectAppTheme);
+  const specialColor = useSelector(selectAppSpecialColor);
   // Animated style for marginBottom
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -30,7 +37,11 @@ const IconContainer: FC<Props> = ({ focused, children, delay }) => {
       style={[
         animatedStyle,
         {
-          backgroundColor: focused ? COLORS[theme].mainColor : "transparent",
+          backgroundColor: focused
+            ? special
+              ? specialColor
+              : COLORS[theme].mainColor
+            : "transparent",
           height: hp(6),
           width: hp(6),
           borderRadius: hp(3),

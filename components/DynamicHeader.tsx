@@ -26,78 +26,73 @@ const DynamicHeader: FC<Props> = (props) => {
         style={{
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "space-between",
           paddingLeft: wp(1),
           position: "absolute",
-          top: top + 10,
+          width: wp(100),
+          top: top + 5,
+          left: 5,
         }}
       >
-        <TouchableRipple
-          onPress={() => setVisible(true)}
-          style={{
-            borderRadius: 22.5,
-            backgroundColor: COLORS[theme].bgColor,
-            elevation: 2,
-            justifyContent: "center",
-            alignItems: "center",
-            width: 45,
-            height: 45,
-          }}
-          rippleColor={"lightgrey"}
-        >
-          <MaterialCommunityIcons
-            name="menu"
-            size={32.5}
-            color={COLORS[theme].mainColor}
-          />
-        </TouchableRipple>
-
-        <SideDrawer
-          visible={visible}
-          onRequestClose={() => setVisible(false)}
-        />
-      </View>
-
-      <Animated.View
-        style={{
-          flexDirection: "row",
-          gap: wp(2),
-          justifyContent: "space-between",
-          position: "absolute",
-          top: top + 10,
-          right: 0,
-        }}
-      >
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => console.log("")}
-          style={{
-            width: wp(80),
-            height: hp(5),
-            borderRadius: 15,
-            flexDirection: "row",
-            paddingHorizontal: wp(2),
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingLeft: wp(7.5),
-            marginRight: wp(3.5),
-            backgroundColor: COLORS[theme].bgColor,
-            borderColor: "lightgrey",
-            borderWidth: 0.5,
-          }}
-        >
+        <TouchableRipple onPress={() => console.log("ok")}>
           <Text
             style={{
+              fontFamily: "Poppins_700Bold",
               marginTop: 6,
-              fontFamily: "Poppins_200ExtraLight",
-              fontSize: hp(1.9),
-              color: COLORS[theme].textColor,
+              fontSize: hp(2.5),
+              color: COLORS[theme].thirdColor,
             }}
           >
-            {t("what are you thinking")}
+            AHOFA.MG
           </Text>
-          <AntDesign name="search1" size={25} color={COLORS[theme].textColor} />
-        </TouchableOpacity>
-      </Animated.View>
+        </TouchableRipple>
+        <Animated.View
+          style={{
+            flexDirection: "row",
+            gap: wp(2),
+          }}
+        >
+          <TouchableRipple
+            onPress={() => setVisible(true)}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              height: 45,
+            }}
+            rippleColor={COLORS[theme].white}
+          >
+            <MaterialCommunityIcons
+              name="microsoft-xbox-controller-menu"
+              size={40}
+              color={COLORS[theme].mainColor}
+            />
+          </TouchableRipple>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => console.log("")}
+            style={{
+              // width: wp(15),
+              height: hp(5),
+              borderRadius: 15,
+              flexDirection: "row",
+              marginRight: wp(5),
+              marginLeft: wp(2),
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <AntDesign
+              name="search1"
+              size={25}
+              color={COLORS[theme].textColor}
+            />
+          </TouchableOpacity>
+          <SideDrawer
+            visible={visible}
+            onRequestClose={() => setVisible(false)}
+          />
+        </Animated.View>
+      </View>
     </View>
   );
 };

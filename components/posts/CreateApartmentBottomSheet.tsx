@@ -131,7 +131,7 @@ const CreateApartmentBottomSheet = () => {
   }, []);
 
   return (
-    <Modal visible={true}>
+    <Modal visible={false}>
       <View style={styles.tabContainer}>
         <TouchableOpacity
           style={[styles.tab, activeTab === "Details" && styles.activeTab]}

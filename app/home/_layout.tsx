@@ -18,9 +18,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import Animated, {
+  BounceIn,
+  BounceInDown,
+  FadeInDown,
+  FadeInUp,
+  SlideInDown,
+} from "react-native-reanimated";
 import SideDrawer from "@/components/modals/SideDrawer";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LottieView from "lottie-react-native";
 import { useAppDispatch } from "@/store/store";
@@ -116,17 +122,15 @@ const HomeLayout = () => {
         options={{
           title: t(""),
           tabBarIcon: ({ focused }) => {
+            const anim = useRef<LottieView>(null);
+
             return (
-              <IconContainer delay={300} focused={focused}>
+              <IconContainer delay={300} focused={focused} special>
                 <MaterialIcons
-                  name="add-box"
-                  color={
-                    focused
-                      ? COLORS[theme].bgColor
-                      : COLORS[theme].secondaryColor
-                  }
-                  style={!focused ? { marginTop: 15 } : null}
-                  size={33}
+                  name={"add"}
+                  color={focused ? "white" : COLORS[theme].secondaryColor}
+                  style={!focused ? { marginTop: 7.5 } : null}
+                  size={30}
                 />
               </IconContainer>
             );
