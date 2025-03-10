@@ -1,36 +1,22 @@
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Dimensions,
-  ImageBackground,
-  Alert,
   BackHandler,
 } from "react-native";
 import { Pressable, ScrollView } from "react-native-gesture-handler";
 import Animated, {
   BounceIn,
-  BounceInRight,
-  BounceOut,
   FadeInDown,
-  FadeInLeft,
-  FadeInRight,
   FadeOutRight,
-  ZoomIn,
 } from "react-native-reanimated";
 import { useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useRouter } from "expo-router";
-// import { Image, ImageBackground } from "expo-image";
+
 import LottieView from "lottie-react-native";
 import {
   AntDesign,
@@ -41,19 +27,13 @@ import {
 } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "@/store/store";
-import {
-  selectAppTheme,
-  setAppPostType,
-  setShowYesNoDialog,
-} from "@/store/slices/appSlice";
+import { selectAppTheme, setShowYesNoDialog } from "@/store/slices/appSlice";
 import COLORS from "@/utils/colors";
 import { hp, wp } from "@/utils/screensize";
-import { useIsFocused } from "@react-navigation/native";
-import RoundedButton from "@/components/ui/RoundedButton";
-import Button from "@/components/ui/Button";
 import { LinearGradient } from "expo-linear-gradient";
 import YesNoDialog from "@/components/modals/YesNoDialog";
 import CreateApartmentBottomSheet from "@/components/posts/CreateApartmentBottomSheet";
+import CreatePostSection from "@/components/posts/CreatePostSection";
 
 interface Props {}
 
@@ -218,257 +198,95 @@ const Create: FC<Props> = (props) => {
           scrollEventThrottle={16}
         >
           {/* Section 1 */}
-          <View style={styles.sectionContainer}>
-            <ImageBackground
-              source={require("@/assets/images/pexels-perqued-13203179.jpg")}
-              style={styles.image}
-            >
-              <LinearGradient
-                colors={["rgba(0,0,0,0.35)", "rgba(0,0,0,0.95)"]}
-                start={{ x: 0, y: 0.35 }}
-                end={{ x: 0, y: 1 }}
-                style={styles.gradient}
-              >
-                {currentPage === 0 && (
-                  <>
-                    <Animated.View entering={BounceIn.duration(600).delay(50)}>
-                      <Text style={{ color: "white", textAlign: "center" }}>
-                        {t("add")}
-                      </Text>
-                      <TouchableOpacity
-                        style={{
-                          marginBottom: 60,
-                          marginTop: 8,
-                          alignSelf: "center",
-                          height: 65,
-                          width: 65,
-                          borderRadius: 32.5,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderWidth: 2,
-                          borderColor: "lightgrey",
-                        }}
-                      >
-                        <AntDesign name="camera" size={40} color="whitesmoke" />
-                      </TouchableOpacity>
-                    </Animated.View>
-                    <Animated.View
-                      style={styles.buttonContainer}
-                      entering={FadeInLeft.duration(450)}
-                    >
-                      <Button
-                        title={t("create")}
-                        style={{
-                          marginHorizontal: wp(10),
-                          borderRadius: 10,
-                          backgroundColor: COLORS[theme].imageTintColor,
-                        }}
-                        textStyle={{ textTransform: "capitalize" }}
-                      >
-                        <MaterialIcons
-                          name="add-home"
-                          size={24}
-                          color={COLORS[theme].white}
-                        />
-                      </Button>
-                    </Animated.View>
-                  </>
-                )}
-              </LinearGradient>
-            </ImageBackground>
-          </View>
+
+          <CreatePostSection
+            containerStyle={styles.sectionContainer}
+            buttonContainerStyle={styles.buttonContainer}
+            currentPage={currentPage}
+            gradientStyle={styles.gradient}
+            imageStyle={styles.image}
+            imageSource={require("@/assets/images/pexels-perqued-13203179.jpg")}
+            buttonStyle={{
+              marginHorizontal: wp(10),
+              borderRadius: 10,
+              backgroundColor: COLORS[theme].imageTintColor,
+            }}
+            icon={
+              <MaterialIcons
+                name="add-home"
+                size={24}
+                color={COLORS[theme].white}
+              />
+            }
+            sectionNumber={0}
+          />
 
           {/* Section 2 */}
-          <View style={styles.sectionContainer}>
-            <ImageBackground
-              source={require("@/assets/images/pexels-eddievaldes155-19871522.jpg")}
-              // source={require("@/assets/images/pexels-perqued-13203179.jpg")}
-              style={styles.image}
-              resizeMode="cover"
-            >
-              <LinearGradient
-                colors={["rgba(0,0,0,0.35)", "rgba(0,0,0,0.95)"]}
-                start={{ x: 0, y: 0.35 }}
-                end={{ x: 0, y: 1 }}
-                style={styles.gradient}
-              >
-                {currentPage === 1 && (
-                  <>
-                    <Animated.View entering={BounceIn.duration(600).delay(50)}>
-                      <Text style={{ color: "white", textAlign: "center" }}>
-                        {t("add")}
-                      </Text>
-                      <TouchableOpacity
-                        style={{
-                          marginBottom: 60,
-                          marginTop: 8,
-                          alignSelf: "center",
-                          height: 65,
-                          width: 65,
-                          borderRadius: 32.5,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderWidth: 2,
-                          borderColor: "lightgrey",
-                        }}
-                      >
-                        <AntDesign name="camera" size={40} color="white" />
-                      </TouchableOpacity>
-                    </Animated.View>
-                    <Animated.View
-                      style={styles.buttonContainer}
-                      entering={FadeInLeft.duration(450)}
-                    >
-                      <Button
-                        title={t("create")}
-                        style={{
-                          marginHorizontal: wp(10),
-                          borderRadius: 10,
-                          backgroundColor: COLORS[theme].violet,
-                          textTransform: "capitalize",
-                          fontSize: hp(1.5),
-                        }}
-                        textStyle={{ textTransform: "capitalize" }}
-                      >
-                        <FontAwesome5
-                          name="car"
-                          size={24}
-                          color={COLORS[theme].white}
-                        />
-                      </Button>
-                    </Animated.View>
-                  </>
-                )}
-              </LinearGradient>
-            </ImageBackground>
-          </View>
+          <CreatePostSection
+            containerStyle={styles.sectionContainer}
+            buttonContainerStyle={styles.buttonContainer}
+            currentPage={currentPage}
+            gradientStyle={styles.gradient}
+            imageStyle={styles.image}
+            imageSource={require("@/assets/images/pexels-eddievaldes155-19871522.jpg")}
+            buttonStyle={{
+              marginHorizontal: wp(10),
+              borderRadius: 10,
+              backgroundColor: COLORS[theme].violet,
+              textTransform: "capitalize",
+              fontSize: hp(1.5),
+            }}
+            icon={
+              <FontAwesome5 name="car" size={24} color={COLORS[theme].white} />
+            }
+            sectionNumber={1}
+          />
 
           {/* Section 3 */}
-          <View style={styles.sectionContainer}>
-            <ImageBackground
-              // source={require("@/assets/images/pexels-pavel-danilyuk-7120379.jpg")}
-              source={require("@/assets/images/pexels-wendywei-1943411.jpg")}
-              style={styles.image}
-            >
-              <LinearGradient
-                colors={["rgba(0,0,0,0.35)", "rgba(0,0,0,0.95)"]}
-                start={{ x: 0, y: 0.35 }}
-                end={{ x: 0, y: 1 }}
-                style={styles.gradient}
-              >
-                {currentPage === 2 && (
-                  <>
-                    <Animated.View entering={BounceIn.duration(600).delay(50)}>
-                      <Text style={{ color: "white", textAlign: "center" }}>
-                        {t("add")}
-                      </Text>
-                      <TouchableOpacity
-                        style={{
-                          marginBottom: 60,
-                          marginTop: 8,
-                          alignSelf: "center",
-                          height: 65,
-                          width: 65,
-                          borderRadius: 32.5,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderWidth: 2,
-                          borderColor: "lightgrey",
-                        }}
-                      >
-                        <AntDesign name="camera" size={40} color="white" />
-                      </TouchableOpacity>
-                    </Animated.View>
-                    <Animated.View
-                      style={styles.buttonContainer}
-                      entering={FadeInRight.duration(450)}
-                    >
-                      <Button
-                        title={t("create")}
-                        style={{
-                          marginHorizontal: wp(10),
-                          borderRadius: 10,
-                          backgroundColor: COLORS[theme].yellow,
-                          textTransform: "capitalize",
-                          fontSize: hp(1.5),
-                        }}
-                        textStyle={{ textTransform: "capitalize" }}
-                      >
-                        <Feather
-                          name="music"
-                          size={24}
-                          color={COLORS[theme].white}
-                        />
-                      </Button>
-                    </Animated.View>
-                  </>
-                )}
-              </LinearGradient>
-            </ImageBackground>
-          </View>
+          <CreatePostSection
+            containerStyle={styles.sectionContainer}
+            buttonContainerStyle={styles.buttonContainer}
+            currentPage={currentPage}
+            gradientStyle={styles.gradient}
+            imageStyle={styles.image}
+            imageSource={require("@/assets/images/pexels-wendywei-1943411.jpg")}
+            buttonStyle={{
+              marginHorizontal: wp(10),
+              borderRadius: 10,
+              backgroundColor: COLORS[theme].yellow,
+              textTransform: "capitalize",
+              fontSize: hp(1.5),
+            }}
+            icon={
+              <Feather name="music" size={24} color={COLORS[theme].white} />
+            }
+            sectionNumber={2}
+          />
 
           {/* Section 4 */}
-          <View style={styles.sectionContainer}>
-            <ImageBackground
-              source={require("@/assets/pexels-amar-8981847.jpg")}
-              style={styles.image}
-            >
-              <LinearGradient
-                colors={["rgba(0,0,0,0.35)", "rgba(0,0,0,0.95)"]}
-                start={{ x: 0, y: 0.35 }}
-                end={{ x: 0, y: 1 }}
-                style={styles.gradient}
-              >
-                {currentPage === 3 && (
-                  <>
-                    <Animated.View entering={BounceIn.duration(600).delay(50)}>
-                      <Text style={{ color: "white", textAlign: "center" }}>
-                        {t("add")}
-                      </Text>
-                      <TouchableOpacity
-                        style={{
-                          marginBottom: 60,
-                          marginTop: 8,
-                          alignSelf: "center",
-                          height: 65,
-                          width: 65,
-                          borderRadius: 32.5,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderWidth: 2,
-                          borderColor: "lightgrey",
-                        }}
-                      >
-                        <AntDesign name="camera" size={40} color="white" />
-                      </TouchableOpacity>
-                    </Animated.View>
-                    <Animated.View
-                      style={styles.buttonContainer}
-                      entering={FadeInRight.duration(450)}
-                    >
-                      <Button
-                        title={t("create")}
-                        style={{
-                          marginHorizontal: wp(10),
-                          borderRadius: 10,
-                          backgroundColor: COLORS[theme].red,
-                          textTransform: "capitalize",
-                          fontSize: hp(1.5),
-                        }}
-                        textStyle={{ textTransform: "capitalize" }}
-                      >
-                        <FontAwesome6
-                          name="computer"
-                          size={24}
-                          color={COLORS[theme].white}
-                        />
-                      </Button>
-                    </Animated.View>
-                  </>
-                )}
-              </LinearGradient>
-            </ImageBackground>
-          </View>
+          <CreatePostSection
+            containerStyle={styles.sectionContainer}
+            buttonContainerStyle={styles.buttonContainer}
+            currentPage={currentPage}
+            gradientStyle={styles.gradient}
+            imageStyle={styles.image}
+            imageSource={require("@/assets/pexels-amar-8981847.jpg")}
+            buttonStyle={{
+              marginHorizontal: wp(10),
+              borderRadius: 10,
+              backgroundColor: COLORS[theme].red,
+              textTransform: "capitalize",
+              fontSize: hp(1.5),
+            }}
+            icon={
+              <FontAwesome6
+                name="computer"
+                size={24}
+                color={COLORS[theme].white}
+              />
+            }
+            sectionNumber={3}
+          />
         </ScrollView>
         <ScrollView
           ref={labelScrollViewRef}
@@ -561,6 +379,8 @@ const createStyles = (theme: "light" | "dark", top: number) =>
       height: hp(76),
       borderRadius: 32,
       overflow: "hidden",
+      borderWidth: 3,
+      borderColor: COLORS[theme].mainColor,
     },
     gradient: {
       width: wp(100) - 20,
