@@ -51,6 +51,9 @@ const Create: FC<Props> = (props) => {
   const [showToolTip, setShowToolTip] = useState(true);
   const [activeScrollView, setActiveScrollView] = useState(0);
 
+  const [showAppartmentModal, setShowAppartmentModal] = useState(false);
+  const [actionType, setActionType] = useState<"details" | "photo">("details");
+
   const topScrollViewRef = useRef<ScrollView>(null);
   const labelScrollViewRef = useRef<ScrollView>(null);
 
@@ -128,7 +131,11 @@ const Create: FC<Props> = (props) => {
       end={{ x: 1, y: 1 }}
       style={styles.container}
     >
-      <CreateApartmentBottomSheet />
+      <CreateApartmentBottomSheet
+        visible={showAppartmentModal}
+        actionType={actionType}
+        onRequestClose={() => setShowAppartmentModal(false)}
+      />
       {showToolTip && (
         <Pressable
           focusable
@@ -219,6 +226,10 @@ const Create: FC<Props> = (props) => {
               />
             }
             sectionNumber={0}
+            onSelect={(actionType: "photo" | "details") => {
+              setShowAppartmentModal(true);
+              setActionType(actionType);
+            }}
           />
 
           {/* Section 2 */}

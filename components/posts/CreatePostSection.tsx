@@ -34,6 +34,7 @@ interface Props {
   buttonStyle: any;
   icon: ReactNode;
   sectionNumber: number;
+  onSelect?: (actionType: "photo" | "details") => void | undefined;
 }
 
 const CreatePostSection: FC<Props> = ({
@@ -46,6 +47,7 @@ const CreatePostSection: FC<Props> = ({
   buttonStyle,
   icon,
   sectionNumber,
+  onSelect = undefined,
 }) => {
   const theme = useSelector(selectAppTheme);
   const { t } = useTranslation();
@@ -90,6 +92,7 @@ const CreatePostSection: FC<Props> = ({
                   title={t("create")}
                   style={buttonStyle}
                   textStyle={{ textTransform: "capitalize" }}
+                  action={() => onSelect!("details")}
                 >
                   {icon}
                 </Button>
