@@ -216,9 +216,9 @@ const SideDrawer: FC<Props> = ({ visible, onRequestClose }) => {
               </TouchableOpacity>
             </Animated.View>
 
-            {/* <Animated.View entering={FadeInDown.delay(750)}>
+            <Animated.View entering={FadeInDown.delay(750)}>
               <LogOutButton />
-            </Animated.View> */}
+            </Animated.View>
           </ScrollView>
           <Text
             style={{

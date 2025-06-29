@@ -280,6 +280,7 @@ const CreateApartmentBottomSheet = ({
                     onChangeText={(text) => handleInputChange("rooms", text)}
                     style={styles.input}
                     placeholderTextColor={COLORS[theme].violet}
+                    keyboardType="number-pad"
                   />
                 </View>
                 <View style={styles.switchContainer}>
@@ -294,6 +295,7 @@ const CreateApartmentBottomSheet = ({
                     onChangeText={(text) => handleInputChange("floor", text)}
                     style={styles.input}
                     placeholderTextColor={COLORS[theme].violet}
+                    keyboardType="number-pad"
                   />
                 </View>
                 <View style={styles.switchContainer}>
@@ -308,6 +310,7 @@ const CreateApartmentBottomSheet = ({
                     onChangeText={(text) => handleInputChange("kitchen", text)}
                     style={styles.input}
                     placeholderTextColor={COLORS[theme].violet}
+                    keyboardType="number-pad"
                   />
                 </View>
                 <View style={styles.switchContainer}>
@@ -322,6 +325,7 @@ const CreateApartmentBottomSheet = ({
                     onChangeText={(text) => handleInputChange("toilets", text)}
                     style={styles.input}
                     placeholderTextColor={COLORS[theme].violet}
+                    keyboardType="number-pad"
                   />
                 </View>
                 <View style={styles.switchContainer}>
@@ -383,6 +387,7 @@ const CreateApartmentBottomSheet = ({
                     }
                     style={[styles.input, { marginLeft: 8 }]}
                     placeholderTextColor={COLORS[theme].violet}
+                    keyboardType="number-pad"
                   />
                 </View>
                 <View
@@ -458,7 +463,7 @@ const createStyles = (theme: "light" | "dark") =>
       marginTop: hp(2.5),
       marginHorizontal: wp(2.5),
       backgroundColor:
-        theme === "light" ? COLORS[theme].bgColor : "rgba(0,10,20,0.75)",
+        theme === "light" ? COLORS[theme].bgColor : "rgba(0,150,200,0.25)",
     },
     tabContainer: {
       flexDirection: "row",
